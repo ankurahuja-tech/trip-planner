@@ -1,0 +1,31 @@
+:root {
+    /*========== Colors ==========*/
+    --clr-neutral-100: hsl(0, 0%, 100%);
+    --clr-neutral-200: hsl(0, 0%, 94%);
+    --clr-neutral-300: hsl(0, 0%, 89%);
+    --clr-neutral-400: hsl(0, 0%, 76%);
+    --clr-neutral-500: hsl(0, 0%, 60%);
+    --clr-neutral-600: hsl(0, 0%, 40%);
+    --clr-neutral-800: hsl(0, 0%, 15%);
+    --clr-neutral-900: hsl(0, 0%, 0%);
+    --clr-primary-100: hsl(216, 78%, 94%);
+    --clr-primary-200: hsl(216, 78%, 86%);
+    --clr-primary-400: hsl(194, 64%, 38%);
+    --clr-primary-500: hsl(213, 28%, 37%);
+    --clr-primary-600: hsl(213, 29%, 31%);
+    --clr-primary-700: hsl(213, 30%, 25%);
+    --clr-primary-800: hsl(214, 31%, 20%);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: linear-gradient(-45deg, var(--clr-primary-400), var(--clr-primary-500));
+    min-height: 100vh;
+}

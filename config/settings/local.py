@@ -2,7 +2,12 @@ from .base import *
 
 DEBUG = True
 
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env('DJANGO_SECRET_KEY', default='django-insecure$(c%=,/$8C6ku#y+}aw.Sd)2')
+
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+]
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 

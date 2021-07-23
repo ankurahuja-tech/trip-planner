@@ -141,3 +141,7 @@ cython_debug/
 
 # others
 notes.txt
+
+# Django specific:
+staticfiles/
+media/
