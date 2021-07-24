@@ -24,6 +24,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 SITE_ID = 1
 
+AUTH_USER_MODEL = "accounts.CustomUser"
+
 # ==============================================================================
 # APPS SETTINGS
 # ==============================================================================
