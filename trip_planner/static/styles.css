@@ -36,6 +36,10 @@
     .sidebar__topnav-max-height {
         max-height: 6rem !important;
     }
+
+    .sidebar__topnav-title {
+        font-size: .8rem;
+    }
 }
 
 /* source: https://dev.to/codeply/bootstrap-5-sidebar-examples-38pb - Sidebar Example 2 */

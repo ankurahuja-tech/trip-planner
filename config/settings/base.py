@@ -169,6 +169,11 @@ MEDIA_ROOT = APPS_DIR / 'media'
 
 # django-allauth
 
+LOGIN_REDIRECT_URL = "pages:home"
+ACCOUNT_LOGOUT_REDIRECT = "pages:home"
+
+ACCOUNT_SESSION_REMEMBER = True
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
