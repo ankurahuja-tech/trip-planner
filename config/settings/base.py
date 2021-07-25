@@ -45,6 +45,9 @@ THIRD_PARTY_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    # django-crispy-forms with crispy_bootstrap5
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 LOCAL_APPS = [
@@ -165,7 +168,14 @@ MEDIA_ROOT = APPS_DIR / 'media'
 # ==============================================================================
 
 # django-allauth
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+## django-crispy-forms with crispy_bootstrap5
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
