@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
 CustomUser = get_user_model()
 
+
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     add_form = UserCreationForm
@@ -14,4 +15,7 @@ class CustomUserAdmin(UserAdmin):
 
     model = CustomUser
 
-    list_display = ['email', 'username',]
+    list_display = [
+        'email',
+        'username',
+    ]
