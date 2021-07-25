@@ -49,6 +49,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     'trip_planner.accounts.apps.AccountsConfig',
+    'trip_planner.pages.apps.PagesConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -74,7 +75,7 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [APPS_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
