@@ -24,9 +24,18 @@ def test_signup_url_dispatcher_status_code_200(client):
 
 
 # TODO: how to test that correct form creates a user?
-# def test_signup_form(client):
-#     response = client.post('/accounts/signup/', {"username": "Janek", "password": "testpass123", "password2": "testpass123"})
-#     assert response.status_code == 201
+# def test_signup_form(client, django_user_model):
+#     credentials = {
+#         "username": "janek",
+#         "email": "janek@email.com",
+#         "password": "TesterowyPass#469",
+#         "password2": "TesterowyPass"
+#         }
+#     response = client.post(reverse('account_signup'), data=credentials, follow=True)
+#     assert response.status_code == 200
+
+#     users = django_user_model.objects.all()
+#     assert users.count() == 1
 
 
 # ==============================================================================
@@ -34,11 +43,26 @@ def test_signup_url_dispatcher_status_code_200(client):
 # ==============================================================================
 
 
-def test_signup_url_status_code_200(client):
+def test_login_url_status_code_200(client):
     response = client.get('/accounts/login/')
     assert response.status_code == 200
 
 
-def test_signup_url_dispatcher_status_code_200(client):
+def test_login_url_dispatcher_status_code_200(client):
     response = client.get(reverse('account_login'))
     assert response.status_code == 200
+
+
+# TODO: how to test that login form works?
+# def test_login(client, django_user_model):
+#     credentials = {
+#         "username": "jack",
+#         "password": "testpass123",
+#         "is_active": True,
+#         "is_staff": True,
+#         "is_superuser": True,
+#     }
+#     user = django_user_model.objects.create_user(**credentials)
+#     user.save()
+#     response = client.get('/accounts/login/', credentials, follow=True)
+#     assert response.context["user"].is_authenticated == True
