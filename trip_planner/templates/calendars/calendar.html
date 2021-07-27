@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Calendar | Trip Planner
+{% endblock title %}
+
+{% block stylesheets %}
+
+    {{ block.super }}
+
+    {% include 'partials/_upper_fullcalendar.html' %}
+
+{% endblock stylesheets %}
+
+
+{% block header %}
+    Calendar
+{% endblock header %}
+
+{% block description %}
+    Calendar view.
+{% endblock description %}
+
+{% block content %}
+
+    {{ block.super }}
+    
+    <div class="container-fluid">
+        <div id="calendar"></div>
+    </div>
+
+{% endblock content %}
+
+{% block scripts %}
+    
+    {{ block.super }}
+
+    {% include 'partials/_bottom_fullcalendar.html' %}
+
+{% endblock scripts %}
