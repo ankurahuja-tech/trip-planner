@@ -8,6 +8,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('accounts/', include('trip_planner.accounts.urls', namespace='accounts')),
     path('', include('trip_planner.pages.urls', namespace='pages')),
+    path('calendar/', include('trip_planner.calendars.urls', namespace='calendars')),
 ]
 
 # Django debug_toolbar
