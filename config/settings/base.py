@@ -51,6 +51,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    'trip_planner.core.apps.CoreConfig',
     'trip_planner.accounts.apps.AccountsConfig',
     'trip_planner.pages.apps.PagesConfig',
     'trip_planner.calendars.apps.CalendarsConfig',
