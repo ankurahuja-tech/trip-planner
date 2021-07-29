@@ -10,9 +10,10 @@ class TimeStampedModel(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
         abstract = True
+
 
 # consider adding abstract class for soft delete TODO
 # deleted_at = models.DateTimeField(null=True, blank=True)
