@@ -6,6 +6,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from .models import Trip
+from .forms import TripCreateForm, TripUpdateForm
 
 # Create your views here.
 
@@ -24,13 +25,8 @@ class TripDetailView(LoginRequiredMixin, DetailView):
 
 class TripCreateView(LoginRequiredMixin, CreateView):
     model = Trip
-    fields = [
-        'title',
-        'start_date',
-        'end_date',
-        'notes',
-    ]
     template_name = 'trips/trip_form.html'
+    form_class = TripCreateForm
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -39,13 +35,8 @@ class TripCreateView(LoginRequiredMixin, CreateView):
 
 class TripUpdateView(LoginRequiredMixin, UpdateView):
     model = Trip
-    fields = [
-        'title',
-        'start_date',
-        'end_date',
-        'notes',
-    ]
     template_name = 'trips/trip_update_form.html'
+    form_class = TripUpdateForm
 
 
 class TripDeleteView(LoginRequiredMixin, DeleteView):

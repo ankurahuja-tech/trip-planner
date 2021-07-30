@@ -12,7 +12,7 @@ class Trip(TimeStampedModel):
     title = models.CharField('Trip title', max_length=100, help_text='This is the title of your trip.')
     start_date = models.DateField('Trip start date', help_text='This is the start date of your trip.')
     end_date = models.DateField('Trip end date', help_text='This is the end date of your trip.')
-    notes = models.TextField('Trip notes', help_text='These are your notes regarding the trip.', default='')
+    notes = models.TextField('Trip notes', help_text='These are your notes regarding the trip.', blank=True, null=True)
     # add locations for the trip when the map app is up TODO
     # location =
     # add photos TODO
@@ -69,7 +69,9 @@ class TripDay(TimeStampedModel):
         'day of the trip', help_text='This shows what day of the trip is this.', blank=True, null=True
     )
     date = models.DateField('date', help_text='This is a date within the trip.')
-    notes = models.TextField('Day notes', help_text='These are your notes for the day of the trip.', default='')
+    notes = models.TextField(
+        'Day notes', help_text='These are your notes for the day of the trip.', blank=True, null=True
+    )
 
     def __str__(self) -> str:
         return "Day " + str(self.num)
@@ -83,7 +85,7 @@ class TripDay(TimeStampedModel):
 # class Activity(TimeStampedModel):
 #     day = models.ForeignKey(TripDay, on_delete=models.CASCADE)
 #     title = models.CharField('Activity title', max_length=255, help_text='This is the title of your activity.')
-#     description = models.TextField('Activity description', help_text='This is the description of the activity.', null=True, blank=True, unique=True)
+#     description = models.TextField('Activity description', help_text='This is the description of the activity.', null=True, blank=True)
 #     time = models.TimeField('Activity time', help_text='This is the time of the activity.')
 
 #     def __str__(self) -> str:
