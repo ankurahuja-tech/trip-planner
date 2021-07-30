@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block title %}
+    Trips | Trip Planner
+{% endblock title %}
+
+{% block header %}
+    Trips
+{% endblock header %}
+
+{% block description %}
+    Trips page.
+{% endblock description %}
+
+{% block content %}
+
+    {{ block.super }}
+
+    <h2>{{ trip.title }}</h2>
+    <br>
+    <h4>Trip start date: {{trip.start_date }}</h4>
+    <h4>Trip end date: {{trip.end_date }}</h4>
+    <h4>Trip notes:</h4>
+    <p>{{ trip.notes }}</p>
+
+<a href="{% url 'trips:trip_update' trip.pk %}" class="btn btn-primary">Update details</a>
+
+{% endblock content %}

@@ -30,19 +30,24 @@ def trip(user: AUTH_USER_MODEL) -> Trip:
     duration = datetime.timedelta(days=3)
     end_date = start_date + duration
     user = user
-    trip = Trip.objects.create(user=user, title='Test trip', start_date=start_date, end_date=end_date)
+    trip = Trip.objects.create(user=user, title='Trip test trip', start_date=start_date, end_date=end_date)
     return trip
 
 
-# consider using a mock trip to make it "atomic" from trip TODO
+# consider using a mock trip to avoid accessing the db TODO
 @pytest.fixture
-def trip_day(trip: Trip) -> TripDay:
+def trip_day(user: AUTH_USER_MODEL) -> TripDay:
     """
     Creates a trip day fixture for TripDay tests.
     """
-    trip = trip
-    date = datetime.date(year=2021, month=1, day=1)
-    trip_day = TripDay.objects.create(trip=trip, date=date)
+    # Create Trip object
+    start_date = datetime.date(year=2021, month=1, day=1)
+    end_date = start_date
+    user = user
+    trip = Trip.objects.create(user=user, title='TripDay test trip', start_date=start_date, end_date=end_date)
+
+    # Get TripDay object
+    trip_day = TripDay.objects.get(trip=trip)
     return trip_day
 
 
@@ -60,14 +65,20 @@ def test_trip_exists(trip: Trip) -> None:
 
 def test_trip_fields(trip: Trip) -> None:
     assert trip.user.username == 'john'
-    assert trip.title == 'Test trip'
+    assert trip.title == 'Trip test trip'
     assert str(trip.start_date) == "2021-07-29"
     assert str(trip.end_date) == "2021-08-01"
     assert trip.notes == ''
 
 
 def test_trip_str(trip: Trip) -> None:
-    assert str(trip) == 'Test trip'
+    trip.title = 'Trip test trip test title'
+    assert str(trip) == 'Trip test trip test title'
+
+
+def test_get_absolute_url(trip: Trip) -> None:
+    trip_pk = str(trip.pk)
+    assert trip.get_absolute_url() == '/trips/' + trip_pk + '/'
 
 
 # Create TripDays tests
@@ -130,6 +141,17 @@ def test_trip_day_exists(trip_day: TripDay) -> None:
 
 
 def test_trip_day_fields(trip_day: TripDay) -> None:
-    assert trip_day.trip.title == 'Test trip'
+    assert trip_day.trip.title == 'TripDay test trip'
     assert str(trip_day.date) == "2021-01-01"
     assert trip_day.notes == ''
+
+
+def test_trip_day_str(trip_day: TripDay) -> None:
+    assert str(trip_day) == 'Day 1'
+
+
+# TODO
+# def test_get_absolute_url(trip_day: TripDay) -> None:
+#     trip_pk = str(trip_day.trip)
+#     trip_day_pk = str(trip_day.pk)
+#     assert trip.get_absolute_url() == '/trips/' + trip_pk + '/days/' + trip_day_pk + '/'

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block title %}
+    Trips | Trip Planner
+{% endblock title %}
+
+{% block header %}
+    Trips
+{% endblock header %}
+
+{% block description %}
+    Trips page.
+{% endblock description %}
+
+{% block content %}
+
+    {{ block.super }}
+
+    <h1><a href="{% url 'trips:trip_create' %}">Create trip</a></h1>
+    <br>
+    <h2>Your trips are below:</h2>
+    {% for trip in trip_list %}
+        <h3><a href="{% url 'trips:trip_detail' trip.pk %}">{{ trip.title }}</a></h3>
+    {% endfor %}
+
+{% endblock content %}

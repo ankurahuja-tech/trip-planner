@@ -2,6 +2,7 @@ import datetime
 
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 
 from trip_planner.core.models import TimeStampedModel
 
@@ -21,6 +22,9 @@ class Trip(TimeStampedModel):
 
     def __str__(self) -> str:
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("trips:trip_detail", kwargs={"pk": self.pk})
 
     def create_trip_days(self):
         """
@@ -67,6 +71,13 @@ class TripDay(TimeStampedModel):
     date = models.DateField('date', help_text='This is a date within the trip.')
     notes = models.TextField('Day notes', help_text='These are your notes for the day of the trip.', default='')
 
+    def __str__(self) -> str:
+        return "Day " + str(self.num)
+
+    # TODO
+    # def get_absolute_url(self):
+    #     return reverse("trips:tripday_detail", kwargs={"pk": self.pk})
+
 
 # add Activity TODO
 # class Activity(TimeStampedModel):
@@ -74,3 +85,9 @@ class TripDay(TimeStampedModel):
 #     title = models.CharField('Activity title', max_length=255, help_text='This is the title of your activity.')
 #     description = models.TextField('Activity description', help_text='This is the description of the activity.', null=True, blank=True, unique=True)
 #     time = models.TimeField('Activity time', help_text='This is the time of the activity.')
+
+#     def __str__(self) -> str:
+#         return self.title
+
+#     def get_absolute_url(self):
+#         return reverse("trips:activity_detail", kwargs={"pk": self.pk})
