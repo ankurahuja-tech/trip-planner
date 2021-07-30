@@ -2,8 +2,6 @@ import datetime
 
 import pytest
 
-from unittest.mock import MagicMock, patch
-
 from config.settings.base import AUTH_USER_MODEL
 from trip_planner.trips.models import Trip, TripDay
 
@@ -24,7 +22,7 @@ def user(django_user_model: AUTH_USER_MODEL) -> AUTH_USER_MODEL:
 @pytest.fixture
 def trip(user: AUTH_USER_MODEL) -> Trip:
     """
-    Creates test trip with 4 trip days fixture for Trip tests.
+    Creates test trip with 4 trip days fixture.
     """
     start_date = datetime.date(year=2021, month=7, day=29)
     duration = datetime.timedelta(days=3)

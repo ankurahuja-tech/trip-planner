@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block title %}
+    Trips | Trip Planner
+{% endblock title %}
+
+{% block header %}
+    Trips
+{% endblock header %}
+
+{% block description %}
+    Delete a trip.
+{% endblock description %}
+
+{% block content %}
+
+    {{ block.super }}
+
+    <p>Are you sure you want to delete this trip: {{ trip.title }}?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit" value="Confirm">Confirm deletion</button>
+    </form>
+
+{% endblock content %}

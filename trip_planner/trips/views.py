@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from .models import Trip
 
@@ -45,3 +46,9 @@ class TripUpdateView(LoginRequiredMixin, UpdateView):
         'notes',
     ]
     template_name = 'trips/trip_update_form.html'
+
+
+class TripDeleteView(LoginRequiredMixin, DeleteView):
+    model = Trip
+    template_name = 'trips/trip_delete.html'
+    success_url = reverse_lazy('trips:trip_list')

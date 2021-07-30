@@ -1,6 +1,7 @@
 import pytest
 from django.urls import reverse, resolve
 
+from config.settings.base import AUTH_USER_MODEL
 from trip_planner.pages.views import HomePageView
 
 
@@ -10,7 +11,7 @@ from trip_planner.pages.views import HomePageView
 
 
 @pytest.fixture
-def user(client, django_user_model):
+def user(client, django_user_model: AUTH_USER_MODEL) -> AUTH_USER_MODEL:
     user = django_user_model.objects.create_user(username='john', password='testpass123')
     client.force_login(user)
     return user
@@ -36,8 +37,8 @@ def test_homepage_logged_in_url_dispatcher_status_code_200(client, user):
 
 def test_homepage_logged_in_template(client, user):
     response = client.get(reverse("pages:home"))
-    homepage_template_name = ['pages/home.html']
-    assert response.template_name == homepage_template_name
+    homepage_template_name = 'pages/home.html'
+    assert homepage_template_name in response.template_name
 
 
 def test_homepage_url_resolves_homepageview(client, user):

@@ -25,5 +25,7 @@
     <p>{{ trip.notes }}</p>
 
 <a href="{% url 'trips:trip_update' trip.pk %}" class="btn btn-primary">Update details</a>
+<a href="{% url 'trips:trip_delete' trip.pk %}" class="btn btn-danger">Delete trip</a>
+
 
 {% endblock content %}
