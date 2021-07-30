@@ -38,13 +38,17 @@ class Trip(TimeStampedModel):
         for trip_date in trip_dates:
             TripDay.objects.get_or_create(trip=self, date=trip_date)
 
-    # def update_trip_days_nums(self): TODO
-    #     trip_days = TripDay.objects.all().filter(trip=self).order_by('-date') # "-" indicates descending order
-    #     num_increment = 1
-    #     for trip_day in trip_days:
-    #         trip_day.num = num_increment
-    #         num_increment += 1
-    #     TripDay.objects.bulk_update(trip_days, 'num')
+    def update_trip_days_nums(self):
+        """
+        Update TripDay object's "num" field for each TripDay object a particular Trip.
+        """
+        trip_days = TripDay.objects.all().filter(trip=self).order_by('date')
+        num_increment = 1
+        for trip_day in trip_days:
+            if trip_day.num != num_increment:
+                trip_day.num = num_increment
+                trip_day.save(update_fields=['num'])
+            num_increment += 1
 
     def save(self, *args, **kwargs):
         """
@@ -52,12 +56,14 @@ class Trip(TimeStampedModel):
         """
         super().save(*args, **kwargs)
         self.create_trip_days()
-        # self.update_trip_days_nums() TODO
+        self.update_trip_days_nums()
 
 
 class TripDay(TimeStampedModel):
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
-    # num = models.IntegerField('day of the trip', help_text='This shows what day of the trip is this.', default=1) TODO
+    num = models.IntegerField(
+        'day of the trip', help_text='This shows what day of the trip is this.', blank=True, null=True
+    )
     date = models.DateField('date', help_text='This is a date within the trip.')
     notes = models.TextField('Day notes', help_text='These are your notes for the day of the trip.', default='')
 

@@ -2,7 +2,7 @@ import datetime
 
 import pytest
 
-# from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 from config.settings.base import AUTH_USER_MODEL
 from trip_planner.trips.models import Trip, TripDay
@@ -23,6 +23,9 @@ def user(django_user_model: AUTH_USER_MODEL) -> AUTH_USER_MODEL:
 
 @pytest.fixture
 def trip(user: AUTH_USER_MODEL) -> Trip:
+    """
+    Creates test trip with 4 trip days fixture for Trip tests.
+    """
     start_date = datetime.date(year=2021, month=7, day=29)
     duration = datetime.timedelta(days=3)
     end_date = start_date + duration
@@ -34,6 +37,9 @@ def trip(user: AUTH_USER_MODEL) -> Trip:
 # consider using a mock trip to make it "atomic" from trip TODO
 @pytest.fixture
 def trip_day(trip: Trip) -> TripDay:
+    """
+    Creates a trip day fixture for TripDay tests.
+    """
     trip = trip
     date = datetime.date(year=2021, month=1, day=1)
     trip_day = TripDay.objects.create(trip=trip, date=date)
@@ -76,20 +82,41 @@ def test_create_trip_days_on_trip_duration_extension(trip: Trip) -> None:
 
     trip.end_date += trip_duration_factor
     trip.save(update_fields=['end_date'])
-    assert TripDay.objects.all().count() == 5
+    assert TripDay.objects.filter(trip=trip).count() == 5
 
     trip.start_date -= trip_duration_factor
     trip.save(update_fields=['start_date'])
-    assert TripDay.objects.all().count() == 6
+    assert TripDay.objects.filter(trip=trip).count() == 6
 
 
-def test_trip_day_num(trip: Trip) -> None:
+def test_dont_create_trip_days_duplicates_on_trip_update_if_trip_day_notes_have_changed(trip: Trip) -> None:
+    trip_day = TripDay.objects.filter(trip=trip).first()
+    trip_day.notes = 'test note'
+    trip_day.save(update_fields=['notes'])
+
+    trip.notes = 'test note'
+    trip.save(update_fields=['notes'])
+
+    assert TripDay.objects.filter(trip=trip).count() == 4
+
+
+def test_trip_day_nums(trip: Trip) -> None:
     trip_first_day = TripDay.objects.get(date=trip.start_date)
     assert trip_first_day.num == 1
 
+    trip_last_day = TripDay.objects.get(date=trip.end_date)
+    assert trip_last_day.num == 4
 
-# def test_change_trip_day_num_on_start_date_change(trip: Trip) -> None: TODO
-#     pass
+
+def test_change_trip_day_num_on_start_date_change(trip: Trip) -> None:
+    trip.start_date -= datetime.timedelta(days=1)
+    trip.save(update_fields=['start_date'])
+
+    trip_new_first_day = TripDay.objects.get(date=trip.start_date)
+    assert trip_new_first_day.num == 1
+
+    trip_last_day = TripDay.objects.get(date=trip.end_date)
+    assert trip_last_day.num == 5
 
 
 # ==============================================================================
