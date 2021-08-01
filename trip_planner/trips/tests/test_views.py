@@ -133,8 +133,5 @@ def test_trip_delete(client, trip: Trip) -> None:
     response = client.post(reverse('trips:trip_delete', kwargs=trip_pk))
 
     assert response.status_code == 302
-    try:
-        trip = Trip.objects.get(title='Test trip')
-    except Trip.DoesNotExist:
-        trip = None
-    assert trip == None
+    with pytest.raises(Trip.DoesNotExist):
+        assert Trip.objects.get(title='Test trip')
