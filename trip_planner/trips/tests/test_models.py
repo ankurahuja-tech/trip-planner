@@ -57,7 +57,9 @@ def activity(trip_day: TripDay) -> Activity:
     # Create Activity object
     user = trip_day.user
     day = trip_day
-    activity = Activity.objects.create(user=user, day=day, title='Activity test title', time=datetime.time(hour=11, minute=11))
+    activity = Activity.objects.create(
+        user=user, day=day, title='Activity test title', time=datetime.time(hour=11, minute=11)
+    )
     return activity
 
 
@@ -190,5 +192,5 @@ def test_activity_str(activity: Activity) -> None:
 
 def test_activity_get_absolute_url(activity: Activity) -> None:
     trip_day_pk = str(activity.day.pk)
-    
+
     assert activity.get_absolute_url() == '/trips/days/' + trip_day_pk + '/'

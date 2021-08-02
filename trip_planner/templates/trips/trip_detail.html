@@ -28,8 +28,11 @@
     <a href="{% url 'trips:trip_delete' trip.pk %}" class="btn btn-danger">Delete trip</a>
 
     <h4>Trip Days:</h4>
-    {% for trip_day in trip.trip_days.all %}
-        <p><a href="{% url 'trips:trip_day_detail' trip_day.pk %}">{{ trip_day }} - {{ trip_day.date }}</a></p>
+    {% for trip_day in trip.prefetched_trip_days %}
+        <h5><a href="{% url 'trips:trip_day_detail' trip_day.pk %}">{{ trip_day }} - {{ trip_day.date }}</a></h5>
+        {% for activity in trip_day.prefetched_activities %}
+            <p>{{ activity.title }}</p>
+        {% endfor %}
     {% endfor %}
 
 {% endblock content %}

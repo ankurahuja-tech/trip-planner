@@ -62,7 +62,9 @@ def activity(trip_day: TripDay) -> Activity:
     # Create Activity object
     user = trip_day.user
     day = trip_day
-    activity = Activity.objects.create(user=user, day=day, title='Activity test title', time=datetime.time(hour=11, minute=11))
+    activity = Activity.objects.create(
+        user=user, day=day, title='Activity test title', time=datetime.time(hour=11, minute=11)
+    )
     return activity
 
 
@@ -97,8 +99,8 @@ def test_trip_list_url_resolves_triplistview(client) -> None:
 
 
 def test_trip_detail_url_dispatcher(client, trip: Trip) -> None:
-    trip_pk = {'pk': str(trip.pk)}
-    response = client.get(reverse("trips:trip_detail", kwargs=trip_pk))
+    params = {'pk': str(trip.pk)}
+    response = client.get(reverse("trips:trip_detail", kwargs=params))
     trip_detail_view_template_name = 'trips/trip_detail.html'
 
     assert response.status_code == 200
@@ -141,14 +143,14 @@ def test_trip_create(client, user: AUTH_USER_MODEL) -> None:
 
 
 def test_trip_update(client, trip: Trip) -> None:
-    trip_pk = {'pk': trip.pk}
+    params = {'pk': trip.pk}
     context = {
         'title': 'Updated test trip',
         'start_date': trip.start_date,
         'end_date': trip.end_date,
         'notes': trip.notes,
     }
-    response = client.post(reverse('trips:trip_update', kwargs=trip_pk), data=context)
+    response = client.post(reverse('trips:trip_update', kwargs=params), data=context)
     trip.refresh_from_db()
 
     assert response.status_code == 302
@@ -159,8 +161,8 @@ def test_trip_update(client, trip: Trip) -> None:
 
 
 def test_trip_delete(client, trip: Trip) -> None:
-    trip_pk = {'pk': trip.pk}
-    response = client.post(reverse('trips:trip_delete', kwargs=trip_pk))
+    params = {'pk': trip.pk}
+    response = client.post(reverse('trips:trip_delete', kwargs=params))
 
     assert response.status_code == 302
     with pytest.raises(Trip.DoesNotExist):
@@ -175,8 +177,8 @@ def test_trip_delete(client, trip: Trip) -> None:
 
 
 def test_trip_day_detail_url_dispatcher(client, trip_day: TripDay) -> None:
-    trip_day_pk = {'pk': str(trip_day.pk)}
-    response = client.get(reverse("trips:trip_day_detail", kwargs=trip_day_pk))
+    params = {'pk': str(trip_day.pk)}
+    response = client.get(reverse("trips:trip_day_detail", kwargs=params))
     trip_day_detail_view_template_name = 'trips/trip_day_detail.html'
 
     assert response.status_code == 200
@@ -201,11 +203,11 @@ def test_trip_day_detail_url_resolves_trip_day_detail_view(client, trip_day: Tri
 
 
 def test_trip_day_update(client, trip_day: TripDay) -> None:
-    trip_day_pk = {'pk': trip_day.pk}
+    params = {'pk': trip_day.pk}
     context = {
         'notes': 'These are updated notes.',
     }
-    response = client.post(reverse('trips:trip_day_update', kwargs=trip_day_pk), data=context)
+    response = client.post(reverse('trips:trip_day_update', kwargs=params), data=context)
     trip_day.refresh_from_db()
 
     assert response.status_code == 302
@@ -220,12 +222,12 @@ def test_trip_day_update(client, trip_day: TripDay) -> None:
 
 
 def test_activity_create(client, trip_day: TripDay) -> None:
-    trip_day_pk = {'pk': trip_day.pk}
+    params = {'pk': trip_day.pk}
     context = {
         'title': 'New test activity',
         'time': datetime.time(hour=11, minute=11),
     }
-    response = client.post(reverse('trips:activity_create', kwargs=trip_day_pk), data=context)
+    response = client.post(reverse('trips:activity_create', kwargs=params), data=context)
     new_activity = Activity.objects.get(title='New test activity')
 
     assert response.status_code == 302
@@ -235,13 +237,16 @@ def test_activity_create(client, trip_day: TripDay) -> None:
 # TripDay Update View tests
 
 
-def test_activity_update(client, activity: Activity) -> None:  
-    activity_pk = {'pk': activity.pk}
+def test_activity_update(client, activity: Activity) -> None:
+    params = {
+        'trip_day_pk': activity.day.pk,
+        'pk': activity.pk,
+    }
     context = {
         'title': 'These are updated notes.',
         "time": activity.time,
     }
-    response = client.post(reverse('trips:activity_update', kwargs=activity_pk), data=context)
+    response = client.post(reverse('trips:activity_update', kwargs=params), data=context)
     activity.refresh_from_db()
 
     assert response.status_code == 302

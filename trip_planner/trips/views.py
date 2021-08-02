@@ -26,8 +26,17 @@ class TripDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'trip'
 
     def get_queryset(self, *args, **kwargs):
-        prefetch_trip_days = Prefetch('trip_days', queryset=TripDay.objects.order_by('date'))
-        qs = super().get_queryset(*args, **kwargs).prefetch_related(prefetch_trip_days)
+        """
+        Before returning queryset, prefetches Trip Days for a given Trip and Activities for these Trip Days.
+        """
+        prefetched_data = Prefetch(
+            'trip_days',
+            queryset=TripDay.objects.order_by('date').prefetch_related(
+                Prefetch('activities', queryset=Activity.objects.order_by('time'), to_attr="prefetched_activities")
+            ),
+            to_attr="prefetched_trip_days",
+        )
+        qs = super().get_queryset(*args, **kwargs).prefetch_related(prefetched_data)
         return qs
 
 
@@ -62,8 +71,13 @@ class TripDayDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'trip_day'
 
     def get_queryset(self, *args, **kwargs):
-        prefetch_activities = Prefetch('activities', queryset=Activity.objects.order_by('time'))
-        qs = super().get_queryset(*args, **kwargs).prefetch_related(prefetch_activities)
+        """
+        Before returning queryset, prefetches Activities for a given Trip Day.
+        """
+        prefetched_data = Prefetch(
+            'activities', queryset=Activity.objects.order_by('time'), to_attr="prefetched_activities"
+        )
+        qs = super().get_queryset(*args, **kwargs).prefetch_related(prefetched_data)
         return qs
 
 
@@ -91,3 +105,13 @@ class ActivityUpdateView(LoginRequiredMixin, UpdateView):
     model = Activity
     template_name = 'trips/activity_update_form.html'
     form_class = ActivityUpdateForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['trip_day_pk'] = self.kwargs['trip_day_pk']
+        return context
+
+    def get_queryset(self, *args, **kwargs):
+        trip_day_pk = self.kwargs['trip_day_pk']
+        qs = super().get_queryset(*args, **kwargs).filter(day=trip_day_pk)
+        return qs

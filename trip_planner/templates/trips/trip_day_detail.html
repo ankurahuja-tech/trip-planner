@@ -29,8 +29,8 @@
     
     <br>
     <h4>Activities:</h4>
-    {% for activity in trip_day.activities.all %}
-        <p>{{ activity }} - <a href="{% url 'trips:activity_update' activity.pk %}">UPDATE</a></p>
+    {% for activity in trip_day.prefetched_activities %}
+        <p>{{ activity }} - <a href="{% url 'trips:activity_update' trip_day.pk activity.pk %}">UPDATE</a></p>
     {% endfor %}
 
 {% endblock content %}
