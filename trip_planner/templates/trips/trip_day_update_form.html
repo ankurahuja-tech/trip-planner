@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Trips | Trip Planner
+{% endblock title %}
+
+{% block header %}
+    Trips
+{% endblock header %}
+
+{% block description %}
+    Update a trip day.
+{% endblock description %}
+
+{% block content %}
+
+    {{ block.super }}
+
+    <p>You can update the details of your trip day below:</p>
+    <br>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-success" type="submit">Update trip day</button>
+    </form>
+
+{% endblock content %}

@@ -101,16 +101,15 @@ class TripDay(TimeStampedModel):
         return reverse("trips:trip_day_detail", kwargs={"pk": self.pk})
 
 
-# add Activity TODO
-# class Activity(TimeStampedModel):
-#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     day = models.ForeignKey(TripDay, on_delete=models.CASCADE)
-#     title = models.CharField('Activity title', max_length=50, help_text='This is the title of your activity.')
-#     description = models.TextField('Activity description', help_text='This is the description of the activity.', null=True, blank=True)
-#     time = models.TimeField('Activity time', help_text='This is the time of the activity.')
+class Activity(TimeStampedModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    day = models.ForeignKey(TripDay, on_delete=models.CASCADE, related_name='activities')
+    title = models.CharField('Activity title', max_length=50, help_text='This is the title of your activity.')
+    # description = models.TextField('Activity description', help_text='This is the description of the activity.', null=True, blank=True)
+    time = models.TimeField('Activity time', help_text='This is the time of the activity.')
 
-#     def __str__(self) -> str:
-#         return self.title
+    def __str__(self) -> str:
+        return self.title
 
-#     def get_absolute_url(self):
-#         return reverse("trips:activity_detail", kwargs={"pk": self.pk})
+    def get_absolute_url(self):
+        return reverse("trips:trip_day_detail", kwargs={"pk": self.day.pk})

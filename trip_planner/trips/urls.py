@@ -9,9 +9,10 @@ from .views import (
     TripDeleteView,
     # TripDay Views
     TripDayDetailView,
-    # TripDayUpdateView,
+    TripDayUpdateView,
     # Activity Views
-    # ActivityCreateView,
+    ActivityCreateView,
+    ActivityUpdateView,
 )
 
 app_name = "trips"
@@ -24,7 +25,8 @@ urlpatterns = [
     path('<int:pk>/delete/', TripDeleteView.as_view(), name='trip_delete'),
     # TripDay urls
     path('days/<int:pk>/', TripDayDetailView.as_view(), name='trip_day_detail'),
-    # path('days/<int:pk>/update/', TripDayUpdateView.as_view(), name='trip_day_update'),
+    path('days/<int:pk>/update/', TripDayUpdateView.as_view(), name='trip_day_update'),
     # Activity urls
-    # path('days/<int:pk>/add-activity/', ActivityCreateView.as_view(), name='activity_create'),
+    path('days/<int:pk>/add-activity/', ActivityCreateView.as_view(), name='activity_create'),
+    path('days/<int:pk>/update-activity/', ActivityUpdateView.as_view(), name='activity_update'),
 ]

@@ -3,7 +3,7 @@ import datetime
 import pytest
 
 from config.settings.base import AUTH_USER_MODEL
-from trip_planner.trips.models import Trip, TripDay
+from trip_planner.trips.models import Activity, Trip, TripDay
 
 
 # ==============================================================================
@@ -36,7 +36,7 @@ def trip(user: AUTH_USER_MODEL) -> Trip:
 @pytest.fixture
 def trip_day(user: AUTH_USER_MODEL) -> TripDay:
     """
-    Creates a trip day fixture for TripDay tests.
+    Creates a trip day fixture.
     """
     # Create Trip object
     start_date = datetime.date(year=2021, month=1, day=1)
@@ -47,6 +47,18 @@ def trip_day(user: AUTH_USER_MODEL) -> TripDay:
     # Get TripDay object
     trip_day = TripDay.objects.get(trip=trip)
     return trip_day
+
+
+@pytest.fixture
+def activity(trip_day: TripDay) -> Activity:
+    """
+    Creates an activity fixture for a trip day.
+    """
+    # Create Activity object
+    user = trip_day.user
+    day = trip_day
+    activity = Activity.objects.create(user=user, day=day, title='Activity test title', time=datetime.time(hour=11, minute=11))
+    return activity
 
 
 # ==============================================================================
@@ -75,7 +87,7 @@ def test_trip_str(trip: Trip) -> None:
     assert str(trip) == 'Trip test trip test title'
 
 
-def test_get_absolute_url(trip: Trip) -> None:
+def test_trip_get_absolute_url(trip: Trip) -> None:
     trip_pk = str(trip.pk)
 
     assert trip.get_absolute_url() == '/trips/' + trip_pk + '/'
@@ -155,8 +167,28 @@ def test_trip_day_str(trip_day: TripDay) -> None:
     assert str(trip_day) == 'Day 1'
 
 
-# TODO
-# def test_get_absolute_url(trip_day: TripDay) -> None:
-#     trip_pk = str(trip_day.trip)
-#     trip_day_pk = str(trip_day.pk)
-#     assert trip.get_absolute_url() == '/trips/' + trip_pk + '/days/' + trip_day_pk + '/'
+def test_trip_day_get_absolute_url(trip_day: TripDay) -> None:
+    trip_pk = str(trip_day.trip)
+    trip_day_pk = str(trip_day.pk)
+    assert trip_day.get_absolute_url() == '/trips/days/' + trip_day_pk + '/'
+
+
+# ==============================================================================
+# ACTIVITY TESTS
+# ==============================================================================
+
+
+def test_activity_exists(activity: Activity) -> None:
+    expected_title = 'Activity test title'
+
+    assert Activity.objects.filter(title=expected_title).count() == 1
+
+
+def test_activity_str(activity: Activity) -> None:
+    assert str(activity) == 'Activity test title'
+
+
+def test_activity_get_absolute_url(activity: Activity) -> None:
+    trip_day_pk = str(activity.day.pk)
+    
+    assert activity.get_absolute_url() == '/trips/days/' + trip_day_pk + '/'

@@ -5,7 +5,7 @@ import pytest
 from django.urls import reverse, resolve
 
 from config.settings.base import AUTH_USER_MODEL
-from trip_planner.trips.models import Trip, TripDay
+from trip_planner.trips.models import Activity, Trip, TripDay
 
 
 # ==============================================================================
@@ -52,6 +52,18 @@ def trip_day(user: AUTH_USER_MODEL) -> TripDay:
     # Get TripDay object
     trip_day = TripDay.objects.get(trip=trip)
     return trip_day
+
+
+@pytest.fixture
+def activity(trip_day: TripDay) -> Activity:
+    """
+    Creates an activity fixture for a trip day.
+    """
+    # Create Activity object
+    user = trip_day.user
+    day = trip_day
+    activity = Activity.objects.create(user=user, day=day, title='Activity test title', time=datetime.time(hour=11, minute=11))
+    return activity
 
 
 # ==============================================================================
@@ -122,13 +134,14 @@ def test_trip_create(client, user: AUTH_USER_MODEL) -> None:
 
     assert response.status_code == 302
     assert new_trip.notes == 'Test notes'
+    assert new_trip.user == user
 
 
 # Trip Update View tests
 
 
 def test_trip_update(client, trip: Trip) -> None:
-    trip_pk = {'pk': trip.id}
+    trip_pk = {'pk': trip.pk}
     context = {
         'title': 'Updated test trip',
         'start_date': trip.start_date,
@@ -146,7 +159,7 @@ def test_trip_update(client, trip: Trip) -> None:
 
 
 def test_trip_delete(client, trip: Trip) -> None:
-    trip_pk = {'pk': trip.id}
+    trip_pk = {'pk': trip.pk}
     response = client.post(reverse('trips:trip_delete', kwargs=trip_pk))
 
     assert response.status_code == 302
@@ -155,7 +168,7 @@ def test_trip_delete(client, trip: Trip) -> None:
 
 
 # ==============================================================================
-# TRIP VIEWS TESTS
+# TRIP DAY VIEWS TESTS
 # ==============================================================================
 
 # TripDay Detail View tests
@@ -182,3 +195,54 @@ def test_trip_day_detail_url_resolves_trip_day_detail_view(client, trip_day: Tri
     view = resolve('/trips/days/' + trip_day_pk + '/')
 
     assert view.func.__name__ == TripDayDetailView.as_view().__name__
+
+
+# TripDay Update View tests
+
+
+def test_trip_day_update(client, trip_day: TripDay) -> None:
+    trip_day_pk = {'pk': trip_day.pk}
+    context = {
+        'notes': 'These are updated notes.',
+    }
+    response = client.post(reverse('trips:trip_day_update', kwargs=trip_day_pk), data=context)
+    trip_day.refresh_from_db()
+
+    assert response.status_code == 302
+    assert trip_day.notes == 'These are updated notes.'
+
+
+# ==============================================================================
+# ACTIVITY TESTS
+# ==============================================================================
+
+# Activity Create View tests
+
+
+def test_activity_create(client, trip_day: TripDay) -> None:
+    trip_day_pk = {'pk': trip_day.pk}
+    context = {
+        'title': 'New test activity',
+        'time': datetime.time(hour=11, minute=11),
+    }
+    response = client.post(reverse('trips:activity_create', kwargs=trip_day_pk), data=context)
+    new_activity = Activity.objects.get(title='New test activity')
+
+    assert response.status_code == 302
+    assert new_activity.day == trip_day
+
+
+# TripDay Update View tests
+
+
+def test_activity_update(client, activity: Activity) -> None:  
+    activity_pk = {'pk': activity.pk}
+    context = {
+        'title': 'These are updated notes.',
+        "time": activity.time,
+    }
+    response = client.post(reverse('trips:activity_update', kwargs=activity_pk), data=context)
+    activity.refresh_from_db()
+
+    assert response.status_code == 302
+    assert activity.title == 'These are updated notes.'
