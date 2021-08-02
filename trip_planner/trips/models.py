@@ -64,7 +64,7 @@ class Trip(TimeStampedModel):
 
 
 class TripDay(TimeStampedModel):
-    trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name='trip_days')
     num = models.IntegerField(
         'day of the trip', help_text='This shows what day of the trip is this.', blank=True, null=True
     )
@@ -84,7 +84,7 @@ class TripDay(TimeStampedModel):
 # add Activity TODO
 # class Activity(TimeStampedModel):
 #     day = models.ForeignKey(TripDay, on_delete=models.CASCADE)
-#     title = models.CharField('Activity title', max_length=255, help_text='This is the title of your activity.')
+#     title = models.CharField('Activity title', max_length=50, help_text='This is the title of your activity.')
 #     description = models.TextField('Activity description', help_text='This is the description of the activity.', null=True, blank=True)
 #     time = models.TimeField('Activity time', help_text='This is the time of the activity.')
 

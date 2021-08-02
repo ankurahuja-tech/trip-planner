@@ -64,7 +64,7 @@ def test_trip_list_url_resolves_triplistview(client, user: AUTH_USER_MODEL) -> N
     assert view.func.__name__ == TripListView.as_view().__name__
 
 
-# Trip Detail View tests
+# Trip Detail View
 
 
 def test_trip_detail_url_dispatcher(client, user: AUTH_USER_MODEL, trip: Trip) -> None:

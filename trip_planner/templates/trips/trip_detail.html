@@ -24,8 +24,12 @@
     <h4>Trip notes:</h4>
     <p>{{ trip.notes }}</p>
 
-<a href="{% url 'trips:trip_update' trip.pk %}" class="btn btn-primary">Update details</a>
-<a href="{% url 'trips:trip_delete' trip.pk %}" class="btn btn-danger">Delete trip</a>
+    <a href="{% url 'trips:trip_update' trip.pk %}" class="btn btn-primary">Update details</a>
+    <a href="{% url 'trips:trip_delete' trip.pk %}" class="btn btn-danger">Delete trip</a>
 
+    <h4>Trip Days:</h4>
+    {% for trip_day in trip.trip_days.all %}
+        <p>{{ trip_day }}, {{ trip_day.date }}</p>
+    {% endfor %}
 
 {% endblock content %}
