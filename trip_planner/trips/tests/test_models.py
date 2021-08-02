@@ -92,9 +92,18 @@ def test_create_trip_days_on_trip_duration_extension(trip: Trip) -> None:
     trip_duration_factor = datetime.timedelta(days=1)
     trip.end_date += trip_duration_factor
     trip.start_date -= trip_duration_factor
-    trip.save(update_fields=['end_date', 'end_date'])
+    trip.save(update_fields=['start_date', 'end_date'])
 
     assert TripDay.objects.filter(trip=trip).count() == 6
+
+
+def test_delete_trip_days_on_trip_duration_reduction(trip: Trip) -> None:
+    trip_duration_factor = datetime.timedelta(days=1)
+    trip.start_date += trip_duration_factor
+    trip.end_date -= trip_duration_factor
+    trip.save(update_fields=['start_date', 'end_date'])
+
+    assert TripDay.objects.filter(trip=trip).count() == 2
 
 
 def test_dont_create_trip_days_duplicates_on_trip_update_if_notes_have_changed(trip: Trip) -> None:

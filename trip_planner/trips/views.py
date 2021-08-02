@@ -15,13 +15,13 @@ from .forms import TripCreateForm, TripUpdateForm
 class TripListView(LoginRequiredMixin, ListView):
     model = Trip
     template_name = 'trips/trip_list.html'
-    context_object_name = 'trip_list'  # this should also work on default as "Trip" is the model name
+    context_object_name = 'trip_list'
 
 
 class TripDetailView(LoginRequiredMixin, DetailView):
     model = Trip
     template_name = 'trips/trip_detail.html'
-    context_object_name = 'trip'  # this should also work on default as "Trip" is the model name
+    context_object_name = 'trip'
 
     def get_queryset(self, *args, **kwargs):
         qs = (
@@ -57,9 +57,11 @@ class TripDeleteView(LoginRequiredMixin, DeleteView):
 # TripDay Views
 
 
-class TripDayDetailView(DetailView):
-    pass
+class TripDayDetailView(LoginRequiredMixin, DetailView):
+    model = TripDay
+    template_name = 'trips/trip_day_detail.html'
+    context_object_name = 'trip_day'
 
 
-class TripDayUpdateView(UpdateView):
+class TripDayUpdateView(LoginRequiredMixin, UpdateView):
     pass

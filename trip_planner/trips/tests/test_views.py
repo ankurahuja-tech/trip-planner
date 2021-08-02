@@ -1,6 +1,6 @@
 import datetime
 
-from trip_planner.trips.views import TripListView, TripDetailView
+from trip_planner.trips.views import TripListView, TripDetailView, TripDayDetailView
 import pytest
 from django.urls import reverse, resolve
 
@@ -37,6 +37,23 @@ def trip(user: AUTH_USER_MODEL) -> Trip:
     return trip
 
 
+# consider using a mock trip to avoid accessing the db TODO
+@pytest.fixture
+def trip_day(user: AUTH_USER_MODEL) -> TripDay:
+    """
+    Creates a trip day fixture for TripDay tests.
+    """
+    # Create Trip object
+    start_date = datetime.date(year=2021, month=1, day=1)
+    end_date = start_date
+    user = user
+    trip = Trip.objects.create(user=user, title='TripDay test trip', start_date=start_date, end_date=end_date)
+
+    # Get TripDay object
+    trip_day = TripDay.objects.get(trip=trip)
+    return trip_day
+
+
 # ==============================================================================
 # TRIP VIEWS TESTS
 # ==============================================================================
@@ -58,7 +75,7 @@ def test_trip_list_url(client, user: AUTH_USER_MODEL) -> None:
     assert response.status_code == 200
 
 
-def test_trip_list_url_resolves_triplistview(client, user: AUTH_USER_MODEL) -> None:
+def test_trip_list_url_resolves_triplistview(client) -> None:
     view = resolve('/trips/')
 
     assert view.func.__name__ == TripListView.as_view().__name__
@@ -67,7 +84,7 @@ def test_trip_list_url_resolves_triplistview(client, user: AUTH_USER_MODEL) -> N
 # Trip Detail View
 
 
-def test_trip_detail_url_dispatcher(client, user: AUTH_USER_MODEL, trip: Trip) -> None:
+def test_trip_detail_url_dispatcher(client, trip: Trip) -> None:
     trip_pk = {'pk': str(trip.pk)}
     response = client.get(reverse("trips:trip_detail", kwargs=trip_pk))
     trip_detail_view_template_name = 'trips/trip_detail.html'
@@ -76,14 +93,14 @@ def test_trip_detail_url_dispatcher(client, user: AUTH_USER_MODEL, trip: Trip) -
     assert trip_detail_view_template_name in response.template_name
 
 
-def test_trip_detail_url(client, user: AUTH_USER_MODEL, trip: Trip) -> None:
+def test_trip_detail_url(client, trip: Trip) -> None:
     trip_pk = str(trip.pk)
     response = client.get('/trips/' + trip_pk + '/')
 
     assert response.status_code == 200
 
 
-def test_trip_detail_url_resolves_tripdetailview(client, user: AUTH_USER_MODEL, trip: Trip) -> None:
+def test_trip_detail_url_resolves_trip_detail_view(client, trip: Trip) -> None:
     trip_pk = str(trip.pk)
     view = resolve('/trips/' + trip_pk + '/')
 
@@ -135,3 +152,33 @@ def test_trip_delete(client, trip: Trip) -> None:
     assert response.status_code == 302
     with pytest.raises(Trip.DoesNotExist):
         assert Trip.objects.get(title='Test trip')
+
+
+# ==============================================================================
+# TRIP VIEWS TESTS
+# ==============================================================================
+
+# TripDay Detail View tests
+
+
+def test_trip_day_detail_url_dispatcher(client, trip_day: TripDay) -> None:
+    trip_day_pk = {'pk': str(trip_day.pk)}
+    response = client.get(reverse("trips:trip_day_detail", kwargs=trip_day_pk))
+    trip_day_detail_view_template_name = 'trips/trip_day_detail.html'
+
+    assert response.status_code == 200
+    assert trip_day_detail_view_template_name in response.template_name
+
+
+def test_trip_day_detail_url(client, trip_day: TripDay) -> None:
+    trip_day_pk = str(trip_day.pk)
+    response = client.get('/trips/days/' + trip_day_pk + '/')
+
+    assert response.status_code == 200
+
+
+def test_trip_day_detail_url_resolves_trip_day_detail_view(client, trip_day: TripDay) -> None:
+    trip_day_pk = str(trip_day.pk)
+    view = resolve('/trips/days/' + trip_day_pk + '/')
+
+    assert view.func.__name__ == TripDayDetailView.as_view().__name__

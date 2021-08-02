@@ -8,7 +8,7 @@ from .views import (
     TripUpdateView,
     TripDeleteView,
     # TripDay Views
-    # TripDayDetailView,
+    TripDayDetailView,
     # TripDayUpdateView,
     # Activity Views
     # ActivityCreateView,
@@ -23,8 +23,8 @@ urlpatterns = [
     path('<int:pk>/update/', TripUpdateView.as_view(), name='trip_update'),
     path('<int:pk>/delete/', TripDeleteView.as_view(), name='trip_delete'),
     # TripDay urls
-    # path('<int:pk>/day-<int:pk>/', TripDayDetailView.as_view(), name='trip_day_detail'),
-    # path('<int:pk>/day-<int:pk>/update/', TripDayUpdateView.as_view(), name='trip_day_update'),
+    path('days/<int:pk>/', TripDayDetailView.as_view(), name='trip_day_detail'),
+    # path('days/<int:pk>/update/', TripDayUpdateView.as_view(), name='trip_day_update'),
     # Activity urls
-    # path('<int:pk>/day-<int:pk>/add-activity/', ActivityCreateView.as_view(), name='activity_create'),
+    # path('days/<int:pk>/add-activity/', ActivityCreateView.as_view(), name='activity_create'),
 ]

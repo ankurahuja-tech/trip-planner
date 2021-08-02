@@ -34,25 +34,44 @@ class Trip(TimeStampedModel):
 
         # get list of dates for the Trip
         trip_dates = []
-        for day in range(trip_duration.days + 1):
-            trip_date = self.start_date + datetime.timedelta(days=day)
+        for date in range(trip_duration.days + 1):
+            trip_date = self.start_date + datetime.timedelta(days=date)
             trip_dates.append(trip_date)
 
         # create TripDay instance for each day of the Trip
         for trip_date in trip_dates:
-            TripDay.objects.get_or_create(trip=self, date=trip_date)
+            TripDay.objects.get_or_create(user=self.user, trip=self, date=trip_date)
 
     def update_trip_days_nums(self):
         """
         Update TripDay object's "num" field for each TripDay object a particular Trip.
         """
+        # get and order list of TripDays for the Trip
         trip_days = TripDay.objects.all().filter(trip=self).order_by('date')
+
+        # update TripDays "num" fields
         num_increment = 1
         for trip_day in trip_days:
             if trip_day.num != num_increment:
                 trip_day.num = num_increment
                 trip_day.save(update_fields=['num'])
             num_increment += 1
+
+    def delete_extra_trip_days(self):
+        """
+        Delete extra TripDay objects if there are more than Trip's duration.
+        """
+        # get list of dates in the Trip
+        trip_duration = (self.end_date - self.start_date).days
+        trip_dates = [self.start_date + datetime.timedelta(days=date) for date in range(trip_duration + 1)]
+
+        # get list of TripDays for the Trip
+        trip_days = TripDay.objects.all().filter(trip=self)
+
+        # delete TripDays that are not in Trip's list of dates
+        for trip_day in trip_days:
+            if trip_day.date not in trip_dates:
+                TripDay.objects.filter(id=trip_day.id).delete()
 
     def save(self, *args, **kwargs):
         """
@@ -61,9 +80,11 @@ class Trip(TimeStampedModel):
         super().save(*args, **kwargs)
         self.create_trip_days()
         self.update_trip_days_nums()
+        self.delete_extra_trip_days()
 
 
 class TripDay(TimeStampedModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name='trip_days')
     num = models.IntegerField(
         'day of the trip', help_text='This shows what day of the trip is this.', blank=True, null=True
@@ -76,13 +97,13 @@ class TripDay(TimeStampedModel):
     def __str__(self) -> str:
         return "Day " + str(self.num)
 
-    # TODO
-    # def get_absolute_url(self):
-    #     return reverse("trips:tripday_detail", kwargs={"pk": self.pk})
+    def get_absolute_url(self):
+        return reverse("trips:trip_day_detail", kwargs={"pk": self.pk})
 
 
 # add Activity TODO
 # class Activity(TimeStampedModel):
+#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 #     day = models.ForeignKey(TripDay, on_delete=models.CASCADE)
 #     title = models.CharField('Activity title', max_length=50, help_text='This is the title of your activity.')
 #     description = models.TextField('Activity description', help_text='This is the description of the activity.', null=True, blank=True)

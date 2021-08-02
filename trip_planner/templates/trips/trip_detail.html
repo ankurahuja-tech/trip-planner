@@ -29,7 +29,7 @@
 
     <h4>Trip Days:</h4>
     {% for trip_day in trip.trip_days.all %}
-        <p>{{ trip_day }}, {{ trip_day.date }}</p>
+        <p><a href="{% url 'trips:trip_day_detail' trip_day.pk %}">{{ trip_day }} - {{ trip_day.date }}</a></p>
     {% endfor %}
 
 {% endblock content %}
