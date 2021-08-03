@@ -1,71 +1,14 @@
 import datetime
+import pytest
 
 from trip_planner.trips.views import TripListView, TripDetailView, TripDayDetailView
-import pytest
 from django.urls import reverse, resolve
 
 from config.settings.base import AUTH_USER_MODEL
 from trip_planner.trips.models import Activity, Trip, TripDay
 
 
-# ==============================================================================
-# FIXTURES
-# ==============================================================================
-
-pytestmark = pytest.mark.django_db
-
-
-@pytest.fixture
-def user(client, django_user_model: AUTH_USER_MODEL) -> AUTH_USER_MODEL:
-    user = django_user_model.objects.create_user(username='john', password='testpass123')
-    client.force_login(user)
-    return user
-
-
-@pytest.fixture
-def trip(user: AUTH_USER_MODEL) -> Trip:
-    """
-    Creates test trip with 4 trip days fixture.
-    """
-    start_date = datetime.date(year=2021, month=7, day=29)
-    duration = datetime.timedelta(days=3)
-    end_date = start_date + duration
-    user = user
-    trip = Trip.objects.create(
-        user=user, title='Test trip', start_date=start_date, end_date=end_date, notes='Test notes'
-    )
-    return trip
-
-
-# consider using a mock trip to avoid accessing the db TODO
-@pytest.fixture
-def trip_day(user: AUTH_USER_MODEL) -> TripDay:
-    """
-    Creates a trip day fixture for TripDay tests.
-    """
-    # Create Trip object
-    start_date = datetime.date(year=2021, month=1, day=1)
-    end_date = start_date
-    user = user
-    trip = Trip.objects.create(user=user, title='TripDay test trip', start_date=start_date, end_date=end_date)
-
-    # Get TripDay object
-    trip_day = TripDay.objects.get(trip=trip)
-    return trip_day
-
-
-@pytest.fixture
-def activity(trip_day: TripDay) -> Activity:
-    """
-    Creates an activity fixture for a trip day.
-    """
-    # Create Activity object
-    user = trip_day.user
-    day = trip_day
-    activity = Activity.objects.create(
-        user=user, day=day, title='Activity test title', time=datetime.time(hour=11, minute=11)
-    )
-    return activity
+# pytestmark = pytest.mark.django_db
 
 
 # ==============================================================================
@@ -121,6 +64,13 @@ def test_trip_detail_url_resolves_trip_detail_view(client, trip: Trip) -> None:
     assert view.func.__name__ == TripDetailView.as_view().__name__
 
 
+def test_trip_detail_permission_restriction_wrong_user(client, trip: Trip, wrong_user: AUTH_USER_MODEL) -> None:
+    params = {'pk': str(trip.pk)}
+    response = client.get(reverse("trips:trip_detail", kwargs=params))
+
+    assert response.status_code == 403
+
+
 # Trip Create View tests
 
 
@@ -157,6 +107,13 @@ def test_trip_update(client, trip: Trip) -> None:
     assert trip.title == 'Updated test trip'
 
 
+def test_trip_update_permission_restriction_wrong_user(client, trip: Trip, wrong_user: AUTH_USER_MODEL) -> None:
+    params = {'pk': str(trip.pk)}
+    response = client.get(reverse("trips:trip_update", kwargs=params))
+
+    assert response.status_code == 403
+
+
 # Trip Delete View tests
 
 
@@ -167,6 +124,13 @@ def test_trip_delete(client, trip: Trip) -> None:
     assert response.status_code == 302
     with pytest.raises(Trip.DoesNotExist):
         assert Trip.objects.get(title='Test trip')
+
+
+def test_trip_delete_permission_restriction_wrong_user(client, trip: Trip, wrong_user: AUTH_USER_MODEL) -> None:
+    params = {'pk': str(trip.pk)}
+    response = client.get(reverse("trips:trip_delete", kwargs=params))
+
+    assert response.status_code == 403
 
 
 # ==============================================================================
@@ -199,6 +163,15 @@ def test_trip_day_detail_url_resolves_trip_day_detail_view(client, trip_day: Tri
     assert view.func.__name__ == TripDayDetailView.as_view().__name__
 
 
+def test_trip_day_detail_permission_restriction_wrong_user(
+    client, trip_day: TripDay, wrong_user: AUTH_USER_MODEL
+) -> None:
+    params = {'pk': str(trip_day.pk)}
+    response = client.get(reverse("trips:trip_day_detail", kwargs=params))
+
+    assert response.status_code == 403
+
+
 # TripDay Update View tests
 
 
@@ -212,6 +185,15 @@ def test_trip_day_update(client, trip_day: TripDay) -> None:
 
     assert response.status_code == 302
     assert trip_day.notes == 'These are updated notes.'
+
+
+def test_trip_day_update_permission_restriction_wrong_user(
+    client, trip_day: TripDay, wrong_user: AUTH_USER_MODEL
+) -> None:
+    params = {'pk': str(trip_day.pk)}
+    response = client.get(reverse("trips:trip_day_update", kwargs=params))
+
+    assert response.status_code == 403
 
 
 # ==============================================================================
@@ -234,6 +216,15 @@ def test_activity_create(client, trip_day: TripDay) -> None:
     assert new_activity.day == trip_day
 
 
+def test_activity_create_permission_restriction_wrong_user(
+    client, trip_day: TripDay, wrong_user: AUTH_USER_MODEL
+) -> None:
+    params = {'pk': str(trip_day.pk)}
+    response = client.get(reverse("trips:activity_create", kwargs=params))
+
+    assert response.status_code == 403
+
+
 # TripDay Update View tests
 
 
@@ -251,3 +242,15 @@ def test_activity_update(client, activity: Activity) -> None:
 
     assert response.status_code == 302
     assert activity.title == 'These are updated notes.'
+
+
+def test_activity_create_permission_restriction_wrong_user(
+    client, activity: Activity, wrong_user: AUTH_USER_MODEL
+) -> None:
+    params = {
+        'trip_day_pk': activity.day.pk,
+        'pk': activity.pk,
+    }
+    response = client.get(reverse("trips:activity_update", kwargs=params))
+
+    assert response.status_code == 403

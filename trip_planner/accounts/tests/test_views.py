@@ -1,3 +1,4 @@
+from config.settings.base import AUTH_USER_MODEL
 import pytest
 from django.urls import reverse, resolve
 
@@ -13,29 +14,30 @@ pytestmark = pytest.mark.django_db
 # ==============================================================================
 
 
-def test_signup_url_status_code_200(client):
+def test_signup_url_status_code_200(client) -> None:
     response = client.get('/accounts/signup/')
     assert response.status_code == 200
 
 
-def test_signup_url_dispatcher_status_code_200(client):
+def test_signup_url_dispatcher_status_code_200(client) -> None:
     response = client.get(reverse('account_signup'))
     assert response.status_code == 200
 
 
 # TODO: how to test that correct form creates a user?
-# def test_signup_form(client, django_user_model):
-#     credentials = {
-#         "username": "janek",
-#         "email": "janek@email.com",
+# def test_signup_form(client, django_user_model: AUTH_USER_MODEL) -> None:
+#         credentials = {
+#         "username": "john",
+#         "email": "john@email.com",
 #         "password": "TesterowyPass#469",
-#         "password2": "TesterowyPass"
+#         "password2": "TesterowyPass#469",
 #         }
-#     response = client.post(reverse('account_signup'), data=credentials, follow=True)
-#     assert response.status_code == 200
 
-#     users = django_user_model.objects.all()
-#     assert users.count() == 1
+#         response = client.post(reverse('account_signup'), data=credentials)
+#         assert response.status_code == 200
+
+#         users = django_user_model.objects.all()
+#         assert users.count() == 1
 
 
 # ==============================================================================
@@ -43,12 +45,12 @@ def test_signup_url_dispatcher_status_code_200(client):
 # ==============================================================================
 
 
-def test_login_url_status_code_200(client):
+def test_login_url_status_code_200(client) -> None:
     response = client.get('/accounts/login/')
     assert response.status_code == 200
 
 
-def test_login_url_dispatcher_status_code_200(client):
+def test_login_url_dispatcher_status_code_200(client) -> None:
     response = client.get(reverse('account_login'))
     assert response.status_code == 200
 
