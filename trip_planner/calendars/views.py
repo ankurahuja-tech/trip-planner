@@ -1,9 +1,27 @@
 from django.shortcuts import render
-from django.views.generic.base import TemplateView
+from django.db.models import Prefetch
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from trip_planner.core.mixins import UserPassesOwnerTestMixin
+
+from django.views.generic.list import ListView
+from trip_planner.trips.models import Trip, TripDay, Activity
 
 
-class CalendarView(TemplateView):
+class CalendarView(LoginRequiredMixin, ListView):
     template_name = 'calendars/calendar.html'
+    model = Trip
 
-
-# i think CalendarView needs to be ListView with models: Trip, Day, Activity. TODO
+    def get_queryset(self, *args, **kwargs):
+        """
+        Before returning queryset, prefetches Trip Days and Activities for user's Trips.
+        """
+        prefetched_data = Prefetch(
+            'trip_days',
+            queryset=TripDay.objects.order_by('date').prefetch_related(
+                Prefetch('activities', queryset=Activity.objects.order_by('time'), to_attr="prefetched_activities")
+            ),
+            to_attr="prefetched_trip_days",
+        )
+        qs = super().get_queryset(*args, **kwargs).filter(user=self.request.user).prefetch_related(prefetched_data)
+        return qs
