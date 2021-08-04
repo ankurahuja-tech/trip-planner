@@ -1,11 +1,13 @@
 from django.shortcuts import render
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.urls.base import reverse
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.db.models import Prefetch
+
+from trip_planner.core.mixins import UserPassesOwnerTestMixin
 
 from .models import Trip, TripDay, Activity
 from .forms import TripCreateForm, TripDayUpdateForm, TripUpdateForm, ActivityCreateForm, ActivityUpdateForm
@@ -25,16 +27,10 @@ class TripListView(LoginRequiredMixin, ListView):
         return context
 
 
-class TripDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+class TripDetailView(LoginRequiredMixin, UserPassesOwnerTestMixin, DetailView):
     model = Trip
     template_name = 'trips/trip_detail.html'
     context_object_name = 'trip'
-
-    def test_func(self) -> bool:
-        """
-        Check if user is the owner of the requested data.
-        """
-        return self.request.user == Trip.objects.get(pk=self.kwargs['pk']).user
 
     def get_queryset(self, *args, **kwargs):
         """
@@ -61,34 +57,22 @@ class TripCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class TripUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class TripUpdateView(LoginRequiredMixin, UserPassesOwnerTestMixin, UpdateView):
     model = Trip
     template_name = 'trips/trip_update_form.html'
     form_class = TripUpdateForm
 
-    def test_func(self) -> bool:
-        """
-        Check if user is the owner of the requested data.
-        """
-        return self.request.user == Trip.objects.get(pk=self.kwargs['pk']).user
 
-
-class TripDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class TripDeleteView(LoginRequiredMixin, UserPassesOwnerTestMixin, DeleteView):
     model = Trip
     template_name = 'trips/trip_delete.html'
     success_url = reverse_lazy('trips:trip_list')
-
-    def test_func(self) -> bool:
-        """
-        Check if user is the owner of the requested data.
-        """
-        return self.request.user == Trip.objects.get(pk=self.kwargs['pk']).user
 
 
 # TripDay Views
 
 
-class TripDayDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+class TripDayDetailView(LoginRequiredMixin, UserPassesOwnerTestMixin, DetailView):
     model = TripDay
     template_name = 'trips/trip_day_detail.html'
     context_object_name = 'trip_day'
@@ -103,46 +87,29 @@ class TripDayDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
         qs = super().get_queryset(*args, **kwargs).prefetch_related(prefetched_data)
         return qs
 
-    def test_func(self) -> bool:
-        """
-        Check if user is the owner of the requested data.
-        """
-        return self.request.user == TripDay.objects.get(pk=self.kwargs['pk']).user
 
-
-class TripDayUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class TripDayUpdateView(LoginRequiredMixin, UserPassesOwnerTestMixin, UpdateView):
     model = TripDay
     template_name = 'trips/trip_day_update_form.html'
     form_class = TripDayUpdateForm
-
-    def test_func(self) -> bool:
-        """
-        Check if user is the owner of the requested data.
-        """
-        return self.request.user == TripDay.objects.get(pk=self.kwargs['pk']).user
 
 
 # Activity Views
 
 
-class ActivityCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class ActivityCreateView(LoginRequiredMixin, UserPassesOwnerTestMixin, CreateView):
     model = Activity
     template_name = 'trips/activity_form.html'
     form_class = ActivityCreateForm
+    owner_mixin_model = TripDay  # custom field for trip_planner.core.mixins.UserPassesOwnerTestMixin
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.instance.day = TripDay.objects.get(pk=self.kwargs['pk'])
         return super().form_valid(form)
 
-    def test_func(self) -> bool:
-        """
-        Check if user is the owner of the requested data.
-        """
-        return self.request.user == TripDay.objects.get(pk=self.kwargs['pk']).user
 
-
-class ActivityUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class ActivityUpdateView(LoginRequiredMixin, UserPassesOwnerTestMixin, UpdateView):
     model = Activity
     template_name = 'trips/activity_update_form.html'
     form_class = ActivityUpdateForm
@@ -156,9 +123,3 @@ class ActivityUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         trip_day_pk = self.kwargs['trip_day_pk']
         qs = super().get_queryset(*args, **kwargs).filter(day=trip_day_pk)
         return qs
-
-    def test_func(self) -> bool:
-        """
-        Check if user is the owner of the requested data.
-        """
-        return self.request.user == Activity.objects.get(pk=self.kwargs['pk']).user
