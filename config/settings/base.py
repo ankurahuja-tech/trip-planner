@@ -38,6 +38,7 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    # 'django.contrib.gis',
 ]
 
 THIRD_PARTY_APPS = [
@@ -54,8 +55,9 @@ LOCAL_APPS = [
     'trip_planner.core.apps.CoreConfig',
     'trip_planner.accounts.apps.AccountsConfig',
     'trip_planner.pages.apps.PagesConfig',
-    'trip_planner.calendars.apps.CalendarsConfig',
     'trip_planner.trips.apps.TripsConfig',
+    'trip_planner.calendars.apps.CalendarsConfig',
+    'trip_planner.maps.apps.MapsConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -101,6 +103,7 @@ TEMPLATES = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
+        # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': env('DB_NAME'),
         'USER': env('DB_USER'),
         'PASSWORD': env('DB_PASSWORD'),
