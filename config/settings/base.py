@@ -38,7 +38,7 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    # 'django.contrib.gis',
+    'django.contrib.gis',
 ]
 
 THIRD_PARTY_APPS = [
@@ -49,6 +49,8 @@ THIRD_PARTY_APPS = [
     # django-crispy-forms with crispy_bootstrap5
     'crispy_forms',
     'crispy_bootstrap5',
+    # django-leaflet
+    'leaflet',
 ]
 
 LOCAL_APPS = [
@@ -102,8 +104,7 @@ TEMPLATES = [
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': env('DB_NAME'),
         'USER': env('DB_USER'),
         'PASSWORD': env('DB_PASSWORD'),
@@ -185,8 +186,16 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-## django-crispy-forms with crispy_bootstrap5
+# django-crispy-forms with crispy_bootstrap5
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# django-leaflet
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (54.372158, 18.638306),
+    'MIN_ZOOM': 2,
+    # 'DEFAULT_ZOOM': 6,
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+{% load leaflet_tags %}
+
+{% block title %}
+    Map | Trip Planner
+{% endblock title %}
+
+
+{% block stylesheets %}
+
+    {{ block.super }}
+
+    {% leaflet_js %}
+    {% leaflet_css %}
+
+    <!--==================== Leaflet Custom CSS ====================-->
+    <link rel="stylesheet" href={% static 'css/leaflet-main.css' %}>
+
+{% endblock stylesheets %}
+
+
+{% block header %}
+    Map
+{% endblock header %}
+
+
+{% block description %}
+    Map view.
+{% endblock description %}
+
+
+{% block content %}
+
+    {{ block.super }}
+    
+    {% leaflet_map "main_map" %}
+
+{% endblock content %}
+
+
+{% block scripts %}
+    
+    {{ block.super }}
+
+{% endblock scripts %}
