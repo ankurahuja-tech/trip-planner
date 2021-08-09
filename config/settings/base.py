@@ -62,7 +62,7 @@ LOCAL_APPS = [
     'trip_planner.pages.apps.PagesConfig',
     'trip_planner.trips.apps.TripsConfig',
     'trip_planner.calendars.apps.CalendarsConfig',
-    'trip_planner.maps.apps.MapsConfig',
+    'trip_planner.markers.apps.MarkersConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

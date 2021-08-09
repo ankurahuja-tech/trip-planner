@@ -13,7 +13,7 @@ from trip_planner.trips.models import Trip
 
 class MarkerListView(LoginRequiredMixin, TemplateView):
 
-    template_name = 'maps/marker_list.html'
+    template_name = 'markers/marker_list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -24,7 +24,7 @@ class MarkerListView(LoginRequiredMixin, TemplateView):
 class MarkerCreateView(LoginRequiredMixin, CreateView):
     
     model = Marker
-    template_name = 'maps/marker_form.html'
+    template_name = 'markers/marker_form.html'
     form_class = MarkerCreateForm
 
     def form_valid(self, form):

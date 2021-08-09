@@ -42,7 +42,7 @@
 
     <script type="text/javascript">
         function get_markers(map, options){
-        let dataset = new L.GeoJSON.AJAX("{% url 'maps:api_trip_markers' trip_pk %}", {
+        let dataset = new L.GeoJSON.AJAX("{% url 'markers:api_trip_markers' trip_pk %}", {
         onEachFeature: function(feature, layer) {
         layer.bindPopup(feature.properties.name)
         }
@@ -51,7 +51,7 @@
         }
     </script>
 
-    <a href="{% url 'maps:marker_create' trip_pk %}" class="btn btn-primary">Add location marker</a>
+    <a href="{% url 'markers:marker_create' trip_pk %}" class="btn btn-primary">Add location marker</a>
 
 {% endblock content %}
 

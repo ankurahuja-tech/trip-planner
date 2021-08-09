@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class MapsConfig(AppConfig):
+class MarkersConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'trip_planner.maps'
+    name = 'trip_planner.markers'
