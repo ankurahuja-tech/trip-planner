@@ -49,6 +49,9 @@ THIRD_PARTY_APPS = [
     # django-crispy-forms with crispy_bootstrap5
     'crispy_forms',
     'crispy_bootstrap5',
+    # djangorestframework
+    'rest_framework',
+    'rest_framework_gis', # TODO pytest gives warning about this
     # django-leaflet
     'leaflet',
 ]
@@ -196,6 +199,9 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (54.372158, 18.638306),
+    'DEFAULT_ZOOM': 6,
     'MIN_ZOOM': 2,
-    # 'DEFAULT_ZOOM': 6,
+    'MAX_ZOOM': 12,
+    'DEFAULT_PRECISION': 6,
+    "SCALE": 'both',
 }

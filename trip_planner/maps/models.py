@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.gis.db import models as gis_models
 
 from django.conf import settings
+from django.urls.base import reverse
 
 from trip_planner.trips.models import Trip
 
@@ -10,14 +11,18 @@ from trip_planner.trips.models import Trip
 
 class Marker(gis_models.Model):
     """
-    A map marker with title and location.
+    A map marker with name and location.
     """
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
-    title = models.CharField('Marker title', max_length=100, help_text='This is the title of your map marker.')
-    point_location = gis_models.PointField()
+    name = models.CharField('Marker name', max_length=100, help_text='This is the name of your map marker.')
+    geom = gis_models.GeometryField('Marker', help_text='This is the location point or area of your map marker.')
 
     def __str__(self) -> str:
-        """Return string representation."""
-        return self.title
+        return self.name
+
+    def get_absolute_url(self):
+        # return reverse("trips:trip_detail", kwargs={"pk": self.trip.pk})
+        return reverse("maps:marker_list", kwargs={"trip_pk": self.trip.pk})
+ 

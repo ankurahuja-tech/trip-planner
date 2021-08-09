@@ -236,6 +236,17 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "django-filter"
+version = "2.4.0"
+description = "Django-filter is a reusable Django application for allowing users to filter querysets dynamically."
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[package.dependencies]
+Django = ">=2.2"
+
+[[package]]
 name = "django-leaflet"
 version = "0.28.1"
 description = "Use Leaflet in your django projects"
@@ -248,6 +259,28 @@ Django = "*"
 
 [package.extras]
 docs = ["sphinx", "sphinx-autobuild"]
+
+[[package]]
+name = "djangorestframework"
+version = "3.12.4"
+description = "Web APIs for Django, made easy."
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[package.dependencies]
+django = ">=2.2"
+
+[[package]]
+name = "djangorestframework-gis"
+version = "0.17"
+description = "Geographic add-ons for Django Rest Framework"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+djangorestframework = "*"
 
 [[package]]
 name = "flake8"
@@ -614,7 +647,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "4da91e015d0284d16043561ddedf1204ae5e61e4a2a5bff8b0abb22ff2ea0e67"
+content-hash = "245c9731ffdc492cabb710775297e6b3fff1693445114df9620ec11ef2114375"
 
 [metadata.files]
 appdirs = [
@@ -799,9 +832,21 @@ django-environ = [
     {file = "django-environ-0.4.5.tar.gz", hash = "sha256:6c9d87660142608f63ec7d5ce5564c49b603ea8ff25da595fd6098f6dc82afde"},
     {file = "django_environ-0.4.5-py2.py3-none-any.whl", hash = "sha256:c57b3c11ec1f319d9474e3e5a79134f40174b17c7cc024bbb2fad84646b120c4"},
 ]
+django-filter = [
+    {file = "django-filter-2.4.0.tar.gz", hash = "sha256:84e9d5bb93f237e451db814ed422a3a625751cbc9968b484ecc74964a8696b06"},
+    {file = "django_filter-2.4.0-py3-none-any.whl", hash = "sha256:e00d32cebdb3d54273c48f4f878f898dced8d5dfaad009438fe61ebdf535ace1"},
+]
 django-leaflet = [
     {file = "django-leaflet-0.28.1.tar.gz", hash = "sha256:0fff2322c0cc1d008e3a18f067df736a937566a1ee1a6ce2e8ad298c4c713bb8"},
     {file = "django_leaflet-0.28.1-py3-none-any.whl", hash = "sha256:02c6b8d7b941cb6ee0b944f33afb668b54495a6e24b57c8ba15daa779df26455"},
+]
+djangorestframework = [
+    {file = "djangorestframework-3.12.4-py3-none-any.whl", hash = "sha256:6d1d59f623a5ad0509fe0d6bfe93cbdfe17b8116ebc8eda86d45f6e16e819aaf"},
+    {file = "djangorestframework-3.12.4.tar.gz", hash = "sha256:f747949a8ddac876e879190df194b925c177cdeb725a099db1460872f7c0a7f2"},
+]
+djangorestframework-gis = [
+    {file = "djangorestframework-gis-0.17.tar.gz", hash = "sha256:d3b6aa6beef32f75811f815bda3bc7e9ea5d2f0306f9741cad5f3820d3973be7"},
+    {file = "djangorestframework_gis-0.17-py2.py3-none-any.whl", hash = "sha256:5be17e27cf2be33ac6119e6d2206d3d81183c62d03aaa9b814ce95a82256614f"},
 ]
 flake8 = [
     {file = "flake8-3.9.2-py2.py3-none-any.whl", hash = "sha256:bf8fd333346d844f616e8d47905ef3a3384edae6b4e9beb0c5101e25e3110907"},

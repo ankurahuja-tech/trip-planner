@@ -10,7 +10,7 @@ urlpatterns = [
     path('', include('trip_planner.pages.urls', namespace='pages')),
     path('trips/', include('trip_planner.trips.urls', namespace='trips')),
     path('calendar/', include('trip_planner.calendars.urls', namespace='calendars')),
-    path('map/', include('trip_planner.maps.urls', namespace='maps')),
+    path('maps/', include('trip_planner.maps.urls', namespace='maps')),
 ]
 
 # Django debug_toolbar

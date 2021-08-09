@@ -18,6 +18,9 @@
     <!--==================== Leaflet Custom CSS ====================-->
     <link rel="stylesheet" href={% static 'css/leaflet-main.css' %}>
 
+    <!--==================== Leaflet-Ajax JS ====================-->
+    <script src="{% static 'vendor/leaflet-ajax/leaflet.ajax.js' %}" charset="utf-8"></script>
+
 {% endblock stylesheets %}
 
 
@@ -35,7 +38,20 @@
 
     {{ block.super }}
     
-    {% leaflet_map "main_map" %}
+    {% leaflet_map "main_map" callback="window.get_markers" %}
+
+    <script type="text/javascript">
+        function get_markers(map, options){
+        let dataset = new L.GeoJSON.AJAX("{% url 'maps:api_trip_markers' trip_pk %}", {
+        onEachFeature: function(feature, layer) {
+        layer.bindPopup(feature.properties.name)
+        }
+        });
+        dataset.addTo(map)
+        }
+    </script>
+
+    <a href="{% url 'maps:marker_create' trip_pk %}" class="btn btn-primary">Add location marker</a>
 
 {% endblock content %}
 

@@ -35,4 +35,6 @@
         {% endfor %}
     {% endfor %}
 
+    <a href="{% url 'maps:marker_list' trip.pk %}" class="btn btn-primary">See Trip Map</a>
+
 {% endblock content %}
