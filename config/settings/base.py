@@ -51,7 +51,7 @@ THIRD_PARTY_APPS = [
     'crispy_bootstrap5',
     # djangorestframework
     'rest_framework',
-    'rest_framework_gis', # TODO pytest gives warning about this
+    'rest_framework_gis',  # TODO pytest gives warning about this
     # django-leaflet
     'leaflet',
 ]

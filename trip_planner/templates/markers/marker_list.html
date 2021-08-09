@@ -44,13 +44,14 @@
         function get_markers(map, options){
         let dataset = new L.GeoJSON.AJAX("{% url 'markers:api_trip_markers' trip_pk %}", {
         onEachFeature: function(feature, layer) {
-        layer.bindPopup(feature.properties.name)
+        layer.bindPopup('<h6>'+feature.properties.name+'</h6><a href={% url "pages:home" %}'+'markers/trips/{{ trip_pk }}/update/'+feature.id+'>Update</a><span> | </span><a href={% url "pages:home" %}'+'markers/trips/{{ trip_pk }}/delete/'+feature.id+'>Delete</a>')
         }
         });
         dataset.addTo(map)
         }
     </script>
 
+    <br>
     <a href="{% url 'markers:marker_create' trip_pk %}" class="btn btn-primary">Add location marker</a>
 
 {% endblock content %}

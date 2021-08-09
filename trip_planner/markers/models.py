@@ -25,4 +25,3 @@ class Marker(gis_models.Model):
     def get_absolute_url(self):
         # return reverse("trips:trip_detail", kwargs={"pk": self.trip.pk})
         return reverse("maps:marker_list", kwargs={"trip_pk": self.trip.pk})
- 

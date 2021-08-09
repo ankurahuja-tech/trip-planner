@@ -9,7 +9,7 @@ from trip_planner.calendars.views import CalendarView
 # ==============================================================================
 
 
-def test_calendar_url_dispatcher(client, user: AUTH_USER_MODEL)-> None:
+def test_calendar_url_dispatcher(client, user: AUTH_USER_MODEL) -> None:
     response = client.get(reverse('calendars:calendar'))
     calendar_view_template_name = 'calendars/calendar.html'
 

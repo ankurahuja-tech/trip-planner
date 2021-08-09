@@ -8,6 +8,11 @@ class MarkerSerializer(gis_serializers.GeoFeatureModelSerializer):
 
     class Meta:
 
-        fields = ("id", "user", "trip", "name", )
+        fields = (
+            "id",
+            "user",
+            "trip",
+            "name",
+        )
         geo_field = "geom"
         model = Marker

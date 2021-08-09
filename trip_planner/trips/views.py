@@ -101,7 +101,7 @@ class ActivityCreateView(LoginRequiredMixin, UserPassesOwnerTestMixin, CreateVie
     model = Activity
     template_name = 'trips/activity_form.html'
     form_class = ActivityCreateForm
-    owner_mixin_model = TripDay  # custom field for trip_planner.core.mixins.UserPassesOwnerTestMixin
+    owner_mixin_model = TripDay  # custom field for UserPassesOwnerTestMixin
 
     def form_valid(self, form):
         form.instance.user = self.request.user
