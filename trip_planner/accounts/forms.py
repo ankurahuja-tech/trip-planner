@@ -3,13 +3,14 @@ from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
 CustomUser = get_user_model()
 
+
 # TODO: are we using this form now that we have django-allauth?
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = (
-            'email',
-            'username',
+            "email",
+            "username",
         )
 
 
@@ -17,6 +18,6 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
         fields = (
-            'email',
-            'username',
+            "email",
+            "username",
         )

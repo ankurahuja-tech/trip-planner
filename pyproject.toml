@@ -24,12 +24,13 @@ django-leaflet = "^0.28.1"
 djangorestframework = "^3.12.4"
 djangorestframework-gis = "^0.17"
 django-filter = "^2.4.0"
+isort = "^5.9.3"
+flake8-isort = "^4.0.0"
 
 [tool.poetry.dev-dependencies]
 
 [tool.black]
 line-length = 119
-skip-string-normalization = true
 exclude = '''
   /(
       \.eggs
@@ -45,6 +46,11 @@ exclude = '''
     | migrations
   )/
 '''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -1,7 +1,5 @@
-from config.settings.base import AUTH_USER_MODEL
 import pytest
-from django.urls import reverse, resolve
-
+from django.urls import reverse
 
 # ==============================================================================
 # FIXTURES
@@ -15,12 +13,12 @@ pytestmark = pytest.mark.django_db
 
 
 def test_signup_url_status_code_200(client) -> None:
-    response = client.get('/accounts/signup/')
+    response = client.get("/accounts/signup/")
     assert response.status_code == 200
 
 
 def test_signup_url_dispatcher_status_code_200(client) -> None:
-    response = client.get(reverse('account_signup'))
+    response = client.get(reverse("account_signup"))
     assert response.status_code == 200
 
 
@@ -46,12 +44,12 @@ def test_signup_url_dispatcher_status_code_200(client) -> None:
 
 
 def test_login_url_status_code_200(client) -> None:
-    response = client.get('/accounts/login/')
+    response = client.get("/accounts/login/")
     assert response.status_code == 200
 
 
 def test_login_url_dispatcher_status_code_200(client) -> None:
-    response = client.get(reverse('account_login'))
+    response = client.get(reverse("account_login"))
     assert response.status_code == 200
 
 

@@ -9,10 +9,10 @@ from trip_planner.core.models import TimeStampedModel
 
 class Trip(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title = models.CharField('Trip title', max_length=100, help_text='This is the title of your trip.')
-    start_date = models.DateField('Trip start date', help_text='This is the start date of your trip.')
-    end_date = models.DateField('Trip end date', help_text='This is the end date of your trip.')
-    notes = models.TextField('Trip notes', help_text='These are your notes regarding the trip.', blank=True, null=True)
+    title = models.CharField("Trip title", max_length=100, help_text="This is the title of your trip.")
+    start_date = models.DateField("Trip start date", help_text="This is the start date of your trip.")
+    end_date = models.DateField("Trip end date", help_text="This is the end date of your trip.")
+    notes = models.TextField("Trip notes", help_text="These are your notes regarding the trip.", blank=True, null=True)
     # add locations for the trip when the map app is up TODO
     # location =
     # add photos TODO
@@ -47,14 +47,14 @@ class Trip(TimeStampedModel):
         Update TripDay object's "num" field for each TripDay object a particular Trip.
         """
         # get and order list of TripDays for the Trip
-        trip_days = TripDay.objects.all().filter(trip=self).order_by('date')
+        trip_days = TripDay.objects.all().filter(trip=self).order_by("date")
 
         # update TripDays "num" fields
         num_increment = 1
         for trip_day in trip_days:
             if trip_day.num != num_increment:
                 trip_day.num = num_increment
-                trip_day.save(update_fields=['num'])
+                trip_day.save(update_fields=["num"])
             num_increment += 1
 
     def delete_extra_trip_days(self):
@@ -85,13 +85,13 @@ class Trip(TimeStampedModel):
 
 class TripDay(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name='trip_days')
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name="trip_days")
     num = models.IntegerField(
-        'day of the trip', help_text='This shows what day of the trip is this.', blank=True, null=True
+        "day of the trip", help_text="This shows what day of the trip is this.", blank=True, null=True
     )
-    date = models.DateField('date', help_text='This is a date within the trip.')
+    date = models.DateField("date", help_text="This is a date within the trip.")
     notes = models.TextField(
-        'Day notes', help_text='These are your notes for the day of the trip.', blank=True, null=True
+        "Day notes", help_text="These are your notes for the day of the trip.", blank=True, null=True
     )
 
     def __str__(self) -> str:
@@ -103,10 +103,10 @@ class TripDay(TimeStampedModel):
 
 class Activity(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    day = models.ForeignKey(TripDay, on_delete=models.CASCADE, related_name='activities')
-    title = models.CharField('Activity title', max_length=50, help_text='This is the title of your activity.')
+    day = models.ForeignKey(TripDay, on_delete=models.CASCADE, related_name="activities")
+    title = models.CharField("Activity title", max_length=50, help_text="This is the title of your activity.")
     # description = models.TextField('Activity description', help_text='This is the description of the activity.', null=True, blank=True)
-    time = models.TimeField('Activity time', help_text='This is the time of the activity.')
+    time = models.TimeField("Activity time", help_text="This is the time of the activity.")
 
     def __str__(self) -> str:
         return self.title

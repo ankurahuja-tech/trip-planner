@@ -1,13 +1,12 @@
 import datetime
-import pytest
 
-from trip_planner.markers.views import MarkerListView
-from trip_planner.trips.models import Trip
-from django.urls import reverse, resolve
+import pytest
+from django.urls import resolve, reverse
 
 from config.settings.base import AUTH_USER_MODEL
 from trip_planner.markers.models import Marker
-
+from trip_planner.markers.views import MarkerListView
+from trip_planner.trips.models import Trip
 
 # ==============================================================================
 # FIXTURES

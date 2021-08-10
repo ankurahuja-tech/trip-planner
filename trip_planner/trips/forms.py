@@ -1,7 +1,6 @@
 from django import forms
 
-from .models import Trip, TripDay, Activity
-
+from .models import Activity, Trip, TripDay
 
 # Custom Widgets
 
@@ -12,7 +11,7 @@ class CustomDateInput(forms.DateInput):
     Creates a custom widget that changes DateField input to HTML5 "date" field.
     """
 
-    input_type = 'date'
+    input_type = "date"
 
 
 class CustomTimeInput(forms.DateInput):
@@ -20,7 +19,7 @@ class CustomTimeInput(forms.DateInput):
     Creates a custom widget that changes TimeField input to HTML5 "time" field.
     """
 
-    input_type = 'time'
+    input_type = "time"
 
 
 # Trip Forms
@@ -36,8 +35,8 @@ class TripCreateForm(forms.ModelForm):
             "notes",
         )
         widgets = {
-            'start_date': CustomDateInput(),
-            'end_date': CustomDateInput(),
+            "start_date": CustomDateInput(),
+            "end_date": CustomDateInput(),
         }
 
 
@@ -51,8 +50,8 @@ class TripUpdateForm(forms.ModelForm):
             "notes",
         )
         widgets = {
-            'start_date': CustomDateInput(),
-            'end_date': CustomDateInput(),
+            "start_date": CustomDateInput(),
+            "end_date": CustomDateInput(),
         }
 
 
@@ -76,7 +75,7 @@ class ActivityCreateForm(forms.ModelForm):
             "time",
         )
         widgets = {
-            'time': CustomTimeInput(),
+            "time": CustomTimeInput(),
         }
 
 
@@ -88,5 +87,5 @@ class ActivityUpdateForm(forms.ModelForm):
             "time",
         )
         widgets = {
-            'time': CustomTimeInput(),
+            "time": CustomTimeInput(),
         }

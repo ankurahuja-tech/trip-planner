@@ -1,15 +1,12 @@
-from django.shortcuts import render
-from django.db.models import Prefetch
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-from trip_planner.core.mixins import UserPassesOwnerTestMixin
-
+from django.db.models import Prefetch
 from django.views.generic.list import ListView
-from trip_planner.trips.models import Trip, TripDay, Activity
+
+from trip_planner.trips.models import Activity, Trip, TripDay
 
 
 class CalendarView(LoginRequiredMixin, ListView):
-    template_name = 'calendars/calendar.html'
+    template_name = "calendars/calendar.html"
     model = Trip
 
     def get_queryset(self, *args, **kwargs):
@@ -17,9 +14,9 @@ class CalendarView(LoginRequiredMixin, ListView):
         Before returning queryset, prefetches Trip Days and Activities for user's Trips.
         """
         prefetched_data = Prefetch(
-            'trip_days',
-            queryset=TripDay.objects.order_by('date').prefetch_related(
-                Prefetch('activities', queryset=Activity.objects.order_by('time'), to_attr="prefetched_activities")
+            "trip_days",
+            queryset=TripDay.objects.order_by("date").prefetch_related(
+                Prefetch("activities", queryset=Activity.objects.order_by("time"), to_attr="prefetched_activities")
             ),
             to_attr="prefetched_trip_days",
         )

@@ -13,5 +13,5 @@ class MarkerViewSet(viewsets.ReadOnlyModelViewSet):
         """
         Filters queryset by user and trip.
         """
-        qs = super().get_queryset(*args, **kwargs).filter(user=self.request.user).filter(trip=self.kwargs['trip_pk'])
+        qs = super().get_queryset(*args, **kwargs).filter(user=self.request.user).filter(trip=self.kwargs["trip_pk"])
         return qs
