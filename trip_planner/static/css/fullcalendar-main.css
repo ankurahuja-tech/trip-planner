@@ -1,0 +1,35 @@
+/*==================== FULLCALENDAR ====================*/
+
+.fullcalendar__outer-container {
+    background: linear-gradient(var(--clr-bg-image-yellow-light), var(--clr-bg-image-orange-light));
+    border-radius: .5rem;
+    max-width: 1600px;
+    width: 100%;
+    margin: auto;
+}
+
+#calendar a {
+    color: black;
+    text-decoration: none;
+}
+
+
+/*==================== MEDIA QUERIES ====================*/
+
+@media (max-width: 991px) {
+    #calendar {
+        font-size: 80%;
+    }
+}
+
+@media (max-width: 767px) {
+    #calendar {
+        font-size: 60%;
+    }
+}
+
+@media (max-width: 419px) {
+    #calendar {
+        font-size: 50%;
+    }
+}

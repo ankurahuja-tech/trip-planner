@@ -15,6 +15,7 @@
         right: 'dayGridMonth,timeGridDay'
       },
       initialView: 'dayGridMonth',
+      aspectRatio: 1,
       navLinks: true, // can click day/week names to navigate views
       editable: true,
       businessHours: true,
@@ -44,6 +45,7 @@
             {% endfor %}
         {% endfor %}
       ],
+      displayEventTime: false,
       eventBackgroundColor: '#396694',
       eventBorderColor: 'black',
       eventTextColor: 'white',

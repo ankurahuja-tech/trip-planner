@@ -82,14 +82,6 @@ body {
 }
 
 
-/*==================== FULLCALENDAR ====================*/
-
-.fullcalendar__outer-container {
-    background: linear-gradient(var(--clr-bg-image-yellow-light), var(--clr-bg-image-orange-light)) !important;
-    border-radius: .5rem;
-}
-
-
 /*==================== MEDIA QUERIES ====================*/
 
 @media (max-width: 575px) {
