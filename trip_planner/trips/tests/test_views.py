@@ -88,6 +88,11 @@ def test_trip_create(client, user: AUTH_USER_MODEL) -> None:
     assert new_trip.user == user
 
 
+    # TODO: patch/test that start date is before end date
+
+    # TODO: patch/test that end date can't be further than 10 years from today
+
+
 # Trip Update View tests
 
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     Trips | Trip Planner
@@ -17,11 +18,35 @@
 
     {{ block.super }}
 
-    <h1><a href="{% url 'trips:trip_create' %}">Create trip</a></h1>
     <br>
-    <h2>Your trips are below:</h2>
-    {% for trip in trip_list %}
-        <h3><a href="{% url 'trips:trip_detail' trip.pk %}">{{ trip.title }}</a></h3>
-    {% endfor %}
+    <br>
+    <div class="d-grid gap-2 col-12 col-sm-6 mx-auto">
+        <a href="{% url 'trips:trip_create' %}" class="btn btn-outline-primary btn-lg" type="button"><strong>CREATE NEW TRIP!</strong></a>
+    </div>
+    <br>
+    
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
+        {% for trip in trip_list %}
+        <div class="card__max-width col">
+        <div class="trip__card card shadow-sm">
+            <img src="{% static '/img/placeholder-trip-img.png' %}" class="card-img-top" alt="placeholder-trip-img">
+
+            <div class="card-body">
+                <h3 class="trip__card-title text-center"><a href="{% url 'trips:trip_detail' trip.pk %}">{{ trip.title }}</a></h3>
+                <h6 class="trip__card-date text-center">{{ trip.start_date }} - {{ trip.end_date }}</h6>
+                <hr>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a href="{% url 'trips:trip_detail' trip.pk %}" type="button" class="btn btn-sm btn-outline-primary"><strong>Details</strong></a>
+                        <a href="{% url 'markers:marker_list' trip.pk %}" type="button" class="btn btn-sm btn-outline-primary"><strong>Map</strong></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        {% endfor %}
+    </div>
+    
 
 {% endblock content %}

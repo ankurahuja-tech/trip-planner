@@ -12,13 +12,12 @@ class Trip(TimeStampedModel):
     title = models.CharField("Trip title", max_length=100, help_text="This is the title of your trip.")
     start_date = models.DateField("Trip start date", help_text="This is the start date of your trip.")
     end_date = models.DateField("Trip end date", help_text="This is the end date of your trip.")
+    # TODO: description
     notes = models.TextField("Trip notes", help_text="These are your notes regarding the trip.", blank=True, null=True)
-    # add locations for the trip when the map app is up TODO
-    # location =
-    # add photos TODO
-    # photo =
-    # consider: past/ongoing/future choices TODO
-    # consider: budget field / app TODO
+    # TODO: location
+    # TODO: photo
+    # NOTE: consider: past/ongoing/future choices
+    # NOTE: consider: budget field / app
 
     def __str__(self) -> str:
         return self.title
@@ -105,7 +104,7 @@ class Activity(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     day = models.ForeignKey(TripDay, on_delete=models.CASCADE, related_name="activities")
     title = models.CharField("Activity title", max_length=50, help_text="This is the title of your activity.")
-    # description = models.TextField('Activity description', help_text='This is the description of the activity.', null=True, blank=True)
+    # TODO: description = models.TextField('Activity description', help_text='This is the description of the activity.', null=True, blank=True)
     time = models.TimeField("Activity time", help_text="This is the time of the activity.")
 
     def __str__(self) -> str:
