@@ -16,25 +16,88 @@
 {% block content %}
 
     {{ block.super }}
-
-    <h2>{{ trip.title }}</h2>
-    <br>
-    <h4>Trip start date: {{trip.start_date }}</h4>
-    <h4>Trip end date: {{trip.end_date }}</h4>
-    <h4>Trip notes:</h4>
-    <p>{{ trip.notes }}</p>
-
-    <a href="{% url 'trips:trip_update' trip.pk %}" class="btn btn-primary">Update details</a>
-    <a href="{% url 'trips:trip_delete' trip.pk %}" class="btn btn-danger">Delete trip</a>
-
-    <h4>Trip Days:</h4>
-    {% for trip_day in trip.prefetched_trip_days %}
-        <h5><a href="{% url 'trips:trip_day_detail' trip_day.pk %}">{{ trip_day }} - {{ trip_day.date }}</a></h5>
-        {% for activity in trip_day.prefetched_activities %}
-            <p>{{ activity.title }}</p>
-        {% endfor %}
-    {% endfor %}
-
-    <a href="{% url 'markers:marker_list' trip.pk %}" class="btn btn-primary">See Trip Map</a>
+    
+    <div class="container content-max-width">
+        <br><br>
+        <div class="row row-cols-1 row-cols-lg-2 g-3">
+            <div class="col">
+                <div class="card text-center">
+                    <div class="card-header text-muted">
+                        Trip details
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ trip.title }}</h5>
+                        <p class="card-text">{{ trip.start_date }} - {{ trip.end_date }}</p>
+                        <hr class="trip__card-hr">
+                        <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus, consectetur?</p>
+                        <div class="col">
+                            <a href="{% url 'trips:trip_update' trip.pk %}" class="btn btn-primary">Update details</a>
+                            <a href="{% url 'markers:marker_list' trip.pk %}" class="btn btn-primary">See Trip Map</a>
+                            <a href="{% url 'trips:trip_delete' trip.pk %}" class="btn btn-outline-danger">Delete Trip</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="col">
+                <div class="card">
+                    <div class="card-header text-muted text-center">
+                        Notes
+                    </div>
+                    <div class="card-body">
+                        {% if trip.notes %}
+                            <p class="card-text">{{ trip.notes }}</p>
+                        {% else %}
+                            <p class="card-text text-muted">There are no notes for the trip yet.</p>                            
+                        {% endif %}
+                        <div class="text-center">
+                            <a href="{% url 'trips:trip_update' trip.pk %}" class="btn btn-outline-primary">Update notes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <br><br>
+        
+        <h4 class="text-center">Trip Days:</h4>
+        <br>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-1 g-md-2 g-xl-3">
+            {% for trip_day in trip.prefetched_trip_days %}
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header text-muted text-center">
+                            Day details
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ trip_day }}</h5>
+                            <h6 class="text-center">{{ trip_day.date }}</h6>
+                            <hr class="trip__card-hr">
+                            {% if trip_day.notes %}
+                                <p class="card-text">{{ trip_day.notes }}</p>
+                            {% else %}
+                                <p class="card-text text-muted">There are no notes for the day yet.</p>                            
+                            {% endif %}
+                        </div>
+                        <div class="card-header card-footer text-muted text-center">
+                            Activities
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            {% for activity in trip_day.prefetched_activities %}
+                                <li class="list-group-item">{{ activity.title }}</li>
+                            {% endfor %}
+                        </ul>
+                        <div class="card-body">
+                            <a href="{% url 'trips:trip_day_detail' trip_day.pk %}" class="btn btn-outline-primary btn-sm">Update details</a>
+                            <div class="btn-group">
+                                <a href="{% url 'trips:trip_day_update' trip_day.pk %}" type="button" class="btn btn-sm btn-outline-primary">Update notes</a>
+                                <a href="{% url 'trips:activity_create' trip_day.pk %}" type="button" class="btn btn-sm btn-outline-primary">Add activity</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
 {% endblock content %}

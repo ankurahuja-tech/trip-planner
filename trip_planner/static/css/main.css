@@ -80,6 +80,13 @@ body {
                 /* (502 / 1280 * 100) */
 }
 
+
+/*==================== REUSABLE COMPONENTS ====================*/
+
+.content-max-width {
+    max-width: 1280px;
+}
+
 /*==================== TRIPS ====================*/
 
 .trip__card-title a {
@@ -87,10 +94,10 @@ body {
     text-decoration: none;
 }
 
-.trip__card .card-body hr {
-    height: .3rem;
+.trip__card-hr {
+    height: .2rem;
     border-radius: .1rem;
-    background: linear-gradient(90deg, var(--clr-bootstrap-primary), var(--clr-bg-image-blue-light), var(--clr-bootstrap-primary)); 
+    background: linear-gradient(90deg, var(--clr-bg-image-blue-light), var(--clr-bootstrap-primary), var(--clr-bg-image-blue-light)); 
     opacity: 90%;
 }
 
