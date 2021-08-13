@@ -29,17 +29,21 @@
                 url: '{% url 'trips:trip_detail' trip.pk %}',
                 start: '{{ trip.start_date|date:"Y-m-d" }}',
                 end: '{{ trip.end_date|addDay|date:"Y-m-d" }}',
+                display: 'block',
             },
             {% for trip_day in trip.prefetched_trip_days %}
                 {
                     title: '{{ trip_day }}',
                     url: '{% url 'trips:trip_day_detail' trip_day.pk %}',
                     start: '{{ trip_day.date|date:"Y-m-d" }}',
+                    backgroundColor: '#6f9ecc',
+                    display: 'block',
                 },
                 {% for activity in trip_day.prefetched_activities %}
                     {
                         title: '{{ activity }}',
                         start: '{{ trip_day.date|date:"Y-m-d" }}T{{ activity.time|time:"H:i" }}',
+                        display: 'list-item',
                     },
                 {% endfor %}
             {% endfor %}

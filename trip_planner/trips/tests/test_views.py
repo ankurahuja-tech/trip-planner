@@ -86,12 +86,7 @@ def test_trip_create(client, user: AUTH_USER_MODEL) -> None:
     assert response.status_code == 302
     assert new_trip.notes == "Test notes"
     assert new_trip.user == user
-
-
-    # TODO: patch/test that start date is before end date
-
-    # TODO: patch/test that end date can't be further than 10 years from today
-
+    
 
 # Trip Update View tests
 

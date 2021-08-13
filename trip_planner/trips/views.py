@@ -16,6 +16,7 @@ from .forms import (
 )
 from .models import Activity, Trip, TripDay
 
+
 # Trip Views
 
 
@@ -26,7 +27,7 @@ class TripListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["trip_list"] = context["trip_list"].filter(user=self.request.user)
+        context["trip_list"] = context["trip_list"].filter(user=self.request.user).order_by("start_date")
         return context
 
 
@@ -126,3 +127,12 @@ class ActivityUpdateView(LoginRequiredMixin, UserPassesOwnerTestMixin, UpdateVie
         trip_day_pk = self.kwargs["trip_day_pk"]
         qs = super().get_queryset(*args, **kwargs).filter(day=trip_day_pk)
         return qs
+
+
+class ActivityDeleteView(LoginRequiredMixin, UserPassesOwnerTestMixin, DeleteView):
+    model = Activity
+    template_name = "trips/activity_delete.html"
+
+    def get_success_url(self, **kwargs):
+        success_url = reverse_lazy("trips:trip_detail", kwargs={"pk": self.kwargs["trip_pk"]})
+        return success_url
