@@ -5,7 +5,7 @@ from django.urls import resolve, reverse
 
 from config.settings.base import AUTH_USER_MODEL
 from trip_planner.trips.models import Activity, Trip, TripDay
-from trip_planner.trips.views import TripDayDetailView, TripDetailView, TripListView
+from trip_planner.trips.views import TripDetailView, TripListView
 
 # pytestmark = pytest.mark.django_db
 
@@ -135,41 +135,6 @@ def test_trip_delete_permission_restriction_wrong_user(client, trip: Trip, wrong
 # ==============================================================================
 # TRIP DAY VIEWS TESTS
 # ==============================================================================
-
-# TripDay Detail View tests
-
-
-def test_trip_day_detail_url_dispatcher(client, trip_day: TripDay) -> None:
-    params = {"pk": str(trip_day.pk)}
-    response = client.get(reverse("trips:trip_day_detail", kwargs=params))
-    trip_day_detail_view_template_name = "trips/trip_day_detail.html"
-
-    assert response.status_code == 200
-    assert trip_day_detail_view_template_name in response.template_name
-
-
-def test_trip_day_detail_url(client, trip_day: TripDay) -> None:
-    trip_day_pk = str(trip_day.pk)
-    response = client.get("/trips/days/" + trip_day_pk + "/")
-
-    assert response.status_code == 200
-
-
-def test_trip_day_detail_url_resolves_trip_day_detail_view(client, trip_day: TripDay) -> None:
-    trip_day_pk = str(trip_day.pk)
-    view = resolve("/trips/days/" + trip_day_pk + "/")
-
-    assert view.func.__name__ == TripDayDetailView.as_view().__name__
-
-
-def test_trip_day_detail_permission_restriction_wrong_user(
-    client, trip_day: TripDay, wrong_user: AUTH_USER_MODEL
-) -> None:
-    params = {"pk": str(trip_day.pk)}
-    response = client.get(reverse("trips:trip_day_detail", kwargs=params))
-
-    assert response.status_code == 403
-
 
 # TripDay Update View tests
 

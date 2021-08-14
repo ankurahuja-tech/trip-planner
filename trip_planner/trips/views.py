@@ -76,22 +76,6 @@ class TripDeleteView(LoginRequiredMixin, UserPassesOwnerTestMixin, DeleteView):
 # TripDay Views
 
 
-class TripDayDetailView(LoginRequiredMixin, UserPassesOwnerTestMixin, DetailView):
-    model = TripDay
-    template_name = "trips/trip_day_detail.html"
-    context_object_name = "trip_day"
-
-    def get_queryset(self, *args, **kwargs):
-        """
-        Before returning queryset, prefetches Activities for a given Trip Day.
-        """
-        prefetched_data = Prefetch(
-            "activities", queryset=Activity.objects.order_by("time"), to_attr="prefetched_activities"
-        )
-        qs = super().get_queryset(*args, **kwargs).prefetch_related(prefetched_data)
-        return qs
-
-
 class TripDayUpdateView(LoginRequiredMixin, UserPassesOwnerTestMixin, UpdateView):
     model = TripDay
     template_name = "trips/trip_day_update_form.html"
