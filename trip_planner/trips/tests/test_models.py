@@ -117,9 +117,9 @@ def test_trip_day_str(trip_day: TripDay) -> None:
 
 
 def test_trip_day_get_absolute_url(trip_day: TripDay) -> None:
-    trip_day_pk = str(trip_day.pk)
+    trip_pk = str(trip_day.trip.pk)
 
-    assert trip_day.get_absolute_url() == "/trips/days/" + trip_day_pk + "/"
+    assert trip_day.get_absolute_url() == "/trips/" + trip_pk + "/"
 
 
 # ==============================================================================
@@ -139,6 +139,6 @@ def test_activity_str(activity: Activity) -> None:
 
 
 def test_activity_get_absolute_url(activity: Activity) -> None:
-    trip_day_pk = str(activity.day.pk)
+    trip_pk = str(activity.trip.pk)
 
-    assert activity.get_absolute_url() == "/trips/days/" + trip_day_pk + "/"
+    assert activity.get_absolute_url() == "/trips/" + trip_pk + "/"

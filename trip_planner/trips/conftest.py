@@ -66,8 +66,9 @@ def activity(trip_day: TripDay) -> Activity:
     """
     # Create Activity object
     user = trip_day.user
+    trip = trip_day.trip
     day = trip_day
     activity = Activity.objects.create(
-        user=user, day=day, title="Activity test title", time=datetime.time(hour=11, minute=11)
+        user=user, trip=trip, day=day, title="Activity test title", time=datetime.time(hour=11, minute=11)
     )
     return activity

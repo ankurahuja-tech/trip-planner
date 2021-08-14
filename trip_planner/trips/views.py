@@ -109,6 +109,7 @@ class ActivityCreateView(LoginRequiredMixin, UserPassesOwnerTestMixin, CreateVie
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        form.instance.trip = Trip.objects.get(pk=self.kwargs["trip_pk"])
         form.instance.day = TripDay.objects.get(pk=self.kwargs["pk"])
         return super().form_valid(form)
 
@@ -120,6 +121,7 @@ class ActivityUpdateView(LoginRequiredMixin, UserPassesOwnerTestMixin, UpdateVie
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["trip_pk"] = self.kwargs["trip_pk"]
         context["trip_day_pk"] = self.kwargs["trip_day_pk"]
         return context
 

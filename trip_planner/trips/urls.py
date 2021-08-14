@@ -23,9 +23,9 @@ urlpatterns = [
     path("<int:pk>/delete/", TripDeleteView.as_view(), name="trip_delete"),
     # TripDay urls
     path("days/<int:pk>/", TripDayDetailView.as_view(), name="trip_day_detail"), # TODO: remove!
-    path("days/<int:pk>/update/", TripDayUpdateView.as_view(), name="trip_day_update"), # TODO: remove!
+    path("<int:trip_pk>/days/<int:pk>/update/", TripDayUpdateView.as_view(), name="trip_day_update"), # TODO: remove!
     # Activity urls
-    path("days/<int:pk>/add-activity/", ActivityCreateView.as_view(), name="activity_create"), # TODO add trip here and to model
-    path("days/<int:trip_day_pk>/update-activity/<int:pk>", ActivityUpdateView.as_view(), name="activity_update"), # TODO add trip here and to model
+    path("<int:trip_pk>/days/<int:pk>/add-activity/", ActivityCreateView.as_view(), name="activity_create"), # TODO add trip here and to model
+    path("<int:trip_pk>/days/<int:trip_day_pk>/update-activity/<int:pk>", ActivityUpdateView.as_view(), name="activity_update"), # TODO add trip here and to model
     path("<int:trip_pk>/days/<int:trip_day_pk>/delete-activity/<int:pk>", ActivityDeleteView.as_view(), name="activity_delete"),
 ]

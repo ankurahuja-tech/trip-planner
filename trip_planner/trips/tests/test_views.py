@@ -175,7 +175,7 @@ def test_trip_day_detail_permission_restriction_wrong_user(
 
 
 def test_trip_day_update(client, trip_day: TripDay) -> None:
-    params = {"pk": trip_day.pk}
+    params = {"trip_pk": str(trip_day.trip.pk), "pk": str(trip_day.pk)}
     context = {
         "notes": "These are updated notes.",
     }
@@ -189,7 +189,7 @@ def test_trip_day_update(client, trip_day: TripDay) -> None:
 def test_trip_day_update_permission_restriction_wrong_user(
     client, trip_day: TripDay, wrong_user: AUTH_USER_MODEL
 ) -> None:
-    params = {"pk": str(trip_day.pk)}
+    params = {"trip_pk": str(trip_day.trip.pk), "pk": str(trip_day.pk)}
     response = client.get(reverse("trips:trip_day_update", kwargs=params))
 
     assert response.status_code == 403
@@ -203,7 +203,7 @@ def test_trip_day_update_permission_restriction_wrong_user(
 
 
 def test_activity_create(client, trip_day: TripDay) -> None:
-    params = {"pk": trip_day.pk}
+    params = {"trip_pk": str(trip_day.trip.pk), "pk": str(trip_day.pk)}
     context = {
         "title": "New test activity",
         "time": datetime.time(hour=11, minute=11),
@@ -218,7 +218,7 @@ def test_activity_create(client, trip_day: TripDay) -> None:
 def test_activity_create_permission_restriction_wrong_user(
     client, trip_day: TripDay, wrong_user: AUTH_USER_MODEL
 ) -> None:
-    params = {"pk": str(trip_day.pk)}
+    params = {"trip_pk": str(trip_day.trip.pk), "pk": str(trip_day.pk)}
     response = client.get(reverse("trips:activity_create", kwargs=params))
 
     assert response.status_code == 403
@@ -229,8 +229,9 @@ def test_activity_create_permission_restriction_wrong_user(
 
 def test_activity_update(client, activity: Activity) -> None:
     params = {
-        "trip_day_pk": activity.day.pk,
-        "pk": activity.pk,
+        "trip_pk": str(activity.trip.pk),
+        "trip_day_pk": str(activity.day.pk),
+        "pk": str(activity.pk),
     }
     context = {
         "title": "These are updated notes.",
@@ -247,8 +248,9 @@ def test_activity_update_permission_restriction_wrong_user(
     client, activity: Activity, wrong_user: AUTH_USER_MODEL
 ) -> None:
     params = {
-        "trip_day_pk": activity.day.pk,
-        "pk": activity.pk,
+        "trip_pk": str(activity.trip.pk),
+        "trip_day_pk": str(activity.day.pk),
+        "pk": str(activity.pk),
     }
     response = client.get(reverse("trips:activity_update", kwargs=params))
 
