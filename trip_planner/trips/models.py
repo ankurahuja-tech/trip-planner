@@ -4,7 +4,18 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
+from imagekit.models import ProcessedImageField
+from imagekit.processors import Thumbnail
+
 from trip_planner.core.models import TimeStampedModel
+
+
+# Trip
+
+
+def user_directory_path(instance, filename):
+    """ Sets path to user uploads to: MEDIA_ROOT/user_<id>/<filename> """
+    return f'user_{instance.user.id}/{filename}'
 
 
 class Trip(TimeStampedModel):
@@ -14,8 +25,8 @@ class Trip(TimeStampedModel):
     end_date = models.DateField("Trip end date", help_text="This is the end date of your trip.")
     # TODO: description = models.CharField("Trip description", help_text="This is a short description of the trip.", blank=True, null=True)
     notes = models.TextField("Trip notes", help_text="These are your notes regarding the trip.", blank=True, null=True)
+    picture = ProcessedImageField(upload_to=user_directory_path, processors=[Thumbnail(width=600, height=400, upscale=True)], format='JPEG', options={'quality': 80}, blank=True, help_text="This is the 3:2 ratio picture associated with the trip.")
     # TODO: location
-    # TODO: photo
     # NOTE: consider: past/ongoing/future choices
     # NOTE: consider: budget field / app
 
@@ -82,6 +93,9 @@ class Trip(TimeStampedModel):
         self.delete_extra_trip_days()
 
 
+# Trip Day
+
+
 class TripDay(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name="trip_days")
@@ -98,6 +112,9 @@ class TripDay(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse("trips:trip_detail", kwargs={"pk": self.trip.pk})
+
+
+# Activity
 
 
 class Activity(TimeStampedModel):

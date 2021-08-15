@@ -12,6 +12,7 @@ from .forms import (
     ActivityUpdateForm,
     TripCreateForm,
     TripDayUpdateForm,
+    TripUpdateFormPicture,
     TripUpdateForm,
 )
 from .models import Activity, Trip, TripDay
@@ -65,6 +66,12 @@ class TripUpdateView(LoginRequiredMixin, UserPassesOwnerTestMixin, UpdateView):
     model = Trip
     template_name = "trips/trip_update_form.html"
     form_class = TripUpdateForm
+
+
+class TripUpdateViewPicture(LoginRequiredMixin, UserPassesOwnerTestMixin, UpdateView):
+    model = Trip
+    template_name = "trips/trip_update_form_picture.html"
+    form_class = TripUpdateFormPicture
 
 
 class TripDeleteView(LoginRequiredMixin, UserPassesOwnerTestMixin, DeleteView):

@@ -34,7 +34,7 @@
             {% for trip_day in trip.prefetched_trip_days %}
                 {
                     title: '{{ trip_day }}',
-                    url: '{% url 'trips:trip_day_detail' trip_day.pk %}',
+                    url: '{% url 'trips:trip_detail' trip.pk %}',
                     start: '{{ trip_day.date|date:"Y-m-d" }}',
                     backgroundColor: '#6f9ecc',
                     display: 'block',

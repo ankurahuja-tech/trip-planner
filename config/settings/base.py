@@ -55,6 +55,8 @@ THIRD_PARTY_APPS = [
     "rest_framework_gis",  # TODO pytest gives warning about this
     # django-leaflet
     "leaflet",
+    # django-imagekit
+    "imagekit",
 ]
 
 LOCAL_APPS = [

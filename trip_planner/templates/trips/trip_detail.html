@@ -20,7 +20,7 @@
     <div class="container content-max-width g-0">
         <br><br>
         <div class="row row-cols-1 row-cols-lg-2 g-3">
-            <div class="col">
+            <div class="col">                
                 <div class="card text-center">
                     <div class="card-header text-muted">
                         Trip details
@@ -34,6 +34,21 @@
                             <a href="{% url 'trips:trip_update' trip.pk %}" class="btn btn-primary">Update details</a>
                             <a href="{% url 'markers:marker_list' trip.pk %}" class="btn btn-primary">See Trip Map</a>
                             <a href="{% url 'trips:trip_delete' trip.pk %}" class="btn btn-outline-danger">Delete Trip</a>
+                        </div>
+                    </div>
+                    <div class="card-header card-footer text-muted">
+                        Trip picture
+                    </div>
+                    <div class="card-body">
+                        <div class="card-text">
+                            {% if trip.picture %}
+                                <img class='trip__card-image mb-2' src="{{ trip.picture.url }}" alt="trip-img">
+                            {% else %}
+                                <p class="card-text text-muted">There is no picture for the trip yet.</p>
+                            {% endif %}
+                        </div>
+                        <div class="col text-end">
+                            <a href="{% url 'trips:trip_update_picture' trip.pk %}" class="btn btn-outline-primary">Update picture</a>
                         </div>
                     </div>
                 </div>

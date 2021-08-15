@@ -4,6 +4,8 @@ from django import forms
 
 from .models import Activity, Trip, TripDay
 
+from crispy_forms.helper import FormHelper
+
 # Custom Widgets
 
 
@@ -89,6 +91,12 @@ class TripUpdateForm(forms.ModelForm):
             self.add_error('end_date', "This app version does not support Trip duration exceeding 90 days. Sorry!")
         
         return cleaned_data
+
+
+class TripUpdateFormPicture(forms.ModelForm):
+    class Meta:
+        model = Trip
+        fields = ("picture",)
 
 
 # Trip Day Forms

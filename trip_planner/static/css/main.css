@@ -101,6 +101,11 @@ body {
     opacity: 90%;
 }
 
+.trip__card-image {
+    max-height: 100%;
+    max-width: 100%;
+}
+
 
 /*==================== MEDIA QUERIES ====================*/
 

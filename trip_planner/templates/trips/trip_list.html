@@ -31,7 +31,11 @@
             {% for trip in trip_list %}
             <div class="card__max-width col">
             <div class="card shadow-sm">
-                <img src="{% static '/img/placeholder-trip-img.png' %}" class="card-img-top" alt="placeholder-trip-img">
+                {% if trip.picture %}
+                    <img src="{{ trip.picture.url }}" class="trip__card-image card-img-top" alt="trip-img">
+                {% else %}
+                    <img src="{% static '/img/placeholder-trip-img.png' %}" class="card-img-top" alt="placeholder-trip-img">
+                {% endif %}
                 <div class="card-body">
                     <h3 class="trip__card-title text-center"><a href="{% url 'trips:trip_detail' trip.pk %}">{{ trip.title }}</a></h3>
                     <h6 class="trip__card-date text-center">{{ trip.start_date }} - {{ trip.end_date }}</h6>
