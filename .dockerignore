@@ -1,0 +1,31 @@
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+Dockerfile.dev
+docker-compose.yaml
+
+# Python
+*/__pycache__/
+*/*/__pycache__/
+*/*/*/__pycache__/
+*/*/*/*/__pycache__/
+*/*/*/*/*/__pycache__/
+.env
+.env/
+.venv/
+venv/
+.cache
+*.pyc
+
+# Third parties
+.pytest_cache/
+.coverage
+.coveragerc
+
+# Other
+notes.txt
+.vs
+.vscode
