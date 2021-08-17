@@ -1,0 +1,2 @@
+# For the purposes of Heroku deployment.
+-r requirements/production.txt
