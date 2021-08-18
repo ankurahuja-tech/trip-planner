@@ -20,6 +20,13 @@
 
 /*==================== MEDIA QUERIES ====================*/
 
+@media (min-width: 1024px) {
+    .fullcalendar__outer-container {
+        width: 90%;
+        margin: auto;
+    }
+}
+
 @media (max-width: 991px) {
     #calendar {
         font-size: 80%;

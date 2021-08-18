@@ -17,54 +17,90 @@
 {% block content %}
     
     {{ block.super }}
-    
-    {% if user.emailaddress_set.all %}
-    <p>The following e-mail addresses are associated with your account:</p>
+    <div class="row row-cols-1 row-cols-lg-2 g-3">
+        <div class="col">
+            <h4 class="text-center">Manage your e-mails</h4>
+            <div class="card form-max-width mx-auto">
+                <div class="card-header text-muted text-center">
+                    Current e-mails
+                </div>
+                <div class="card-body">
+                    {% if user.emailaddress_set.all %}
 
-    <form action="{% url 'account_email' %}" class="email_list" method="post">
-    {% csrf_token %}
-    <fieldset class="blockLabels">
+                    <p>The following e-mail addresses are associated with your account:</p>
 
-    {% for emailaddress in user.emailaddress_set.all %}
-        <div class="ctrlHolder">
-            <label for="email_radio_{{forloop.counter}}" class="{% if emailaddress.primary %}primary_email{%endif%}">
+                    <form action="{% url 'account_email' %}" class="email_list" method="post">
+                    {% csrf_token %}
+                    <fieldset class="blockLabels">
 
-                <input id="email_radio_{{forloop.counter}}" type="radio" name="email" {% if emailaddress.primary or user.emailaddress_set.count == 1 %}checked="checked"{%endif %} value="{{emailaddress.email}}"/>
+                    {% for emailaddress in user.emailaddress_set.all %}
+                        <div class="ctrlHolder">
+                            <label for="email_radio_{{forloop.counter}}" class="{% if emailaddress.primary %}primary_email{%endif%}">
 
-            {{ emailaddress.email }}
-                {% if emailaddress.verified %}
-                <span class="verified">Verified</span>
-                {% else %}
-                <span class="unverified">Unverified</span>
-                {% endif %}
-                {% if emailaddress.primary %}<span class="primary">Primary</span>{% endif %}
-            </label>
+                                <input id="email_radio_{{forloop.counter}}" type="radio" name="email" {% if emailaddress.primary or user.emailaddress_set.count == 1 %}checked="checked"{%endif %} value="{{emailaddress.email}}"/>
+
+                            {{ emailaddress.email }}
+                                {% if emailaddress.verified %}
+                                <span class="verified badge bg-success">Verified</span>
+                                {% else %}
+                                <span class="unverified badge bg-secondary">Unverified</span>
+                                {% endif %}
+                                {% if emailaddress.primary %}<span class="primary badge bg-success">Primary</span>{% endif %}
+                            </label>
+                        </div>
+                    {% endfor %}
+                    <br>
+                    <div class="buttonHolder text-end">
+                        <button class="secondaryAction btn btn-primary" type="submit" name="action_primary" >Make Primary</button>
+                        <button class="secondaryAction btn btn-primary" type="submit" name="action_send" >Re-send Verification</button>
+                        <button class="primaryAction btn btn-outline-danger" type="submit" name="action_remove" >Remove</button>
+                    </div>
+
+                    </fieldset>
+                    </form>
+
+                    {% else %}
+                    <p class="alert alert-warning" role="alert"><strong>Warning:</strong> You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc.</p>
+
+                    {% endif %}
+                </div>
+
+                <div class="card-header card-footer">
+                </div>
+                <div class="card-body">
+                    {% if can_add_email %}
+                        <p>Add new e-mail address associated with your account:</p>
+
+                        <form method="post" action="{% url 'account_email' %}" class="add_email form-max-width">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <div class="text-end">
+                                <button class="btn btn-primary" name="action_add" type="submit">Add E-mail</button>
+                            </div>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-    {% endfor %}
-
-    <div class="buttonHolder">
-        <button class="secondaryAction btn btn-success" type="submit" name="action_primary" >Make Primary</button>
-        <button class="secondaryAction btn btn-success" type="submit" name="action_send" >Re-send Verification</button>
-        <button class="primaryAction btn btn-success" type="submit" name="action_remove" >Remove</button>
+        <div class="col">
+            <h4 class="text-center">Manage your account password</h4>
+            <div class="card text-center form-max-width mx-auto">
+                <div class="card-header text-muted">
+                    Change password
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'account_change_password' %}" class="btn btn-primary btn-lg" type="button">Change password</a>
+                </div>
+                <div class="card-header card-footer text-muted">
+                    Forgot your password?
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'account_reset_password' %}" class="btn btn-outline-danger btn-lg" type="button">Reset your password</a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    </fieldset>
-    </form>
-
-    {% else %}
-    <p><strong>Warning:</strong> You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc.</p>
-
-    {% endif %}
-
-    {% if can_add_email %}
-        <h2>Add E-mail Address</h2>
-
-        <form method="post" action="{% url 'account_email' %}" class="add_email">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <button class="btn btn-success" name="action_add" type="submit">Add E-mail</button>
-        </form>
-    {% endif %}
 
     <script type="text/javascript">
     (function() {
