@@ -17,10 +17,21 @@
 
     {{ block.super }}
 
-    <p>Are you sure you want to delete this marker: {{ marker.name }}?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button class="btn btn-danger" type="submit" value="Confirm">Confirm deletion</button>
-    </form>
+    <br>
+    
+    <div class="card form-max-width mx-auto">
+        <div class="card-header text-muted text-center">
+            Delete confirmation
+        </div>
+        <div class="card-body">
+            <p>Are you sure you want to delete this marker: {{ marker.name }}?</p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="text-end">
+                    <button class="btn btn-danger" type="submit" value="Confirm">Confirm deletion</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
 {% endblock content %}

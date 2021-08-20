@@ -3,7 +3,7 @@ from django.urls import path
 from .api_views import MarkerViewSet
 from .views import MarkerCreateView, MarkerDeleteView, MarkerListView, MarkerUpdateView
 
-app_name = "maps"
+app_name = "markers"
 urlpatterns = [
     path("trips/<int:trip_pk>/", MarkerListView.as_view(), name="marker_list"),
     path("trips/<int:trip_pk>/create/", MarkerCreateView.as_view(), name="marker_create"),

@@ -19,25 +19,36 @@
 {% block content %}
 
     {{ block.super }}
-    
-    <p>Please confirm your e-mail address.</p>
-    {% if confirmation %}
 
-    {% user_display confirmation.email_address.user as user_display %}
+    <br>
 
-    <p>Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user {{ user_display }}.</p>
+    <div class="card form-max-width mx-auto">
+        <div class="card-header text-center text-muted">
+            Logout confirmation
+        </div>
+        <div class="card-body">
+            <p>Please confirm your e-mail address.</p>
+            {% if confirmation %}
 
-    <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
-    {% csrf_token %}
-        <button class="btn btn-success" type="submit">Confirm</button>
-    </form>
+                {% user_display confirmation.email_address.user as user_display %}
 
-    {% else %}
+                <p>Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user {{ user_display }}.</p>
 
-    {% url 'account_email' as email_url %}
+                <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+                {% csrf_token %}
+                    <div class="text-end">
+                        <button class="btn btn-success" type="submit">Confirm</button>
+                    </div>
+                </form>
 
-    <p>This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.</p>
+            {% else %}
 
-    {% endif %}
+                {% url 'account_email' as email_url %}
+
+                <p>This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.</p>
+
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock content %}

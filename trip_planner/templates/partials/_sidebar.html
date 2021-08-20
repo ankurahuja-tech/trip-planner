@@ -1,39 +1,37 @@
 <div class="sidebar__topnav-max-height col-12 col-sm-3 col-lg-2 px-sm-2 px-0 bg-dark d-flex sticky-top">
                 <div class="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start px-3 pt-2 text-white">
                     <a href="{% url 'pages:home' %}" class="d-flex align-items-center pb-sm-3 mb-md-0 me-md-auto text-warning text-decoration-none">
-                        <span class="fs-5">T<span class="d-none d-sm-inline">ripNotes</span></span>
+                        <span class="fs-4">T<span class="d-none d-sm-inline">ripNotes</span></span>
                     </a>
                     <ul class="nav nav-pills flex-sm-column flex-row flex-nowrap flex-shrink-1 flex-sm-grow-0 flex-grow-1 mb-sm-3 mb-0 justify-content-center align-items-center align-items-sm-start" id="menu">
                         <li class="nav-item">
                             <a href="{% url 'pages:home' %}" class="nav-link px-sm-0 px-2 link-light">
-                                <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline">Home</span>
+                                <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline fs-5">Home</span>
                             </a>
                         </li>
                         <li>
                             <a href="{% url 'trips:trip_list' %}" class="nav-link px-sm-0 px-2 link-light">
-                                <i class="fs-5 bi-bicycle"></i><span class="ms-1 d-none d-sm-inline">Trips</span> </a>
+                                <i class="fs-5 bi-bicycle"></i><span class="ms-1 d-none d-sm-inline fs-5">Trips</span> </a>
                         </li>
                         <li>
                             <a href="{% url 'calendars:calendar' %}" class="nav-link px-sm-0 px-2 link-light">
-                                <i class="fs-5 bi-table"></i><span class="ms-1 d-none d-sm-inline">Calendar</span></a>
-                        </li>
-                        <li>
-                            <a href="{% url 'accounts:profile' %}" class="nav-link px-sm-0 px-2 link-light">
-                                <i class="fs-5 bi-grid"></i><span class="ms-1 d-none d-sm-inline">Profile</span></a>
+                                <i class="fs-5 bi-table"></i><span class="ms-1 d-none d-sm-inline fs-5">Calendar</span></a>
                         </li>
                         <li>
                             <a href="#" class="nav-link px-sm-0 px-2 link-light">
-                                <i class="fs-5 bi-people"></i><span class="ms-1 d-none d-sm-inline">Placeholder</span> </a>
+                                <i class="fs-5 bi-map"></i><span class="ms-1 d-none d-sm-inline fs-5">Map</span></a>
+                        </li>
+                        <li>
+                            <a href="{% url 'account_email' %}" class="nav-link px-sm-0 px-2 link-light">
+                                <i class="fs-5 bi-person-fill"></i><span class="ms-1 d-none d-sm-inline fs-5">Profile</span></a>
                         </li>
                     </ul>
                     <div class="dropdown py-sm-4 mt-sm-2 ms-auto ms-sm-0 flex-shrink-1">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="hugenerd" width="28" height="28" class="rounded-circle">
-                            <span class="d-none d-sm-inline mx-1">Account</span>
+                            <i class="fs-5 bi-grid"></i><span class="d-none d-sm-inline mx-1 fs-5">Account</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile</a></li>
-                            <li><a class="dropdown-item" href="{% url 'account_email' %}">Configure Emails</a></li>
+                            <li><a class="dropdown-item" href="{% url 'account_email' %}">Profile</a></li>
                             <li><a class="dropdown-item" href="{% url 'account_change_password' %}">Change Password</a></li>
                             <li><a class="dropdown-item" href="{% url 'account_reset_password' %}">Reset Password</a></li>
                             <li>

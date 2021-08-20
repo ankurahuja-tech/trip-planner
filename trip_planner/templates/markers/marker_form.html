@@ -36,11 +36,15 @@
 
     {{ block.super }}
     
-    <form method="POST">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button class="btn btn-success" type="submit">Create marker</button>
-    </form>
+    <div class="content-map-max-width mx-auto">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="text-end">
+                <button class="btn btn-primary" type="submit">Create marker</button>
+            </div>
+        </form>
+    </div>
 
 {% endblock content %}
 

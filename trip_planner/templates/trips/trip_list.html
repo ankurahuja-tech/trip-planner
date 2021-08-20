@@ -18,15 +18,10 @@
 
     {{ block.super }}
 
+    <br>
+
     <div class="container content-max-width g-0">
-        <br><br>
-        <div class="d-grid gap-2 col-12 col-sm-8 col-md-6 mx-auto">
-            <a href="{% url 'trips:trip_create' %}" class="btn btn-outline-primary btn-lg" type="button"><strong>CREATE NEW TRIP!</strong></a>
-        </div>
-        <br>
-        <br>
-            <h4 class="text-center">Your Trips so far:</h4>
-        <br>
+        <h4 class="text-center">Your Trips so far:</h4>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
             {% for trip in trip_list %}
             <div class="card__max-width col">
@@ -40,7 +35,13 @@
                     <h3 class="trip__card-title text-center"><a href="{% url 'trips:trip_detail' trip.pk %}">{{ trip.title }}</a></h3>
                     <h6 class="trip__card-date text-center">{{ trip.start_date }} - {{ trip.end_date }}</h6>
                     <hr class="trip__card-hr">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <div class="card__text-truncate-container">
+                        {% if trip.notes %}
+                            <p class="card-text text-truncate">{{ trip.notes }}</p>
+                        {% else %}
+                            <p class="card-text text-muted">There are no notes for the trip yet.</p>
+                        {% endif %}
+                    </div>
                     <div class="col text-end">
                         <div class="btn-group">
                             <a href="{% url 'trips:trip_detail' trip.pk %}" type="button" class="btn btn-sm btn-outline-primary"><strong>Details</strong></a>
@@ -52,6 +53,12 @@
             </div>
             {% endfor %}
         </div>
+
+        <br><br>
+        <div class="d-grid gap-2 col-12 col-sm-8 col-md-6 mx-auto">
+            <a href="{% url 'trips:trip_create' %}" class="btn btn-primary btn-lg" type="button"><strong>CREATE A NEW TRIP!</strong></a>
+        </div>
+        <br>
     </div>
     
 

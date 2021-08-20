@@ -17,58 +17,31 @@
 
     {{ block.super }}
     
+    <br>
+
     <div class="container content-max-width g-0">
-        <br><br>
-        <div class="row row-cols-1 row-cols-lg-2 g-3">
-            <div class="col">
-                <div class="card text-center">
-                    <div class="card-header text-muted">
-                        Trip details
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ trip.title }}</h5>
-                        <p class="card-text">{{ trip.start_date }} - {{ trip.end_date }}</p>
-                        <hr class="trip__card-hr">
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus, consectetur?</p>
-                        <div class="col text-end">
-                            <a href="{% url 'trips:trip_update' trip.pk %}" class="btn btn-primary">Update details</a>
-                            <a href="{% url 'markers:marker_list' trip.pk %}" class="btn btn-primary">See Trip Map</a>
-                            <a href="{% url 'trips:trip_delete' trip.pk %}" class="btn btn-outline-danger">Delete Trip</a>
-                        </div>
-                    </div>
-                    <div class="card-header card-footer text-muted">
-                        Trip picture
-                    </div>
-                    <div class="card-body">
-                        <div class="card-text">
-                            {% if trip.picture %}
-                                <img class='trip__card-image mb-2' src="{{ trip.picture.url }}" alt="trip-img">
-                            {% else %}
-                                <p class="card-text text-muted">There is no picture for the trip yet.</p>
-                            {% endif %}
-                        </div>
-                        <div class="col text-end">
-                            <a href="{% url 'trips:trip_update_picture' trip.pk %}" class="btn btn-outline-primary">Update picture</a>
-                        </div>
-                    </div>
-                </div>
+        <div class="card content-card-max-width mx-auto text-center">
+            <div class="card-header">
+                <h5 class="card-title">{{ trip.title }}</h5>
+                <p class="card-text">{{ trip.start_date }} - {{ trip.end_date }}</p>
             </div>
-        
-            <div class="col">
-                <div class="card">
-                    <div class="card-header text-muted text-center">
-                        Notes
-                    </div>
-                    <div class="card-body">
-                        {% if trip.notes %}
-                            <p class="card-text">{{ trip.notes }}</p>
-                        {% else %}
-                            <p class="card-text text-muted">There are no notes for the trip yet.</p>                            
-                        {% endif %}
-                        <div class="text-end">
-                            <a href="{% url 'trips:trip_update' trip.pk %}" class="btn btn-outline-primary">Update notes</a>
-                        </div>
-                    </div>
+            <div class="card-body">
+                {% if trip.picture %}
+                    <img class='trip__card-image mb-2' src="{{ trip.picture.url }}" alt="trip-img">
+                {% else %}
+                    <p class="card-text text-muted">There is no picture for the trip yet.</p>
+                {% endif %}
+                <hr class="trip__card-hr">
+                {% if trip.notes %}
+                    <p class="card-text">{{ trip.notes }}</p>
+                {% else %}
+                    <p class="card-text text-muted">There are no notes for the trip yet.</p>                            
+                {% endif %}
+                <div class="text-end">
+                    <a href="{% url 'trips:trip_update' trip.pk %}" class="btn btn-primary trip__card-button-width mb-1">Update details</a>
+                    <a href="{% url 'trips:trip_update_picture' trip.pk %}" class="btn btn-primary trip__card-button-width mb-1">Update picture</a>
+                    <a href="{% url 'markers:marker_list' trip.pk %}" class="btn btn-primary trip__card-button-width mb-1">Show Map</a>
+                    <a href="{% url 'trips:trip_delete' trip.pk %}" class="btn btn-outline-danger trip__card-button-width mb-1">Delete Trip</a>
                 </div>
             </div>
         </div>
@@ -81,41 +54,36 @@
             {% for trip_day in trip.prefetched_trip_days %}
                 <div class="col">
                     <div class="card">
-                        <div class="card-header text-muted text-center">
-                            Day details
-                        </div>
-                        <div class="card-body">
+                        <div class="card-header">
                             <h5 class="card-title text-center">{{ trip_day }}</h5>
                             <h6 class="text-center">{{ trip_day.date }}</h6>
-                            <hr class="trip__card-hr">
+                        </div>
+                        <div class="card-body">
                             {% if trip_day.notes %}
                                 <p class="card-text">{{ trip_day.notes }}</p>
                             {% else %}
                                 <p class="card-text text-muted text-center">There are no notes for the day yet.</p>
                             {% endif %}
-                            <div class="col text-end">
-                                <a href="{% url 'trips:trip_day_update' trip.pk trip_day.pk %}" type="button" class="btn btn-sm btn-outline-primary">Update notes</a>
-                            </div>
                         </div>
-                        <div class="card-header card-footer text-muted text-center">
-                            Activities
-                        </div>
-                        <ul class="list-group list-group-flush">
                             {% if trip_day.prefetched_activities %}
-                                {% for activity in trip_day.prefetched_activities %}
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <div class="d-inline"><span>{{ activity.title }}</span></div>
-                                        <div class="btn-group-vertical" role="group" aria-label="Activity buttons">
-                                            <a href="{% url 'trips:activity_update' trip.pk trip_day.pk activity.pk %}" type="button" class="btn btn-outline-secondary btn-sm">Update</a>
-                                            <a href="{% url 'trips:activity_delete' trip.pk trip_day.pk activity.pk %}" type="button" class="btn btn-outline-secondary btn-sm">Delete</a>
-                                        </div>
-                                    </li>
-                                {% endfor %}
+                                <ul class="list-group list-group-flush">
+                                    {% for activity in trip_day.prefetched_activities %}
+                                        <li class="trip__card-activity-item list-group-item d-flex justify-content-between align-items-center">
+                                            <div class="d-inline"><span>{{ activity.title }}</span></div>
+                                            <div class="btn-group-vertical" role="group" aria-label="Activity buttons">
+                                                <a href="{% url 'trips:activity_update' trip.pk trip_day.pk activity.pk %}" type="button" class="btn btn-outline-secondary btn-sm">Update</a>
+                                                <a href="{% url 'trips:activity_delete' trip.pk trip_day.pk activity.pk %}" type="button" class="btn btn-outline-secondary btn-sm">Delete</a>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
                             {% else %}
+                                <hr class="trip__card-day-hr">
+                                <br>
                                 <p class="card-text text-muted text-center">There are no activities for the day yet.</p>
                             {% endif %}
-                        </ul>
                         <div class="card-body text-end">
+                            <a href="{% url 'trips:trip_day_update' trip.pk trip_day.pk %}" type="button" class="btn btn-sm btn-outline-primary">Update notes</a>                        
                             <a href="{% url 'trips:activity_create' trip.pk trip_day.pk %}" type="button" class="btn btn-sm btn-outline-primary">Add activity</a>
                         </div>
                     </div>

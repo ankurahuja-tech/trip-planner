@@ -17,10 +17,21 @@
 
     {{ block.super }}
 
-    <p>Are you sure you want to delete this activity: {{ activity.title }} from {{ trip_day }} of {{ trip.title }} Trip?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button class="btn btn-danger" type="submit" value="Confirm">Confirm deletion</button>
-    </form>
+    <br>
+    
+    <div class="card form-max-width mx-auto">
+        <div class="card-header text-muted text-center">
+            Activity delete
+        </div>
+        <div class="card-body">
+            <p>Are you sure you want to delete this activity: <span class="fw-bolder">{{ activity.title }}</span> from <span class="fw-bolder">{{ activity.day }}</span> of <span class="fw-bolder">{{ activity.trip }}</span> trip?</p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="text-end">
+                    <button class="btn btn-danger" type="submit" value="Confirm">Confirm deletion</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
 {% endblock content %}

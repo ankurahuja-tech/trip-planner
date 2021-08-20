@@ -202,8 +202,8 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 LEAFLET_CONFIG = {
     "DEFAULT_CENTER": (54.372158, 18.638306),
-    "DEFAULT_ZOOM": 6,
-    "MIN_ZOOM": 1,
+    "DEFAULT_ZOOM": 2,
+    "MIN_ZOOM": 2,
     "MAX_ZOOM": 12,
     "DEFAULT_PRECISION": 6,
     "SCALE": "both",

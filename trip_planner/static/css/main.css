@@ -50,6 +50,7 @@ body {
 
 .base__content-min-height {
     min-height: 85vh;
+    background-color: var(--clr-bg-image-orange);
 }
 
 .base__top-image-bg {
@@ -91,6 +92,15 @@ body {
     max-width: 575px;
 }
 
+.content-card-max-width {
+    max-width: 720px;
+}
+
+.content-map-max-width {
+    max-width: 1024px;
+}
+
+
 /*==================== TRIPS ====================*/
 
 .trip__card-title a {
@@ -108,6 +118,42 @@ body {
 .trip__card-image {
     max-height: 100%;
     max-width: 100%;
+}
+
+.trip__card-button-width {
+    width: 9rem;
+}
+
+.trip__card-day-hr {
+    margin: 0;
+    opacity: 15%;
+}
+
+.trip__card-activity-item {
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    padding-right: .5rem;
+}
+
+/* https://kiranworkspace.com/ellipsis-to-multiline-text-in-css/ */
+.card__text-truncate-container p {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
+
+
+/*==================== TRIP PICTURE FORM ====================*/
+
+#div_id_picture .form-label {
+    display: none;
+}
+
+#id_picture {
+    display: block;
+    border: solid .075rem var(--clr-neutral-400);
+    width: 100%;
 }
 
 

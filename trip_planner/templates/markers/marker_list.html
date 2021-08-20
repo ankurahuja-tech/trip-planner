@@ -37,29 +37,35 @@
 {% block content %}
 
     {{ block.super }}
-    
-    {% leaflet_map "main_map" callback="window.map_init" %}
-    
-    <script type="text/javascript">
         
-        function map_init(map, options){
-            let southWest = L.latLng(-90, -180),
-                northEast = L.latLng(90, 180),
-                bounds = L.latLngBounds(southWest, northEast);
-            map.setMinZoom( map.getBoundsZoom(bounds, true));
+    <br>
 
-            let dataset = new L.GeoJSON.AJAX("{% url 'markers:api_trip_markers' trip_pk %}", {
-            onEachFeature: function(feature, layer) {
-            layer.bindPopup('<h6>'+feature.properties.name+'</h6><a href={% url "pages:home" %}'+'markers/trips/{{ trip_pk }}/update/'+feature.id+'>Update</a><span> | </span><a href={% url "pages:home" %}'+'markers/trips/{{ trip_pk }}/delete/'+feature.id+'>Delete</a>')
-            }
-            });
-            dataset.addTo(map)
-        }
+    <div class="content-map-max-width mx-auto">
+        {% leaflet_map "main_map" callback="window.map_init" %}
         
-    </script>
+        <script type="text/javascript">
+        
+            function map_init(map, options){
+                let southWest = L.latLng(-90, -180),
+                    northEast = L.latLng(90, 180),
+                    bounds = L.latLngBounds(southWest, northEast);
+                map.setMinZoom( map.getBoundsZoom(bounds, true));
+                let dataset = new L.GeoJSON.AJAX("{% url 'markers:api_trip_markers' trip_pk %}", {
+                onEachFeature: function(feature, layer) {
+                layer.bindPopup('<h6>'+feature.properties.name+'</h6><a href={% url "pages:home" %}'+'markers/trips/{{ trip_pk }}/update/'+feature.id+'>Update</a><span> | </span><a href={% url "pages:home" %}'+'markers/trips/{{ trip_pk }}/delete/'+feature.id+'>Delete</a>')
+                }
+                });
+                dataset.addTo(map)
+            }
+        
+        </script>
+        <br>
+        <div class="text-end">
+            <a href="{% url 'markers:marker_create' trip_pk %}" class="btn btn-primary">Add location marker</a>
+        </div>
+    </div>
 
     <br>
-    <a href="{% url 'markers:marker_create' trip_pk %}" class="btn btn-primary">Add location marker</a>
 
 {% endblock content %}
 

@@ -6,7 +6,6 @@ from django.urls import include, path
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
-    path("accounts/", include("trip_planner.accounts.urls", namespace="accounts")),
     path("", include("trip_planner.pages.urls", namespace="pages")),
     path("trips/", include("trip_planner.trips.urls", namespace="trips")),
     path("calendar/", include("trip_planner.calendars.urls", namespace="calendars")),

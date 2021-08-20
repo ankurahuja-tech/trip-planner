@@ -17,16 +17,29 @@
 {% block content %}
 
     {{ block.super }}
-    
-    <p>Already have an account? Then please <a href="{{ login_url }}">sign in</a>.</p>
 
-    <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-    {% csrf_token %}
-    {{ form|crispy }}
-    {% if redirect_field_value %}
-    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-    {% endif %}
-    <button class="btn btn-success" type="submit">Sign Up &raquo;</button>
-    </form>
+    <br>
 
+    <div class="card form-max-width mx-auto">
+        <div class="card-header text-center text-muted">
+            Sign up
+        </div>
+        <div class="card-body">
+            <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+                {% csrf_token %}
+                {{ form|crispy }}
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+                <div class="text-end">
+                    <button class="btn btn-primary" type="submit">Sign Up &raquo;</button>
+                </div>
+            </form>
+            <br>
+            <div class="text-end">
+                <p>Already have an account? <a class="btn btn-success" href="{{ login_url }}">Sign in!</a></p>
+            </div>
+        </div>
+    </div>
+<br>
 {% endblock %}
