@@ -10,7 +10,6 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
 ]
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 DATABASES = {
     "default": {
@@ -26,6 +25,20 @@ DATABASES = {
 INSTALLED_APPS += [
     "debug_toolbar",
 ]
+
+
+# E-mail
+EMAIL_BACKEND = env(
+    "DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+
+if EMAIL_BACKEND == "django.core.mail.backends.smtp.EmailBackend":
+    EMAIL_HOST = env("EMAIL_HOST")
+    EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
 # Django debug_toolbar
 MIDDLEWARE += [
