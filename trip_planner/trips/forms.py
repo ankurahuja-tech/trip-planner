@@ -4,8 +4,6 @@ from django import forms
 
 from .models import Activity, Trip, TripDay
 
-from crispy_forms.helper import FormHelper
-
 # Custom Widgets
 
 
@@ -51,13 +49,13 @@ class TripCreateForm(forms.ModelForm):
         # asserts that a given Trip's end date does not come before start date
         if start_date and end_date:
             if end_date < start_date:
-                self.add_error('end_date', "Trip end date cannot come before Trip start date.")
-        
+                self.add_error("end_date", "Trip end date cannot come before Trip start date.")
+
         # asserts that Trip's duration is not longer than 90 days
         max_trip_duration = datetime.timedelta(days=90)
         if (end_date - start_date) > max_trip_duration:
-            self.add_error('end_date', "This app version does not support Trip duration exceeding 90 days. Sorry!")
-        
+            self.add_error("end_date", "This app version does not support Trip duration exceeding 90 days. Sorry!")
+
         return cleaned_data
 
 
@@ -83,13 +81,13 @@ class TripUpdateForm(forms.ModelForm):
         # asserts that a given Trip's end date does not come before start date
         if start_date and end_date:
             if end_date < start_date:
-                self.add_error('end_date', "Trip end date cannot come before Trip start date.")
-        
+                self.add_error("end_date", "Trip end date cannot come before Trip start date.")
+
         # asserts that Trip's duration is not longer than 90 days
         max_trip_duration = datetime.timedelta(days=90)
         if (end_date - start_date) > max_trip_duration:
-            self.add_error('end_date', "This app version does not support Trip duration exceeding 90 days. Sorry!")
-        
+            self.add_error("end_date", "This app version does not support Trip duration exceeding 90 days. Sorry!")
+
         return cleaned_data
 
 

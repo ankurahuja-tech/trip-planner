@@ -38,5 +38,5 @@ INTERNAL_IPS = [
 
 # https://stackoverflow.com/questions/26898597/django-debug-toolbar-and-docker
 DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
+    "SHOW_TOOLBAR_CALLBACK": lambda request: DEBUG,
 }

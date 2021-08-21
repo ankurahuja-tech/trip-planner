@@ -86,7 +86,7 @@ def test_trip_create(client, user: AUTH_USER_MODEL) -> None:
     assert response.status_code == 302
     assert new_trip.notes == "Test notes"
     assert new_trip.user == user
-    
+
 
 # Trip Update View tests
 

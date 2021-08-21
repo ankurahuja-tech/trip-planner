@@ -3,10 +3,8 @@ import datetime
 import pytest
 
 from config.settings.base import AUTH_USER_MODEL
-
-from trip_planner.trips.models import Trip
 from trip_planner.markers.models import Marker
-
+from trip_planner.trips.models import Trip
 
 # ==============================================================================
 # FIXTURES
@@ -44,7 +42,10 @@ def marker(trip: Trip) -> Marker:
     Creates test marker.
     """
     marker = Marker.objects.create(
-        user=trip.user, trip=trip, name="New test marker", geom='{"type": "Point", "coordinates": [21.599464, 53.981935]}',
+        user=trip.user,
+        trip=trip,
+        name="New test marker",
+        geom='{"type": "Point", "coordinates": [21.599464, 53.981935]}',
     )
     return marker
 

@@ -1,7 +1,7 @@
 <div class="sidebar__topnav-max-height col-12 col-sm-3 col-lg-2 px-sm-2 px-0 bg-dark d-flex sticky-top">
                 <div class="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start px-3 pt-2 text-white">
                     <a href="{% url 'pages:home' %}" class="d-flex align-items-center pb-sm-3 mb-md-0 me-md-auto text-warning text-decoration-none">
-                        <span class="fs-4">T<span class="d-none d-sm-inline">ripNotes</span></span>
+                        <span class="fs-4">T<span class="d-none d-sm-inline">ripPlanner</span></span>
                     </a>
                     <ul class="nav nav-pills flex-sm-column flex-row flex-nowrap flex-shrink-1 flex-sm-grow-0 flex-grow-1 mb-sm-3 mb-0 justify-content-center align-items-center align-items-sm-start" id="menu">
                         <li class="nav-item">
@@ -18,7 +18,7 @@
                                 <i class="fs-5 bi-table"></i><span class="ms-1 d-none d-sm-inline fs-5">Calendar</span></a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link px-sm-0 px-2 link-light">
+                            <a href="{% url 'markers:marker_list_all_trips' %}" class="nav-link px-sm-0 px-2 link-light">
                                 <i class="fs-5 bi-map"></i><span class="ms-1 d-none d-sm-inline fs-5">Map</span></a>
                         </li>
                         <li>

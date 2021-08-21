@@ -5,7 +5,7 @@ from django.urls import resolve, reverse
 
 from config.settings.base import AUTH_USER_MODEL
 from trip_planner.markers.models import Marker
-from trip_planner.markers.views import MarkerListView
+from trip_planner.markers.views import MarkerListView, MarkerListViewAllTrips
 from trip_planner.trips.models import Trip
 
 # ==============================================================================
@@ -73,7 +73,7 @@ def test_marker_list_url_resolves_marker_list_view(client, trip: Trip) -> None:
     assert view.func.__name__ == MarkerListView.as_view().__name__
 
 
-def test_trip_detail_permission_restriction_wrong_user(client, trip: Trip, wrong_user: AUTH_USER_MODEL) -> None:
+def test_marker_list_permission_restriction_wrong_user(client, trip: Trip, wrong_user: AUTH_USER_MODEL) -> None:
     params = {"trip_pk": str(trip.pk)}
     response = client.get(reverse("markers:marker_list", kwargs=params))
 
@@ -103,3 +103,26 @@ def test_marker_create_permission_restriction_wrong_user(client, trip: Trip, wro
     response = client.get(reverse("markers:marker_create", kwargs=params))
 
     assert response.status_code == 403
+
+
+# Marker List All Trips View tests
+
+
+def test_marker_list_all_trips_url_dispatcher(client, user: AUTH_USER_MODEL) -> None:
+    response = client.get(reverse("markers:marker_list_all_trips"))
+    marker_list_all_trips_view_template_name = "markers/marker_list_all_trips.html"
+
+    assert response.status_code == 200
+    assert marker_list_all_trips_view_template_name in response.template_name
+
+
+def test_marker_list_all_trips_url(client, user: AUTH_USER_MODEL) -> None:
+    response = client.get("/markers/trips/")
+
+    assert response.status_code == 200
+
+
+def test_marker_list_all_trips_url_resolves_marker_list_view(client, user: AUTH_USER_MODEL) -> None:
+    view = resolve("/markers/trips/")
+
+    assert view.func.__name__ == MarkerListViewAllTrips.as_view().__name__

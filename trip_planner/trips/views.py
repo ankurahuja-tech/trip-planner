@@ -12,11 +12,10 @@ from .forms import (
     ActivityUpdateForm,
     TripCreateForm,
     TripDayUpdateForm,
-    TripUpdateFormPicture,
     TripUpdateForm,
+    TripUpdateFormPicture,
 )
 from .models import Activity, Trip, TripDay
-
 
 # Trip Views
 

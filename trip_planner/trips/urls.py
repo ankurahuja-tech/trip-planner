@@ -26,6 +26,14 @@ urlpatterns = [
     path("<int:trip_pk>/days/<int:pk>/update/", TripDayUpdateView.as_view(), name="trip_day_update"),
     # Activity urls
     path("<int:trip_pk>/days/<int:pk>/add-activity/", ActivityCreateView.as_view(), name="activity_create"),
-    path("<int:trip_pk>/days/<int:trip_day_pk>/activities/<int:pk>/update/", ActivityUpdateView.as_view(), name="activity_update"),
-    path("<int:trip_pk>/days/<int:trip_day_pk>/activities/<int:pk>/delete/", ActivityDeleteView.as_view(), name="activity_delete"),
+    path(
+        "<int:trip_pk>/days/<int:trip_day_pk>/activities/<int:pk>/update/",
+        ActivityUpdateView.as_view(),
+        name="activity_update",
+    ),
+    path(
+        "<int:trip_pk>/days/<int:trip_day_pk>/activities/<int:pk>/delete/",
+        ActivityDeleteView.as_view(),
+        name="activity_delete",
+    ),
 ]

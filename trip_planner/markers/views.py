@@ -9,7 +9,7 @@ from trip_planner.trips.models import Trip
 from .forms import MarkerCreateForm, MarkerUpdateForm
 from .models import Marker
 
-# Create your views here.
+# Single Trip Views
 
 
 class MarkerListView(LoginRequiredMixin, UserPassesOwnerTestMixin, TemplateView):
@@ -69,3 +69,11 @@ class MarkerDeleteView(LoginRequiredMixin, UserPassesOwnerTestMixin, DeleteView)
     def get_success_url(self) -> str:
         trip_pk = self.kwargs["trip_pk"]
         return reverse_lazy("markers:marker_list", kwargs={"trip_pk": trip_pk})
+
+
+# All Trips Views
+
+
+class MarkerListViewAllTrips(LoginRequiredMixin, TemplateView):
+
+    template_name = "markers/marker_list_all_trips.html"
