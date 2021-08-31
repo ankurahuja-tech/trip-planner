@@ -57,6 +57,8 @@ THIRD_PARTY_APPS = [
     "leaflet",
     # django-imagekit
     "imagekit",
+    # django-storages
+    "storages",
 ]
 
 LOCAL_APPS = [
@@ -155,11 +157,37 @@ USE_L10N = True
 USE_TZ = True
 
 # ==============================================================================
-# STATIC FILES SETTINGS
+# STATIC AND MEDIA FILES SETTINGS
 # ==============================================================================
 
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
+USE_S3 = env.bool("USE_S3", True)
+
+if USE_S3:
+    # AWS S3 settings
+    AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+    AWS_S3_REGION_NAME = "eu-central-1"
+    AWS_S3_SIGNATURE_VERSION = "s3v4"
+    AWS_DEFAULT_ACL = None  # options: 'public-read' / 'public-read-write' / None (which is default)
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+    AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}  # one day
+    # S3 static settings
+    STATIC_LOCATION = "static"
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/"
+    STATICFILES_STORAGE = "config.storage_backends.StaticStorage"
+    # S3 public media settings
+    PUBLIC_MEDIA_LOCATION = "media"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/"
+    DEFAULT_FILE_STORAGE = "config.storage_backends.PublicMediaStorage"
+else:
+    # static settings
+    STATIC_URL = "/static/"
+    STATIC_ROOT = BASE_DIR / "staticfiles"
+    # media settings
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = APPS_DIR / "media"
+
 STATICFILES_DIRS = [
     APPS_DIR / "static",
 ]
@@ -168,13 +196,6 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
-
-# ==============================================================================
-# MEDIA FILES SETTINGS
-# ==============================================================================
-
-MEDIA_URL = "/media/"
-MEDIA_ROOT = APPS_DIR / "media"
 
 # ==============================================================================
 # THIRD-PARTY SETTINGS

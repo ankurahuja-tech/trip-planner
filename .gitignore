@@ -141,6 +141,7 @@ cython_debug/
 
 # others
 notes.txt
+working-static/
 
 # Django specific:
 staticfiles/
