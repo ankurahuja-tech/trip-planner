@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import environ
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 APPS_DIR = BASE_DIR / "trip_planner"
@@ -127,6 +128,10 @@ DATABASES = {
         "PORT": env("DB_PORT"),
     }
 }
+
+DATABASE_URL = env('DATABASE_URL')
+db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500, ssl_require=True)
+DATABASES['default'].update(db_from_env)
 
 
 # ==============================================================================
