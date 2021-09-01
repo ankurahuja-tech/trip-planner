@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import environ
-import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 APPS_DIR = BASE_DIR / "trip_planner"
@@ -118,21 +117,6 @@ TEMPLATES = [
         },
     },
 ]
-
-# ==============================================================================
-# DATABASES SETTINGS
-# ==============================================================================
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.contrib.gis.db.backends.postgis",
-        "NAME": env("DB_NAME"),
-        "USER": env("DB_USER"),
-        "PASSWORD": env("DB_PASSWORD"),
-        "HOST": env("DB_HOST"),
-        "PORT": env("DB_PORT"),
-    }
-}
 
 
 # ==============================================================================

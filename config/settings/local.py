@@ -8,6 +8,17 @@ INSTALLED_APPS += [
     "debug_toolbar",
 ]
 
+# Database
+DATABASES = {
+    "default": {
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
+        "NAME": env("DB_NAME"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASSWORD"),
+        "HOST": env("DB_HOST"),
+        "PORT": env("DB_PORT"),
+    }
+}
 
 # E-mail
 EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
