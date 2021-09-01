@@ -30,6 +30,9 @@ RUN pip install -r /app/requirements.txt
 # Copy project files to docker image
 COPY . /app
 
+# collect static files
+RUN python manage.py collectstatic --noinput
+
 # add and run as non-root user with ownership of /app directory
 RUN useradd -m user && \
     chown user /app

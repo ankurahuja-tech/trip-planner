@@ -84,6 +84,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -163,10 +164,31 @@ USE_L10N = True
 USE_TZ = True
 
 # ==============================================================================
+# STATIC FILES SETTINGS
+# ==============================================================================
+
+USE_WHITENOISE = env.bool("USE_WHITENOISE", default=False)
+
+if USE_WHITENOISE:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_URL = "/static/"
+
+STATICFILES_DIRS = [
+    APPS_DIR / "static",
+]
+
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
+
+# ==============================================================================
 # STATIC AND MEDIA FILES SETTINGS
 # ==============================================================================
 
-USE_S3 = env.bool("USE_S3", False)
+USE_S3 = env.bool("USE_S3", default=False)
 
 if USE_S3:
     # AWS S3 settings
@@ -178,30 +200,14 @@ if USE_S3:
     AWS_DEFAULT_ACL = None  # options: 'public-read' / 'public-read-write' / None (which is default)
     AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
     AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}  # one day
-    # S3 static settings
-    STATIC_LOCATION = "static"
-    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/"
-    STATICFILES_STORAGE = "config.storage_backends.StaticStorage"
     # S3 public media settings
     PUBLIC_MEDIA_LOCATION = "media"
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/"
     DEFAULT_FILE_STORAGE = "config.storage_backends.PublicMediaStorage"
 else:
-    # static settings
-    STATIC_URL = "/static/"
-    STATIC_ROOT = BASE_DIR / "staticfiles"
     # media settings
     MEDIA_URL = "/media/"
     MEDIA_ROOT = APPS_DIR / "media"
-
-STATICFILES_DIRS = [
-    APPS_DIR / "static",
-]
-
-STATICFILES_FINDERS = [
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-]
 
 # ==============================================================================
 # THIRD-PARTY SETTINGS
