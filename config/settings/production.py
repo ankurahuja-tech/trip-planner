@@ -4,8 +4,6 @@ ALLOWED_HOSTS += env("ALLOWED_HOSTS")
 
 DEBUG = env('DJANGO_DEBUG')
 
-SECRET_KEY = env('DJANGO_SECRET_KEY')
-
 DATABASES = {
     'default': env.db(),
 }

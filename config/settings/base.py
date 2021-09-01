@@ -18,7 +18,7 @@ env = environ.Env()
 # CORE SETTINGS
 # ==============================================================================
 
-SECRET_KEY = env("DJANGO_SECRET_KEY", default="django-insecure$(c%=,/$8C6ku#y+}aw.Sd)2")
+SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 DEBUG = env.bool("DJANGO_DEBUG", default=False)
 
