@@ -1,1 +1,4 @@
 -r base.txt # includes the base.txt requirements file
+
+# Gunicorn
+gunicorn==20.1.0; python_version >= "3.5"

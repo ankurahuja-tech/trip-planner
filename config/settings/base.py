@@ -15,7 +15,7 @@ environ.Env.read_env(env_file=".env")
 
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
-DEBUG = env.bool("DJANGO_DEBUG", False)
+DEBUG = env.bool("DJANGO_DEBUG", default=False)
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -26,6 +26,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 SITE_ID = 1
 
 AUTH_USER_MODEL = "accounts.CustomUser"
+
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "0.0.0.0",
+]
 
 # ==============================================================================
 # APPS SETTINGS
@@ -160,7 +166,7 @@ USE_TZ = True
 # STATIC AND MEDIA FILES SETTINGS
 # ==============================================================================
 
-USE_S3 = env.bool("USE_S3", True)
+USE_S3 = env.bool("USE_S3", False)
 
 if USE_S3:
     # AWS S3 settings
