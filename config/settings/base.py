@@ -10,16 +10,16 @@ APPS_DIR = BASE_DIR / "trip_planner"
 env = environ.Env()
 
 # https://github.com/joke2k/django-environ/issues/243
-try:
-    environ.Env.read_env(env_file=".env")
-except FileNotFoundError:
-    pass
+# try:
+#     environ.Env.read_env(env_file=".env")
+# except FileNotFoundError:
+#     pass
 
 # ==============================================================================
 # CORE SETTINGS
 # ==============================================================================
 
-SECRET_KEY = env("DJANGO_SECRET_KEY")
+SECRET_KEY = env("DJANGO_SECRET_KEY", default="django-insecure$(c%=,/$8C6ku#y+}aw.Sd)2")
 
 DEBUG = env.bool("DJANGO_DEBUG", default=False)
 
@@ -133,10 +133,6 @@ DATABASES = {
         "PORT": env("DB_PORT"),
     }
 }
-
-DATABASE_URL = env('DATABASE_URL')
-db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500, ssl_require=True)
-DATABASES['default'].update(db_from_env)
 
 
 # ==============================================================================
