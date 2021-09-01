@@ -8,7 +8,12 @@ APPS_DIR = BASE_DIR / "trip_planner"
 
 # django-environ
 env = environ.Env()
-environ.Env.read_env(env_file=".env")
+
+# https://github.com/joke2k/django-environ/issues/243
+try:
+    environ.Env.read_env(env_file=".env")
+except FileNotFoundError:
+    pass
 
 # ==============================================================================
 # CORE SETTINGS
