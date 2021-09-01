@@ -64,11 +64,9 @@
                     <p class="alert alert-warning" role="alert"><strong>Warning:</strong> You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc.</p>
 
                     {% endif %}
-                </div>
 
-                <div class="card-header card-footer">
-                </div>
-                <div class="card-body">
+                    <hr class="trip__card-hr">
+
                     {% if can_add_email %}
                         <p>Add new e-mail address associated with your account:</p>
 
@@ -89,13 +87,13 @@
                     Change password
                 </div>
                 <div class="card-body">
-                    <a href="{% url 'account_change_password' %}" class="btn btn-primary btn-lg" type="button">Change password</a>
+                    <a href="{% url 'account_change_password' %}" class="btn btn-primary" type="button">Change password</a>
                 </div>
                 <div class="card-header card-footer text-muted">
                     Forgot your password?
                 </div>
                 <div class="card-body">
-                    <a href="{% url 'account_reset_password' %}" class="btn btn-outline-danger btn-lg" type="button">Reset your password</a>
+                    <a href="{% url 'account_reset_password' %}" class="btn btn-outline-danger" type="button">Reset your password</a>
                 </div>
             </div>
         </div>

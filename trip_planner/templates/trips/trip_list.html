@@ -21,6 +21,11 @@
     <br>
 
     <div class="container content-max-width g-0">
+        <div class="d-grid gap-2 col-12 col-sm-8 col-md-6 mx-auto">
+            <a href="{% url 'trips:trip_create' %}" class="btn btn-outline-primary btn-lg" type="button"><strong>CREATE A NEW TRIP!</strong></a>
+        </div>
+        <br>
+        
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
             {% for trip in trip_list %}
             <div class="card__max-width col">
@@ -54,10 +59,6 @@
         </div>
 
         <br><br>
-        <div class="d-grid gap-2 col-12 col-sm-8 col-md-6 mx-auto">
-            <a href="{% url 'trips:trip_create' %}" class="btn btn-primary btn-lg" type="button"><strong>CREATE A NEW TRIP!</strong></a>
-        </div>
-        <br>
     </div>
     
 

@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     volumes:
-      # only to be user in development - https://www.youtube.com/watch?v=9uweLP9FV10 10:35 https://www.youtube.com/watch?v=mScd-Pc_pX0 18:30
+      # only to be used in development - https://www.youtube.com/watch?v=9uweLP9FV10 10:35 https://www.youtube.com/watch?v=mScd-Pc_pX0 18:30
       - .:/app
     ports:
       - "8000:8000"
@@ -27,7 +27,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgis_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data/
     env_file:
       - .env
     environment:
@@ -43,4 +43,4 @@ networks:
     driver: bridge
 
 volumes:
-  postgis_data:
+  postgres_data:
