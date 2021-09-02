@@ -2,8 +2,6 @@ from .base import *
 
 ALLOWED_HOSTS += env("ALLOWED_HOSTS")
 
-DEBUG = env('DJANGO_DEBUG')
-
 DATABASES = {
     'default': env.db(),
 }
