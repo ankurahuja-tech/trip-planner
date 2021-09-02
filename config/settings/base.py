@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from django.core.management.utils import get_random_secret_key
+
 import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -18,7 +20,7 @@ env = environ.Env()
 # CORE SETTINGS
 # ==============================================================================
 
-SECRET_KEY = env("DJANGO_SECRET_KEY")
+SECRET_KEY = env("DJANGO_SECRET_KEY", default=get_random_secret_key())
 
 DEBUG = env.bool("DJANGO_DEBUG", default=False)
 
@@ -160,7 +162,10 @@ USE_TZ = True
 USE_WHITENOISE = env.bool("USE_WHITENOISE", default=False)
 
 if USE_WHITENOISE:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+    # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    # https://stackoverflow.com/questions/44160666/valueerror-missing-staticfiles-manifest-entry-for-favicon-ico/51060143#51060143
+    # WHITENOISE_MANIFEST_STRICT = False
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = "/static/"

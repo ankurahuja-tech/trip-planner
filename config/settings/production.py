@@ -1,23 +1,33 @@
 from .base import *
 
-ALLOWED_HOSTS += env("ALLOWED_HOSTS")
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "0.0.0.0",
+    ".herokuapp.com"
+]
 
-DATABASES = {
-    'default': env.db(),
-}
-DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+USE_DB = env.bool("USE_DB", default=False)
+
+if USE_DB:
+    DATABASES = {
+        'default': env.db(),
+    }
+    # https://stackoverflow.com/questions/12538510/getting-databaseoperations-object-has-no-attribute-geo-db-type-error-when-do
+    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 # ==============================================================================
 # EMAIL SETTINGS
 # ==============================================================================
+EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
 
-EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND")
-EMAIL_HOST = env("EMAIL_HOST")
-EMAIL_HOST_USER = env("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+if EMAIL_BACKEND != "django.core.mail.backends.console.EmailBackend":
+    EMAIL_HOST = env("EMAIL_HOST")
+    EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 # ==============================================================================
