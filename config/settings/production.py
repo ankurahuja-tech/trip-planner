@@ -5,6 +5,7 @@ ALLOWED_HOSTS += env("ALLOWED_HOSTS")
 DATABASES = {
     'default': env.db(),
 }
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 # ==============================================================================
 # EMAIL SETTINGS
