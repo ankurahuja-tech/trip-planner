@@ -144,7 +144,6 @@ notes.txt
 working-static/
 
 # Django specific:
-staticfiles/
 media/
 
 .vscode/
