@@ -16,7 +16,9 @@
     <br>
     
     <div class="card content-card-max-width mx-auto">
-        <h5 class="card-header text-center">Welcome!</h5>
+        <h5 class="card-header text-center">
+            Welcome!
+        </h5>
         <div class="card-body">
             <ul class="list-unstyled">
                 <li>Trip Planner app is a convenient way to plan your future trips and document your past trips. <br> You can:
@@ -30,10 +32,28 @@
                     </ul>
                 </li>
             </ul>
-            <br>
-            <div class="d-grid gap-2 col-12 col-sm-8 col-md-6 mx-auto">
-                <a href="{% url 'trips:trip_create' %}" class="btn btn-outline-primary btn-lg" type="button"><strong>CREATE A NEW TRIP!</strong></a>
-            </div>
+        
+            <hr class="trip__card-hr">
+            {% if user.is_authenticated %}
+                <div class="container">
+                    <div class="d-grid gap-2 d-md-flex">
+                        <a href="{% url 'trips:trip_list' %}" class="btn btn-primary btn-lg col-md-4" type="button"><i class="fs-5 bi-bicycle"></i> Trips</a>
+                        <a href="{% url 'calendars:calendar' %}" class="btn btn-primary btn-lg col-md-4" type="button"><i class="fs-5 bi-table"></i> Calendar</a>
+                        <a href="{% url 'markers:marker_list_all_trips' %}" class="btn btn-primary btn-lg col-md-4" type="button"><i class="fs-5 bi-map"></i> Map</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="text-end">
+                    <p>Don't have an account yet? <a class="btn btn-primary" href="{% url 'account_signup' %}">Sign up for free now! &raquo;</a></p>
+                    <div class="text-end">
+                        Already have an account?
+                        <span>
+                            <a class="btn btn-outline-primary" href="{% url 'account_login' %}">Login</a>
+                            <a class="btn btn-outline-danger" href="{% url 'account_reset_password' %}">Forgot password?</a>
+                        </span>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
     <br>

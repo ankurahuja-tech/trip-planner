@@ -43,7 +43,9 @@
             </h5>
             <div class="card-body">
                 <p>On this page you can view all map location markers for all of your trips.</p>
-                <p>You can create and view markers for specific trips on your Trips page.</p>
+                <div class="d-grid gap-2 col-12 col-sm-8 col-md-6 mx-auto">
+                    <a href="{% url 'trips:trip_create' %}" class="btn btn-outline-primary btn-lg" type="button"><strong>CREATE A NEW TRIP!</strong></a>
+                </div>
             </div>
         </div>
 

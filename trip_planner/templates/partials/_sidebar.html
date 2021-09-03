@@ -15,15 +15,15 @@
                         </li>
                         <li>
                             <a href="{% url 'calendars:calendar' %}" class="nav-link px-sm-0 px-2 link-light">
-                                <i class="fs-5 bi-table"></i><span class="ms-1 d-none d-sm-inline fs-5">Calendar</span></a>
+                                <i class="fs-5 bi-calendar"></i><span class="ms-1 d-none d-sm-inline fs-5">Calendar</span></a>
                         </li>
                         <li>
                             <a href="{% url 'markers:marker_list_all_trips' %}" class="nav-link px-sm-0 px-2 link-light">
                                 <i class="fs-5 bi-map"></i><span class="ms-1 d-none d-sm-inline fs-5">Map</span></a>
                         </li>
                         <li>
-                            <a href="{% url 'account_email' %}" class="nav-link px-sm-0 px-2 link-light">
-                                <i class="fs-5 bi-person-fill"></i><span class="ms-1 d-none d-sm-inline fs-5">E-mails</span></a>
+                            <a href="#" class="nav-link px-sm-0 px-2 link-light disabled">
+                                <i class="fs-5 bi-envelope"></i><span class="ms-1 d-none d-sm-inline fs-5">Contact</span></a>
                         </li>
                     </ul>
                     <div class="dropdown py-sm-4 mt-sm-2 ms-auto ms-sm-0 flex-shrink-1">
@@ -40,8 +40,8 @@
                                 </li>
                                 <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
                             {% else %}
-                                <li><a class="dropdown-item" href="{{ login_url }}">Login</a></li>
-                                <li><a class="dropdown-item" href="{{ signup_url }}">Sign Up</a></li>
+                                <li><a class="dropdown-item" href="{% url 'account_login' %}">Login</a></li>
+                                <li><a class="dropdown-item" href="{% url 'account_signup' %}">Sign Up</a></li>
                                 <li><a class="dropdown-item" href="{% url 'account_reset_password' %}">Reset Password</a></li>
                             {% endif %}
                         </ul>
