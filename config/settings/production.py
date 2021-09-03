@@ -47,3 +47,14 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 SESSION_COOKIE_SECURE = True
+
+
+# ==============================================================================
+# STATIC FILES SETTINGS
+# ==============================================================================
+USE_WHITENOISE = env.bool("USE_WHITENOISE", default=False)
+
+if USE_WHITENOISE:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+    whitenoise_middleware_index = MIDDLEWARE.index("django.middleware.security.SecurityMiddleware") + 1
+    MIDDLEWARE.insert(whitenoise_middleware_index, "whitenoise.middleware.WhiteNoiseMiddleware")

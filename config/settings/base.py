@@ -10,11 +10,10 @@ APPS_DIR = BASE_DIR / "trip_planner"
 # django-environ
 env = environ.Env()
 
-# https://github.com/joke2k/django-environ/issues/243
-# try:
-#     environ.Env.read_env(env_file=".env")
-# except FileNotFoundError:
-#     pass
+try:
+    environ.Env.read_env(env_file=".env")
+except FileNotFoundError:
+    pass
 
 # ==============================================================================
 # CORE SETTINGS
@@ -91,7 +90,6 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware', # whitenoise
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -158,14 +156,6 @@ USE_TZ = True
 # ==============================================================================
 # STATIC FILES SETTINGS
 # ==============================================================================
-
-USE_WHITENOISE = env.bool("USE_WHITENOISE", default=False)
-
-if USE_WHITENOISE:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-    # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    # https://stackoverflow.com/questions/44160666/valueerror-missing-staticfiles-manifest-entry-for-favicon-ico/51060143#51060143
-    # WHITENOISE_MANIFEST_STRICT = False
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = "/static/"
