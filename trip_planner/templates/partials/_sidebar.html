@@ -23,7 +23,7 @@
                         </li>
                         <li>
                             <a href="{% url 'account_email' %}" class="nav-link px-sm-0 px-2 link-light">
-                                <i class="fs-5 bi-person-fill"></i><span class="ms-1 d-none d-sm-inline fs-5">Profile</span></a>
+                                <i class="fs-5 bi-person-fill"></i><span class="ms-1 d-none d-sm-inline fs-5">E-mails</span></a>
                         </li>
                     </ul>
                     <div class="dropdown py-sm-4 mt-sm-2 ms-auto ms-sm-0 flex-shrink-1">
@@ -31,13 +31,19 @@
                             <i class="fs-5 bi-grid"></i><span class="d-none d-sm-inline mx-1 fs-5">Account</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="{% url 'account_email' %}">Profile</a></li>
-                            <li><a class="dropdown-item" href="{% url 'account_change_password' %}">Change Password</a></li>
-                            <li><a class="dropdown-item" href="{% url 'account_reset_password' %}">Reset Password</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+                            {% if user.is_authenticated %}
+                                <li><a class="dropdown-item" href="{% url 'account_email' %}">E-mails</a></li>
+                                <li><a class="dropdown-item" href="{% url 'account_change_password' %}">Change Password</a></li>
+                                <li><a class="dropdown-item" href="{% url 'account_reset_password' %}">Reset Password</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+                            {% else %}
+                                <li><a class="dropdown-item" href="{{ login_url }}">Login</a></li>
+                                <li><a class="dropdown-item" href="{{ signup_url }}">Sign Up</a></li>
+                                <li><a class="dropdown-item" href="{% url 'account_reset_password' %}">Reset Password</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

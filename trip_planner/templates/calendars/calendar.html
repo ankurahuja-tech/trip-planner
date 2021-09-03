@@ -19,19 +19,31 @@
     Calendar
 {% endblock header %}
 
-{% block description %}
-    Calendar view.
-{% endblock description %}
-
 {% block content %}
 
     {{ block.super }}
 
     <br>
     
+    <div class="card content-card-max-width mx-auto">
+        <h5 class="card-header text-center">
+            Trips Calendar
+        </h5>
+        <div class="card-body">
+            <p>On this page you can view your trips and activities on a calendar.</p>
+            <div class="d-grid gap-2 col-12 col-sm-8 col-md-6 mx-auto">
+                <a href="{% url 'trips:trip_create' %}" class="btn btn-outline-primary btn-lg" type="button"><strong>CREATE A NEW TRIP!</strong></a>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
     <div class="fullcalendar__outer-container">
         <div id="calendar"></div>
     </div>
+    
+    <br>
     
 {% endblock content %}
 

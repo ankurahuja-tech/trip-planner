@@ -27,24 +27,28 @@
 {% endblock header %}
 
 
-{% block description %}
-    Add markers to your map.
-{% endblock description %}
-
-
 {% block content %}
 
     {{ block.super }}
     
     <div class="content-map-max-width mx-auto">
-        <form method="POST">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <div class="text-end">
-                <button class="btn btn-primary" type="submit">Create marker</button>
+        <div class="card form-max-width mx-auto">
+            <h5 class="card-header text-center">
+                Create a map marker
+            </h5>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="text-end">
+                        <button class="btn btn-primary" type="submit">Create marker</button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
+
+    <br>
 
 {% endblock content %}
 

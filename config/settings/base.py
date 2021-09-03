@@ -170,7 +170,7 @@ STATICFILES_FINDERS = [
 ]
 
 # ==============================================================================
-# STATIC AND MEDIA FILES SETTINGS
+# MEDIA FILES SETTINGS
 # ==============================================================================
 
 USE_S3 = env.bool("USE_S3", default=False)

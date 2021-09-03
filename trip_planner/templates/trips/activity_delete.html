@@ -9,10 +9,6 @@
     Trips
 {% endblock header %}
 
-{% block description %}
-    Delete an activity.
-{% endblock description %}
-
 {% block content %}
 
     {{ block.super }}
@@ -20,11 +16,13 @@
     <br>
     
     <div class="card form-max-width mx-auto">
-        <div class="card-header text-muted text-center">
-            Activity delete
-        </div>
+        <h5 class="card-header text-center">
+            Delete the trip day activity
+        </h5>
         <div class="card-body">
-            <p>Are you sure you want to delete this activity: <span class="fw-bolder">{{ activity.title }}</span> from <span class="fw-bolder">{{ activity.day }}</span> of <span class="fw-bolder">{{ activity.trip }}</span> trip?</p>
+            <p>Are you sure you want to delete this activity:
+            <br><span class="fw-bolder">{{ activity.title }}</span>
+            <br>from <span class="fw-bolder">{{ activity.day }}</span> of <span class="fw-bolder">{{ activity.trip }}</span> trip?</p>
             <form method="post">
                 {% csrf_token %}
                 <div class="text-end">

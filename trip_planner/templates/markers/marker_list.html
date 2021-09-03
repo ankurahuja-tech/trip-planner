@@ -29,18 +29,30 @@
 {% endblock header %}
 
 
-{% block description %}
-    Map view.
-{% endblock description %}
-
-
 {% block content %}
 
     {{ block.super }}
         
     <br>
 
+
+
     <div class="content-map-max-width mx-auto">
+    
+        <div class="card content-card-max-width mx-auto">
+            <h5 class="card-header text-center">
+                Trip Map
+            </h5>
+            <div class="card-body">
+                <p>On this page you can add and view map location markers for your trip.</p>
+                <div class="text-end">
+                    <a href="{% url 'markers:marker_create' trip_pk %}" class="btn btn-outline-primary">Add location marker</a>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
         {% leaflet_map "main_map" callback="window.map_init" %}
         
         <script type="text/javascript">
@@ -59,10 +71,6 @@
             }
         
         </script>
-        <br>
-        <div class="text-end">
-            <a href="{% url 'markers:marker_create' trip_pk %}" class="btn btn-primary">Add location marker</a>
-        </div>
     </div>
 
     <br>

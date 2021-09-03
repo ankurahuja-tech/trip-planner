@@ -10,10 +10,6 @@
     Trips
 {% endblock header %}
 
-{% block description %}
-    Update a trip.
-{% endblock description %}
-
 {% block content %}
 
     {{ block.super }}
@@ -21,16 +17,15 @@
     <br>
     
     <div class="card form-max-width mx-auto">
-        <div class="card-header text-muted text-center">
-            Trip Day notes
-        </div>
+        <h5 class="card-header text-center">
+            Update trip details
+        </h5>
         <div class="card-body">
-            <p>You can update the details of your trip below:</p>
             <form class="form-max-width mx-auto" method="post">
                 {% csrf_token %}
                 {{ form|crispy }}
                 <div class="text-end">
-                    <button class="btn btn-primary" type="submit">Update Trip details</button>
+                    <button class="btn btn-primary" type="submit">Update details</button>
                 </div>
             </form>
         </div>

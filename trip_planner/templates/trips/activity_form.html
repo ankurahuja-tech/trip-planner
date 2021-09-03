@@ -10,10 +10,6 @@
     Trips
 {% endblock header %}
 
-{% block description %}
-    Create a trip day activity.
-{% endblock description %}
-
 {% block content %}
 
     {{ block.super }}
@@ -21,12 +17,10 @@
     <br>
     
     <div class="card form-max-width mx-auto">
-        <div class="card-header text-muted text-center">
-            Create activity
-        </div>
+        <h5 class="card-header text-center">
+            Create a trip day activity
+        </h5>
         <div class="card-body">
-            <p>Please enter a short description and time of the activity:</p>
-            <br>
             <form class="form-max-width mx-auto" method="post">
                 {% csrf_token %}
                 {{ form|crispy }}

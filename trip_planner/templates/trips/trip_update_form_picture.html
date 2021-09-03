@@ -10,10 +10,6 @@
     Trips
 {% endblock header %}
 
-{% block description %}
-    Update a trip picture.
-{% endblock description %}
-
 {% block content %}
 
     {{ block.super }}
@@ -21,11 +17,10 @@
     <br>
 
     <div class="card form-max-width mx-auto">
-        <div class="card-header text-center">
-            Picture upload
-        </div>
+        <h5 class="card-header text-center">
+            Update trip picture
+        </h5>
         <div class="card-body">
-            <p>You can update your trip picture below:</p>
             <br>
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}

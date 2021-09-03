@@ -10,10 +10,6 @@
     Account
 {% endblock header %}
 
-{% block description %}
-    Login.
-{% endblock description %}
-
 {% block content %}
 
     {{ block.super }}
@@ -21,9 +17,9 @@
     <br>
 
     <div class="card form-max-width mx-auto">
-        <div class="card-header text-center text-muted">
+        <h5 class="card-header text-center">
             Login
-        </div>
+        </h5>
         <div class="card-body">            
             <form class="login" method="POST" action="{% url 'account_login' %}">
                 {% csrf_token %}

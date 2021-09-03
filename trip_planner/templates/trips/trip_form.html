@@ -10,22 +10,25 @@
     Trips
 {% endblock header %}
 
-{% block description %}
-    Create a trip.
-{% endblock description %}
-
 {% block content %}
 
     {{ block.super }}
     
     <br>
 
-    <p>Please enter the details of your trip below:</p>
-    <br>
-    <form class="form-max-width mx-auto" method="post">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button class="btn btn-primary" type="submit">Create trip</button>
-    </form>
+    <div class="card form-max-width mx-auto">
+        <h5 class="card-header text-center">
+            Create a trip
+        </h5>
+        <div class="card-body">
+            <form class="form-max-width mx-auto" method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="text-end">
+                    <button class="btn btn-primary" type="submit">Create trip</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
 {% endblock content %}

@@ -32,8 +32,3 @@ RUN pip install -r /app/requirements/local.txt
 
 # Copy project files to docker image
 COPY . /app
-
-# add and run as non-root user with ownership of /app directory
-RUN useradd -m user && \
-    chown user /app
-USER user

@@ -10,10 +10,6 @@
     Account
 {% endblock header %}
 
-{% block description %}
-    Sign Up.
-{% endblock description %}
-
 {% block content %}
 
     {{ block.super }}
@@ -21,9 +17,9 @@
     <br>
 
     <div class="card form-max-width mx-auto">
-        <div class="card-header text-center text-muted">
+        <h5 class="card-header text-center">
             Sign up
-        </div>
+        </h5>
         <div class="card-body">
             <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
                 {% csrf_token %}
@@ -41,5 +37,7 @@
             </div>
         </div>
     </div>
-<br>
-{% endblock %}
+    
+    <br>
+
+{% endblock content %}

@@ -10,10 +10,6 @@
     Trips
 {% endblock header %}
 
-{% block description %}
-    Trips page.
-{% endblock description %}
-
 {% block content %}
 
     {{ block.super }}
@@ -21,39 +17,52 @@
     <br>
 
     <div class="container content-max-width g-0">
-        <div class="d-grid gap-2 col-12 col-sm-8 col-md-6 mx-auto">
-            <a href="{% url 'trips:trip_create' %}" class="btn btn-outline-primary btn-lg" type="button"><strong>CREATE A NEW TRIP!</strong></a>
+        <div class="card content-card-max-width mx-auto">
+            <h5 class="card-header text-center">
+                All Trips
+            </h5>
+            <div class="card-body">
+                <p>On this page you can create and view all your trips. Have fun!</p>
+                <div class="d-grid gap-2 col-12 col-sm-8 col-md-6 mx-auto">
+                    <a href="{% url 'trips:trip_create' %}" class="btn btn-outline-primary btn-lg" type="button"><strong>CREATE A NEW TRIP!</strong></a>
+                </div>
+            </div>
         </div>
+
         <br>
         
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
             {% for trip in trip_list %}
             <div class="card__max-width col">
-            <div class="card shadow-sm">
-                {% if trip.picture %}
-                    <img src="{{ trip.picture.url }}" class="trip__card-image card-img-top" alt="trip-img">
-                {% else %}
-                    <img src="{% static '/img/placeholder-trip-img.png' %}" class="card-img-top" alt="placeholder-trip-img">
-                {% endif %}
-                <div class="card-body">
-                    <h3 class="trip__card-title text-center"><a href="{% url 'trips:trip_detail' trip.pk %}">{{ trip.title }}</a></h3>
-                    <h6 class="trip__card-date text-center">{{ trip.start_date }} - {{ trip.end_date }}</h6>
-                    <hr class="trip__card-hr">
-                    <div class="card__text-truncate-container">
-                        {% if trip.notes %}
-                            <p class="card-text text-truncate">{{ trip.notes }}</p>
-                        {% else %}
-                            <p class="card-text text-muted">There are no notes for the trip yet.</p>
-                        {% endif %}
-                    </div>
-                    <div class="col text-end">
-                        <div class="btn-group">
-                            <a href="{% url 'trips:trip_detail' trip.pk %}" type="button" class="btn btn-sm btn-outline-primary"><strong>Details</strong></a>
-                            <a href="{% url 'markers:marker_list' trip.pk %}" type="button" class="btn btn-sm btn-outline-primary"><strong>Map</strong></a>
+                <div class="card shadow-sm">
+                    {% if trip.picture %}
+                        <a href="{% url 'trips:trip_detail' trip.pk %}">
+                            <img src="{{ trip.picture.url }}" class="trip__card-image card-img-top" alt="trip-img">
+                        </a>
+                    {% else %}
+                        <a href="{% url 'trips:trip_detail' trip.pk %}">
+                            <img src="{% static '/img/placeholder-trip-img.png' %}" class="card-img-top" alt="placeholder-trip-img">
+                        </a>
+                    {% endif %}
+                    <div class="card-body">
+                        <h3 class="trip__card-title text-center">{{ trip.title }}</h3>
+                        <h6 class="trip__card-date text-center">{{ trip.start_date }} - {{ trip.end_date }}</h6>
+                        <hr class="trip__card-hr">
+                        <div class="card__text-truncate-container">
+                            {% if trip.notes %}
+                                <p class="card-text text-truncate">{{ trip.notes }}</p>
+                            {% else %}
+                                <p class="card-text text-muted">There are no notes for the trip yet.</p>
+                            {% endif %}
+                        </div>
+                        <div class="col text-end">
+                            <div class="btn-group">
+                                <a href="{% url 'trips:trip_detail' trip.pk %}" type="button" class="btn btn-sm btn-outline-primary"><strong>Details</strong></a>
+                                <a href="{% url 'markers:marker_list' trip.pk %}" type="button" class="btn btn-sm btn-outline-primary"><strong>Map</strong></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
             {% endfor %}
         </div>
