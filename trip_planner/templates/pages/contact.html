@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Contact | Trip Planner
+{% endblock title %}
+
+{% block header %}
+    Contact
+{% endblock header %}
+
+{% block content %}
+
+    {{ block.super }}
+
+    <br>
+    
+    <div class="card form-max-width mx-auto">
+        <h5 class="card-header text-center">
+            Contact Me
+        </h5>
+        <div class="card-body">
+            <p>Thank you for trying out Trip Planner! &#128512;</p>
+            <p>Whether you have any questions, suggestions, want to share your thoughts on Trip Planner or otherwise, feel free to contact me!</p>
+        
+            <hr class="trip__card-hr">
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="text-end">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <br>
+{% endblock content %}
