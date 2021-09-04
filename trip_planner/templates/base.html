@@ -10,6 +10,13 @@
     <title>
         {% block title %}Trip Planner{% endblock title %}
     </title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="Trip Planner is a convenient way to plan your future trips and document your past trips.">
     
     {% block stylesheets %}
         <!--==================== Bootstrap 5 CSS ====================-->
@@ -35,9 +42,9 @@
                     <div class="col ps-0 pe-0">
                         <div class="base__middle-container">
                             <div class="base__top-image-bg">
-                                <div class="container-fluid justify-content-center pt-3 pt-md-4 pt-xxl-5">
+                                <div class="container-fluid justify-content-center text-center pt-3 pt-md-4 pt-xxl-5">
                                     
-                                    <h1 class="text-center mb-0">{% block header %}{% endblock header %}</h1>
+                                    <h1 class="base__title-bg-color mb-0 rounded d-inline">&nbsp;{% block header %}{% endblock header %}&nbsp;</h1>
                                 </div>
                             </div>
                             

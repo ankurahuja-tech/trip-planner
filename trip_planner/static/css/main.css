@@ -81,6 +81,10 @@ body {
                 /* (502 / 1280 * 100) */
 }
 
+.base__title-bg-color {
+    background-color: var(--clr-bg-image-blue-light);
+}
+
 
 /*==================== REUSABLE COMPONENTS ====================*/
 

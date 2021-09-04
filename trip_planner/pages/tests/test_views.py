@@ -48,13 +48,6 @@ def test_homepage_url_resolves_homepageview(client, user):
 # Tests for when user is notlogged in
 
 
-def test_homepage_not_logged_in_status_code_302(client):
+def test_homepage_not_logged_in_status_code_200(client):
     response = client.get(reverse("pages:home"))
-    assert response.status_code == 302
-
-
-@pytest.mark.django_db
-def test_homepage_not_logged_in_redirect_to_login(client):
-    response = client.get(reverse("pages:home"))
-    redirected_login_url = "/accounts/login/?next=/"  # equivalent to django settings.LOGIN_URL + "?next=/"
-    assert response.url == redirected_login_url
+    assert response.status_code == 200

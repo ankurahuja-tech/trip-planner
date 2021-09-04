@@ -27,3 +27,18 @@ def test_calendar_url_resolves_calendarview(client) -> None:
     view = resolve("/calendar/")
 
     assert view.func.__name__ == CalendarView.as_view().__name__
+
+
+# Tests for when user is notlogged in
+
+
+def test_calendar_not_logged_in_status_code_302(client):
+    response = client.get(reverse("calendars:calendar"))
+    assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_calendar_not_logged_in_redirect_to_login(client):
+    response = client.get(reverse("calendars:calendar"))
+    redirected_login_url = "/accounts/login/?next=/calendar/"  # equivalent to django settings.LOGIN_URL + "?next=/"
+    assert response.url == redirected_login_url

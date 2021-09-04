@@ -37,6 +37,21 @@ def test_trip_list_url_resolves_triplistview(client) -> None:
     assert view.func.__name__ == TripListView.as_view().__name__
 
 
+# Tests for when user is notlogged in
+
+
+def test_trip_list_not_logged_in_status_code_302(client):
+    response = client.get(reverse("trips:trip_list"))
+    assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_trip_list_not_logged_in_redirect_to_login(client):
+    response = client.get(reverse("trips:trip_list"))
+    redirected_login_url = "/accounts/login/?next=/trips/"  # equivalent to django settings.LOGIN_URL + "?next=/"
+    assert response.url == redirected_login_url
+
+
 # Trip Detail View
 
 

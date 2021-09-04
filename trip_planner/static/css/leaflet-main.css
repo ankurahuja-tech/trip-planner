@@ -14,15 +14,3 @@
         height: 400px;
     }
 }
-
-@media (max-width: 767px) {
-    .leaflet-container {
-        height: 300px;
-    }
-}
-
-@media (max-width: 419px) {
-    .leaflet-container {
-        height: 200px;
-    }
-}

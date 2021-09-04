@@ -1,20 +1,15 @@
 from .base import *
 
-ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
-    "0.0.0.0",
-    ".herokuapp.com"
-]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "0.0.0.0", ".herokuapp.com"]
 
 USE_DB = env.bool("USE_DB", default=False)
 
 if USE_DB:
     DATABASES = {
-        'default': env.db(),
+        "default": env.db(),
     }
     # https://stackoverflow.com/questions/12538510/getting-databaseoperations-object-has-no-attribute-geo-db-type-error-when-do
-    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+    DATABASES["default"]["ENGINE"] = "django.contrib.gis.db.backends.postgis"
 
 # ==============================================================================
 # EMAIL SETTINGS
@@ -55,6 +50,6 @@ SESSION_COOKIE_SECURE = True
 USE_WHITENOISE = env.bool("USE_WHITENOISE", default=False)
 
 if USE_WHITENOISE:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
     whitenoise_middleware_index = MIDDLEWARE.index("django.middleware.security.SecurityMiddleware") + 1
     MIDDLEWARE.insert(whitenoise_middleware_index, "whitenoise.middleware.WhiteNoiseMiddleware")

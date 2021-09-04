@@ -126,3 +126,20 @@ def test_marker_list_all_trips_url_resolves_marker_list_view(client, user: AUTH_
     view = resolve("/markers/trips/")
 
     assert view.func.__name__ == MarkerListViewAllTrips.as_view().__name__
+
+
+# Tests for when user is notlogged in
+
+
+def test_marker_list_all_trips_not_logged_in_status_code_302(client):
+    response = client.get(reverse("markers:marker_list_all_trips"))
+    assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_marker_list_all_trips_not_logged_in_redirect_to_login(client):
+    response = client.get(reverse("markers:marker_list_all_trips"))
+    redirected_login_url = (
+        "/accounts/login/?next=/markers/trips/"  # equivalent to django settings.LOGIN_URL + "?next=/"
+    )
+    assert response.url == redirected_login_url

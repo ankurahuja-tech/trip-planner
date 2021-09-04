@@ -26,7 +26,7 @@
                 {% if trip.picture %}
                     <img class='trip__card-image mb-2' src="{{ trip.picture.url }}" alt="trip-img">
                 {% else %}
-                    <img src="{% static '/img/placeholder-trip-img.png' %}" class="card-img-top" alt="placeholder-trip-img">
+                    <img src="{% static '/img/placeholder-trip-img.png' %}" class="trip__card-image mb-2" alt="placeholder-trip-img">
                 {% endif %}
                 <hr class="trip__card-hr">
                 {% if trip.notes %}

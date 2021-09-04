@@ -21,7 +21,8 @@ class Trip(TimeStampedModel):
     title = models.CharField("Trip title", max_length=50, help_text="This is the title of your trip.")
     start_date = models.DateField("Trip start date", help_text="This is the start date of your trip.")
     end_date = models.DateField("Trip end date", help_text="This is the end date of your trip.")
-    # TODO: description = models.CharField("Trip description", help_text="This is a short description of the trip.", blank=True, null=True)
+    # TODO: description = models.CharField("Trip description",
+    # help_text="This is a short description of the trip.", blank=True, null=True)
     notes = models.TextField("Trip notes", help_text="These are your notes regarding the trip.", blank=True, null=True)
     picture = ProcessedImageField(
         upload_to=user_directory_path,
@@ -126,7 +127,9 @@ class Activity(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name="activities")
     day = models.ForeignKey(TripDay, on_delete=models.CASCADE, related_name="activities")
-    title = models.CharField("Activity title", max_length=50, help_text="This is the title of your activity.")
+    title = models.CharField(
+        "Activity title", max_length=50, help_text="This is the title of your activity (max 50 characters)."
+    )
     time = models.TimeField("Activity time", help_text="This is the time of the activity.")
 
     def __str__(self) -> str:
