@@ -56,7 +56,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('modified_at', models.DateTimeField(auto_now=True)),
-                ('title', models.CharField(help_text='This is the title of your activity.', max_length=50, verbose_name='Activity title')),
+                ('title', models.CharField(help_text='This is the title of your activity (max 50 characters).', max_length=50, verbose_name='Activity title')),
                 ('time', models.TimeField(help_text='This is the time of the activity.', verbose_name='Activity time')),
                 ('day', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='activities', to='trips.tripday')),
                 ('trip', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='activities', to='trips.trip')),
