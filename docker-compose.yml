@@ -17,6 +17,7 @@ services:
              python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     restart: always
+    container_name: trip-planner-web
     depends_on:
       - db
     networks: 
@@ -35,6 +36,7 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DBNAME=${DB_NAME}
     restart: always
+    container_name: trip-planner-db
     networks:
       - trip-planner-backend
 

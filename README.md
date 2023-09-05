@@ -8,9 +8,9 @@ Among others, a signed user can:
 * create, view, update and delete trips with specified dates and descriptions,
 * upload photos for each trip (current app version supports 1 photo per trip).
 
-You can see the live version of the app at [Trip Planner](https://trip-planner-website.herokuapp.com "Trip Planner").
+The live version of the app at [Trip Planner](https://trip-planner-website.herokuapp.com "Trip Planner") is currently unavailable.
 
-You can also install the app locally, following the below instructions.
+**You can however install the app locally, following the below instructions.**
 ## Setup
 
 You will need Docker installed to run app locally. 
@@ -45,7 +45,13 @@ When you have Docker installed, follow these steps:
 
 5. Finally navigate to http://127.0.0.1:8000/ in your browser and verify that the app is running.
 
-6. After finishing using the app, stop and remove containers: 
+6. To create a user with admin privileges and without the need to verify email, create a superuser:
+
+```bash
+  sudo docker exec -it trip-planner-web python3 manage.py createsuperuser
+```
+
+7. After finishing using the app, stop and remove containers:
 
 ```bash
 docker-compose down -v
