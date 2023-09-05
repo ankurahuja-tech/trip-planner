@@ -7,7 +7,6 @@ class MarkerSerializer(gis_serializers.GeoFeatureModelSerializer):
     """Marker GeoJSON serializer."""
 
     class Meta:
-
         fields = (
             "id",
             "user",

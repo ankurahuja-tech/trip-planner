@@ -13,7 +13,6 @@ from .models import Marker
 
 
 class MarkerListView(LoginRequiredMixin, UserPassesOwnerTestMixin, TemplateView):
-
     template_name = "markers/marker_list.html"
     owner_mixin_model = Trip  # custom field for UserPassesOwnerTestMixin
 
@@ -23,7 +22,6 @@ class MarkerListView(LoginRequiredMixin, UserPassesOwnerTestMixin, TemplateView)
 
 
 class MarkerCreateView(LoginRequiredMixin, UserPassesOwnerTestMixin, CreateView):
-
     model = Marker
     template_name = "markers/marker_form.html"
     form_class = MarkerCreateForm
@@ -40,7 +38,6 @@ class MarkerCreateView(LoginRequiredMixin, UserPassesOwnerTestMixin, CreateView)
 
 
 class MarkerUpdateView(LoginRequiredMixin, UserPassesOwnerTestMixin, UpdateView):
-
     model = Marker
     template_name = "markers/marker_update_form.html"
     form_class = MarkerUpdateForm
@@ -57,7 +54,6 @@ class MarkerUpdateView(LoginRequiredMixin, UserPassesOwnerTestMixin, UpdateView)
 
 
 class MarkerDeleteView(LoginRequiredMixin, UserPassesOwnerTestMixin, DeleteView):
-
     model = Marker
     template_name = "markers/marker_delete.html"
     owner_mixin_model = Trip  # custom field for UserPassesOwnerTestMixin
@@ -75,5 +71,4 @@ class MarkerDeleteView(LoginRequiredMixin, UserPassesOwnerTestMixin, DeleteView)
 
 
 class MarkerListViewAllTrips(LoginRequiredMixin, TemplateView):
-
     template_name = "markers/marker_list_all_trips.html"

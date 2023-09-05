@@ -5,7 +5,6 @@ from .serializers import MarkerSerializer
 
 
 class MarkerViewSet(viewsets.ReadOnlyModelViewSet):
-
     queryset = Marker.objects.all()
     serializer_class = MarkerSerializer
 
@@ -18,7 +17,6 @@ class MarkerViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class MarkerViewSetAllTrips(viewsets.ReadOnlyModelViewSet):
-
     queryset = Marker.objects.all()
     serializer_class = MarkerSerializer
 

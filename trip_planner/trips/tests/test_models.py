@@ -15,7 +15,6 @@ from trip_planner.trips.models import Activity, Trip, TripDay
 
 
 def test_trip_exists(trip: Trip) -> None:
-
     assert Trip.objects.all().count() == 1
 
 
@@ -43,7 +42,6 @@ def test_trip_get_absolute_url(trip: Trip) -> None:
 
 
 def test_create_trip_days_on_trip_creation(trip: Trip) -> None:
-
     assert TripDay.objects.all().count() == 4
 
 
@@ -105,14 +103,12 @@ def test_trip_day_exists(trip_day: TripDay) -> None:
 
 
 def test_trip_day_fields(trip_day: TripDay) -> None:
-
     assert trip_day.trip.title == "TripDay test trip"
     assert str(trip_day.date) == "2021-01-01"
     assert trip_day.notes is None
 
 
 def test_trip_day_str(trip_day: TripDay) -> None:
-
     assert str(trip_day) == "Day 1"
 
 
@@ -134,7 +130,6 @@ def test_activity_exists(activity: Activity) -> None:
 
 
 def test_activity_str(activity: Activity) -> None:
-
     assert str(activity) == "Activity test title"
 
 
