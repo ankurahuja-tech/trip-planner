@@ -1,4 +1,4 @@
-FROM python:3.9-slim-buster
+FROM python:3.10-slim-buster
 
 LABEL maintainer="AnkurAhuja.TECH@gmail.com"
 LABEL description="Heroku Production image for Trip Planner app"

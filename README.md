@@ -75,7 +75,7 @@ If the containers are running, verify that the Django app within the container i
 ## Technologies
 
 Project is created mainly with:
-* Python 3.9,
+* Python 3.10,
 * Poetry,
 * Django with Django REST Framework,
 * Pytest with pytest-django,

@@ -142,6 +142,7 @@ cython_debug/
 
 # others
 notes.txt
+notes/
 working-static/
 
 # Django specific:
